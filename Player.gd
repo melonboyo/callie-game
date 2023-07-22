@@ -1,3 +1,4 @@
+@tool
 extends CharacterBody2D
 class_name Player
 
@@ -9,6 +10,37 @@ const AIR_ACCELERATION = 1.8
 const CLIMB_ACCELERATION = 12.0
 const MAX_FALL_SPEED = 300.0
 const LOOK_OFFSET = 32.0
+const OVERWORLD_SPEED = 87.0
+
+var step_sounds_grass := [
+	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_grass_000.ogg"),
+#	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_grass_001.ogg"),
+#	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_grass_002.ogg"),
+	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_grass_003.ogg"),
+	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_grass_004.ogg"),
+]
+
+var step_sounds_concrete := [
+	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_concrete_000.ogg"),
+	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_concrete_001.ogg"),
+	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_concrete_002.ogg"),
+	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_concrete_003.ogg"),
+	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_concrete_004.ogg"),
+]
+
+var step_sounds_wood := [
+	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_wood_000.ogg"),
+	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_wood_001.ogg"),
+	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_wood_002.ogg"),
+	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_wood_003.ogg"),
+	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_wood_004.ogg"),
+]
+
+var step_sounds := [
+	step_sounds_grass,
+	step_sounds_concrete,
+	step_sounds_wood
+]
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -33,15 +65,31 @@ var was_on_floor = true
 var jumped = false
 
 var freeze = false
+@export var is_in_overworld = false:
+	set(value):
+		is_in_overworld = value
+		if value:
+			motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
+		else:
+			motion_mode = CharacterBody2D.MOTION_MODE_GROUNDED
+			
+var exit_level = false
+var exit_level_direction = Vector2.RIGHT
 
 var pick_up: Node2D
 
+@onready var sprite = $PlayerSprite
+
 
 func _ready():
+	if Engine.is_editor_hint():
+		return
 	jump_height = jump_height
 
 
 func _process(delta):
+	if Engine.is_editor_hint():
+		return
 	direction_x = Input.get_axis("move_left", "move_right")
 	direction_y = Input.get_axis("move_up", "move_down")
 	
@@ -53,20 +101,25 @@ func _process(delta):
 
 
 func _physics_process(delta):
-	collision_mask = 9
+	if Engine.is_editor_hint():
+		return
 	
 	if freeze:
 		velocity = Vector2.ZERO
 		return
 	
-	if pick_up:
-		var direction_to_player = pick_up.position.direction_to(position)
-		var desired_position = position - direction_to_player * 12.0
-		var distance_to = pick_up.position.distance_to(desired_position)
-		var follow_speed = clampf(distance_to / 28.0, 0.0, 1.0) * 3.8
-		pick_up.position = pick_up.position.lerp(desired_position, delta * follow_speed)
-		if not GameState.has_key:
-			pick_up.queue_free()
+	if is_in_overworld:
+		overworld_move(delta)
+		return
+	
+	if exit_level:
+		exit_level_move(delta)
+		animate()
+		return
+	
+	collision_mask = 9
+	
+	animate_pick_up(delta)
 	
 	if can_climb and abs(direction_y) > 0.8 and not $ClimbWait.time_left > 0.0:
 		$ClimbWait.stop()
@@ -103,6 +156,9 @@ func _physics_process(delta):
 	if is_on_floor():
 		desired_velocity = direction_x * MAX_RUN_SPEED
 		acceleration = ACCELERATION
+		
+		if not was_on_floor:
+			play_step_sound(0)
 	else:
 		desired_velocity = direction_x * MAX_AIR_SPEED
 		acceleration = clampf((1.0 - (velocity.x / MAX_AIR_SPEED) * 0.8), 0.2, 1.0) *  AIR_ACCELERATION
@@ -121,9 +177,9 @@ func _physics_process(delta):
 		velocity.y = minf(velocity.y, MAX_FALL_SPEED)
 	
 	if last_strong_direction_x < 0:
-		$Sprite.flip_h = true
+		sprite.flip_h = true
 	else:
-		$Sprite.flip_h = false
+		sprite.flip_h = false
 	
 	animate()
 
@@ -134,12 +190,41 @@ func _physics_process(delta):
 	move_and_slide()
 
 
+func exit_level_move(delta):
+	velocity.x = lerpf(velocity.x, exit_level_direction.x * MAX_RUN_SPEED, delta * ACCELERATION)
+	last_strong_direction_x = exit_level_direction
+	if not is_on_floor():
+		velocity.y += gravity * delta
+		velocity.y = minf(velocity.y, MAX_FALL_SPEED)
+	
+	move_and_slide()
+
+
+func overworld_move(delta):
+	var direction_input = Input.get_vector("move_left", "move_right", "move_up", "move_down").normalized()
+
+	velocity = direction_input * OVERWORLD_SPEED
+	
+	if velocity.length() > 0.001:
+		sprite.play("run")
+		
+		if velocity.x < -0.01:
+			sprite.flip_h = true
+		elif velocity.x > 0.01:
+			sprite.flip_h = false
+	else:
+		sprite.play("idle")
+	
+	move_and_slide()
+
+
 func jump():
 	if (
 		((is_on_floor() or is_climbing) and $JumpBufferEarly.time_left > 0.0) or
 		(not is_on_floor() and $JumpBufferLate.time_left > 0.0 and Input.is_action_just_pressed("do_jump"))
 	):
 		velocity.y = jump_velocity
+		$JumpPlayer.play()
 		
 		if is_climbing:
 			velocity.x = direction_x * MAX_RUN_SPEED * 0.6
@@ -162,22 +247,42 @@ func jump():
 
 func animate():
 	if is_climbing:
-		$Sprite.play("climb")
-		$Sprite.speed_scale = abs(velocity.y) / MAX_CLIMB_SPEED
+		sprite.play("climb")
+		sprite.speed_scale = abs(velocity.y) / MAX_CLIMB_SPEED
 	elif not is_on_floor():
 		if velocity.y > 70.0:
-			$Sprite.play("fall")
+			sprite.play("fall")
 		else:
-			$Sprite.play("jump")
+			sprite.play("jump")
 	elif velocity.length() > 5.0:
-		$Sprite.play("run")
-		$Sprite.speed_scale = 0.8 * abs(velocity.x) / MAX_RUN_SPEED + 0.2
+		sprite.play("run")
+		sprite.speed_scale = 0.8 * abs(velocity.x) / MAX_RUN_SPEED + 0.2
 	elif direction_y > 0.1:
-		$Sprite.play("look_down")
+		sprite.play("look_down")
 	elif direction_y < -0.1:
-		$Sprite.play("look_up")
+		sprite.play("look_up")
 	else:
-		$Sprite.play("idle")
+		sprite.play("idle")
+
+
+func animate_pick_up(delta):
+	if not pick_up:
+		return
+	var direction_to_player = pick_up.position.direction_to(position)
+	var desired_position = position - direction_to_player * 12.0
+	var distance_to = pick_up.position.distance_to(desired_position)
+	var follow_speed = clampf(distance_to / 28.0, 0.0, 1.0) * 3.8
+	pick_up.position = pick_up.position.lerp(desired_position, delta * follow_speed)
+	if not GameState.has_key:
+		pick_up.queue_free()
+		pick_up = null
+
+
+func play_step_sound(type: int):
+	var sounds = step_sounds[type]
+	var sound = sounds[randi_range(0, sounds.size()-1)]
+	$StepPlayer.stream = sound
+	$StepPlayer.play()
 
 
 func reset():
@@ -229,3 +334,14 @@ func _on_look_down_timer_timeout():
 
 func _on_key_key_picked_up(key):
 	pick_up = key
+
+
+func _on_player_sprite_frame_changed():
+	if sprite.is_playing():
+		if sprite.frame == 0:
+			if sprite.animation == "run":
+				play_step_sound(0)
+			elif sprite.animation == "climb":
+				play_step_sound(2)
+
+

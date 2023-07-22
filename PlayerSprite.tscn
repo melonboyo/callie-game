@@ -1,0 +1,134 @@
+[gd_scene load_steps=15 format=3 uid="uid://bu42bi3m5khvm"]
+
+[ext_resource type="Texture2D" uid="uid://clpfwo5vlmome" path="res://Textures/Player/FlopEar/tile_0295.png" id="1_ktl5m"]
+[ext_resource type="Texture2D" uid="uid://cak7w4ofvrw7b" path="res://Textures/Player/FlopEar/tile_0291.png" id="2_2ks8o"]
+[ext_resource type="Texture2D" uid="uid://ddplmvclxg6p4" path="res://Textures/Player/FlopEar/tile_0292.png" id="3_wae36"]
+[ext_resource type="Texture2D" uid="uid://b2ny8vvsn1wbv" path="res://Textures/Player/FlopEar/tile_0282.png" id="4_vp6yk"]
+[ext_resource type="Texture2D" uid="uid://dl1syt3exh3pd" path="res://Textures/Player/FlopEar/tile_0285.png" id="5_qg3va"]
+[ext_resource type="Texture2D" uid="uid://gfnwsqtfv6i8" path="res://Textures/Player/FlopEar/tile_0280.png" id="6_eg78w"]
+[ext_resource type="Texture2D" uid="uid://bwap20qxex6l1" path="res://Textures/Player/FlopEar/tile_0287.png" id="7_xh7ok"]
+[ext_resource type="Texture2D" uid="uid://c2wdm3ymuoslv" path="res://Textures/Player/FlopEar/tile_0290.png" id="8_kr5o6"]
+[ext_resource type="Texture2D" uid="uid://clasrq7xxkywy" path="res://Textures/Player/FlopEar/tile_0293.png" id="9_ky0if"]
+[ext_resource type="Texture2D" uid="uid://c337stha0r5o7" path="res://Textures/Player/FlopEar/tile_0288.png" id="10_gf4yg"]
+[ext_resource type="Texture2D" uid="uid://gyejc8va12ep" path="res://Textures/Player/FlopEar/tile_0294.png" id="11_fvkkf"]
+[ext_resource type="Texture2D" uid="uid://dnqp8mpn2xsti" path="res://Textures/Player/FlopEar/tile_0281.png" id="12_dsklg"]
+[ext_resource type="Texture2D" uid="uid://cm6s3unrvto3w" path="res://Textures/Player/FlopEar/tile_0284.png" id="13_1wxsj"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nm6yw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ktl5m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_ktl5m")
+}],
+"loop": true,
+"name": &"climb",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_2ks8o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_wae36")
+}],
+"loop": true,
+"name": &"climb_old",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_vp6yk")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_qg3va")
+}],
+"loop": true,
+"name": &"get",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_eg78w")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_xh7ok")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_kr5o6")
+}],
+"loop": true,
+"name": &"lay",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_kr5o6")
+}],
+"loop": true,
+"name": &"look_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_ky0if")
+}],
+"loop": true,
+"name": &"look_down_old",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_gf4yg")
+}],
+"loop": true,
+"name": &"look_up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_fvkkf")
+}],
+"loop": true,
+"name": &"look_up_old",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_dsklg")
+}, {
+"duration": 2.0,
+"texture": ExtResource("4_vp6yk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_1wxsj")
+}, {
+"duration": 2.0,
+"texture": ExtResource("5_qg3va")
+}],
+"loop": true,
+"name": &"run",
+"speed": 24.0
+}]
+
+[node name="PlayerSprite" type="AnimatedSprite2D"]
+use_parent_material = true
+sprite_frames = SubResource("SpriteFrames_nm6yw")
+animation = &"climb"

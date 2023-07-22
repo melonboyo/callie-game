@@ -10,7 +10,7 @@ var upgrade_scenes := {
 }
 
 var acquired_upgrades = {
-	Upgrade.Jump1: false
+	Upgrade.Jump1: true
 }
 
 var has_key = false

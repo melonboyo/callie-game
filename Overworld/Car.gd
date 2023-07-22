@@ -14,10 +14,10 @@ class_name Car2D
 
 
 const CAMERA_CATCH_UP = 2.0
-const CAMERA_OFFSET = 32.0
-const ACCELERATION = 2.0
-const DECELERATION = 3.2
-const MAX_SPEED = 190.0
+const CAMERA_OFFSET = 28.0
+const ACCELERATION = 1.5
+const DECELERATION = 1.8
+const MAX_SPEED = 155.0
 const HANDLING = 1.7
 
 var facing_rotation = 0.0
@@ -49,5 +49,7 @@ func _physics_process(delta):
 		direction_input.normalized() * (linear_velocity.length() / \
 		MAX_SPEED) * CAMERA_OFFSET, delta * CAMERA_CATCH_UP
 	)
+	if not direction_input and camera.offset.length() < 1.2:
+		camera.offset = Vector2.ZERO
 	
 	car_rotation = rad_to_deg(facing_rotation)
