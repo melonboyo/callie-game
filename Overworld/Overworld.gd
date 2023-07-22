@@ -24,6 +24,7 @@ func _ready():
 	player.position = $Spawns.get_children()[GameState.exit].position
 	await get_tree().create_timer(0.5).timeout
 	PaletteSwitch.fade_in()
+	Music.play(Music.Track.Overworld)
 	player.freeze = false
 
 

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dbfiwnw3rfac5"
+path="res://.godot/imported/overworld pog.ogg-f9be04df01d579d20c52b978fe7ec46b.oggvorbisstr"
+
+[deps]
+
+source_file="res://Sounds/music/overworld pog.ogg"
+dest_files=["res://.godot/imported/overworld pog.ogg-f9be04df01d579d20c52b978fe7ec46b.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4
