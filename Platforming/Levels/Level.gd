@@ -13,6 +13,7 @@ func _ready():
 	await get_tree().create_timer(0.5).timeout
 	PaletteSwitch.fade_in()
 	player.freeze = false
+	Music.play(Music.Track.Forest)
 
 
 func _on_death_zone_body_entered(body):

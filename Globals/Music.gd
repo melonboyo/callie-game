@@ -1,14 +1,16 @@
 extends Node
 
 enum Track {
+	Forest
 }
 
 var streams = {
+	Track.Forest : preload("res://Sounds/music/forest theme (you are on your way!).ogg"), 
 }
 
 var volume = 0
 var volumes = {
-#	Track.Start: -4,
+	Track.Forest : -10,
 }
 
 var selected_track = null
