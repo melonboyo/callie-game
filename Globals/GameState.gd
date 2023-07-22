@@ -2,15 +2,18 @@ extends Node
 
 
 enum Upgrade {
-	Jump1
+	Jump1,
+	Minecart
 }
 
 var upgrade_scenes := {
-	Upgrade.Jump1: preload("res://Platforming/Upgrades/Jump1.tscn")
+	Upgrade.Jump1: preload("res://Platforming/Upgrades/Jump1.tscn"),
+	Upgrade.Minecart: preload("res://Platforming/Upgrades/Jump1.tscn"),
 }
 
 var acquired_upgrades = {
-	Upgrade.Jump1: false
+	Upgrade.Jump1: false,
+	Upgrade.Minecart: true,
 }
 
 var has_key = false

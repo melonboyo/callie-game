@@ -1,12 +1,127 @@
-[gd_scene load_steps=6 format=3 uid="uid://bo1xhn2kyap4e"]
+[gd_scene load_steps=12 format=3 uid="uid://bo1xhn2kyap4e"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_8fvrf"]
 [ext_resource type="PackedScene" uid="uid://bu42bi3m5khvm" path="res://PlayerSprite.tscn" id="2_0nbv6"]
 [ext_resource type="AudioStream" uid="uid://dgtii8fgp3k1" path="res://Sounds/egg/jump.ogg" id="3_ixp0a"]
 [ext_resource type="AudioStream" uid="uid://b2bo1cywfep7t" path="res://Sounds/kenney_impact-sounds/Audio/footstep_grass_000.ogg" id="3_jrbrd"]
+[ext_resource type="Texture2D" uid="uid://b5fy36lb6bsgl" path="res://Textures/Player/Minecart/MinecartFront.png" id="5_muekf"]
+[ext_resource type="Texture2D" uid="uid://cffgae45ornex" path="res://Textures/Player/Minecart/MinecartBack.png" id="6_gbrsd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2514i"]
+size = Vector2(14, 11)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7myib"]
 size = Vector2(12, 11)
+
+[sub_resource type="Animation" id="Animation_fes0p"]
+resource_name = "enter_minecart"
+length = 0.57
+step = 0.03
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.35, 0.51),
+"transitions": PackedFloat32Array(0.5, 2, 2.54912, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -17), Vector2(0, -17), Vector2(0, -3)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PlayerSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.51),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [&"jump", &"fall", &"minecarting"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Minecart:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Minecart:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.42),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_aauuy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PlayerSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Minecart:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Minecart:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3i2rj"]
+_data = {
+"RESET": SubResource("Animation_aauuy"),
+"enter_minecart": SubResource("Animation_fes0p")
+}
 
 [node name="Player" type="CharacterBody2D"]
 texture_filter = 1
@@ -17,12 +132,31 @@ floor_max_angle = 0.872665
 script = ExtResource("1_8fvrf")
 jump_height = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CartShape" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 2.5)
-shape = SubResource("RectangleShape2D_7myib")
+shape = SubResource("RectangleShape2D_2514i")
+disabled = true
+debug_color = Color(0.792157, 0.392157, 0.470588, 0.337255)
+
+[node name="Minecart" type="Node2D" parent="."]
+visible = false
+
+[node name="Front" type="Sprite2D" parent="Minecart"]
+z_index = 1
+texture = ExtResource("5_muekf")
+
+[node name="Back" type="Sprite2D" parent="Minecart"]
+texture = ExtResource("6_gbrsd")
 
 [node name="PlayerSprite" parent="." instance=ExtResource("2_0nbv6")]
-animation = &"climb_old"
+unique_name_in_owner = true
+animation = &"idle"
+
+[node name="PlayerShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_7myib")
+debug_color = Color(0.247059, 0.568627, 0.360784, 0.345098)
 
 [node name="JumpBufferEarly" type="Timer" parent="."]
 wait_time = 0.067
@@ -67,8 +201,14 @@ bus = &"Effects"
 volume_db = -11.0
 bus = &"Effects"
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_3i2rj")
+}
+
 [connection signal="frame_changed" from="PlayerSprite" to="." method="_on_player_sprite_frame_changed"]
 [connection signal="timeout" from="LookUpTimer" to="." method="_on_look_up_timer_timeout"]
 [connection signal="timeout" from="LookDownTimer" to="." method="_on_look_down_timer_timeout"]
 [connection signal="area_entered" from="LadderArea" to="." method="_on_ladder_area_entered"]
 [connection signal="area_exited" from="LadderArea" to="." method="_on_ladder_area_exited"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

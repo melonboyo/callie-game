@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://bvmyeydgriqwh"]
+
+[ext_resource type="Texture2D" uid="uid://cffgae45ornex" path="res://Textures/Player/Minecart/MinecartBack.png" id="1_tgeyj"]
+[ext_resource type="Texture2D" uid="uid://b5fy36lb6bsgl" path="res://Textures/Player/Minecart/MinecartFront.png" id="2_gmpv6"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wv20x"]
+friction = 0.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_826oq"]
+size = Vector2(12, 11)
+
+[node name="MinecartRigid" type="RigidBody2D"]
+texture_filter = 1
+collision_layer = 2048
+collision_mask = 2048
+physics_material_override = SubResource("PhysicsMaterial_wv20x")
+gravity_scale = 1.2
+
+[node name="PlayerShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_826oq")
+debug_color = Color(0.247059, 0.568627, 0.360784, 0.345098)
+
+[node name="Minecart" type="Node2D" parent="."]
+
+[node name="Front" type="Sprite2D" parent="Minecart"]
+z_index = 1
+texture = ExtResource("2_gmpv6")
+
+[node name="Back" type="Sprite2D" parent="Minecart"]
+texture = ExtResource("1_tgeyj")

@@ -24,9 +24,11 @@ var facing_rotation = 0.0
 var input_rotation = 0.0
 var actual_rotation = 0.0
 
+var disable = true
+
 
 func _physics_process(delta):
-	if Engine.is_editor_hint():
+	if Engine.is_editor_hint() or disable:
 		return
 	
 	var direction_input = Input.get_vector("move_left", "move_right", "move_up", "move_down")

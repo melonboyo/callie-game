@@ -16,6 +16,7 @@ func _ready():
 
 
 func _on_death_zone_body_entered(body):
+	$DeathPlayer.play()
 	PaletteSwitch.fade_out_in()
 	player.freeze = true
 	await get_tree().create_timer(0.71).timeout

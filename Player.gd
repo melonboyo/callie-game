@@ -11,6 +11,8 @@ const CLIMB_ACCELERATION = 12.0
 const MAX_FALL_SPEED = 300.0
 const LOOK_OFFSET = 32.0
 const OVERWORLD_SPEED = 87.0
+const MINECART_START_SPEED = 210.0
+const MINECART_SPEED = 170.0
 
 var step_sounds_grass := [
 	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_grass_000.ogg"),
@@ -59,6 +61,7 @@ var direction_y = 0.0
 
 var is_climbing = false
 var can_climb = false
+var first_climb_frame = false
 var climb_x = 0.0
 
 var was_on_floor = true
@@ -76,9 +79,14 @@ var freeze = false
 var exit_level = false
 var exit_level_direction = Vector2.RIGHT
 
+var is_minecarting = false
+var is_entering_minecart = false
+var minecart_direction = 1.0
+var rigid_minecart = preload("res://Platforming/Upgrades/MinecartRigid.tscn")
+
 var pick_up: Node2D
 
-@onready var sprite = $PlayerSprite
+@onready var sprite = %PlayerSprite
 
 
 func _ready():
@@ -121,28 +129,35 @@ func _physics_process(delta):
 	
 	animate_pick_up(delta)
 	
+	if is_minecarting:
+		minecart_move(delta)
+		if is_minecarting:
+			return
+	
+	sprite.offset = sprite.offset.move_toward(Vector2.ZERO, delta * 5.0)
+	
 	if can_climb and abs(direction_y) > 0.8 and not $ClimbWait.time_left > 0.0:
 		$ClimbWait.stop()
 		is_climbing = true
+		first_climb_frame = true
 	
 	if is_climbing:
-		position.x = lerpf(position.x, climb_x, delta * 15.0)
-		velocity.x = 0.0
-		
-		if direction_y:
-			velocity.y = lerpf(velocity.y, direction_y * MAX_CLIMB_SPEED, delta * CLIMB_ACCELERATION)
-		else:
-			velocity.y = lerpf(velocity.y, 0.0, delta * CLIMB_ACCELERATION)
-			if abs(velocity.y) < 8.0:
-				velocity.y = 0.0
-		
-		jump()
-		animate()
-		
+		climb_move(delta)
 		if is_climbing:
 			collision_mask = 1
 			move_and_slide()
 			return
+	
+	if (
+		Input.is_action_just_pressed("minecart") and 
+		GameState.acquired_upgrades[GameState.Upgrade.Minecart]
+		and not is_climbing
+	):
+		is_entering_minecart = true
+		$AnimationPlayer.play("enter_minecart")
+		freeze = true
+		minecart_direction = last_strong_direction_x
+		return
 	
 	if not is_on_floor():
 		if was_on_floor and not jumped:
@@ -190,6 +205,39 @@ func _physics_process(delta):
 	move_and_slide()
 
 
+func climb_move(delta):
+	position.x = lerpf(position.x, climb_x, delta * 15.0)
+	velocity.x = 0.0
+	
+	if direction_y:
+		velocity.y = lerpf(velocity.y, direction_y * MAX_CLIMB_SPEED, delta * CLIMB_ACCELERATION)
+	else:
+		velocity.y = lerpf(velocity.y, 0.0, delta * CLIMB_ACCELERATION)
+		if abs(velocity.y) < 8.0:
+			velocity.y = 0.0
+	
+	jump()
+	animate()
+	
+	if is_climbing and is_on_floor() and direction_y > 0.5 and not first_climb_frame:
+		is_climbing = false
+		$ClimbWait.start()
+	
+	first_climb_frame = false
+
+
+func minecart_move(delta):
+	if jump():
+		$Minecart.visible = false
+		is_minecarting = false
+		return
+	velocity.x = lerpf(velocity.x, minecart_direction * MINECART_SPEED, delta * ACCELERATION)
+	if not is_on_floor():
+		velocity.y += gravity * 1.2 * delta
+		velocity.y = minf(velocity.y, MAX_FALL_SPEED)
+	move_and_slide()
+
+
 func exit_level_move(delta):
 	velocity.x = lerpf(velocity.x, exit_level_direction.x * MAX_RUN_SPEED, delta * ACCELERATION)
 	last_strong_direction_x = exit_level_direction
@@ -218,10 +266,12 @@ func overworld_move(delta):
 	move_and_slide()
 
 
-func jump():
+func jump() -> bool:
+	var jumped = false
 	if (
 		((is_on_floor() or is_climbing) and $JumpBufferEarly.time_left > 0.0) or
-		(not is_on_floor() and $JumpBufferLate.time_left > 0.0 and Input.is_action_just_pressed("do_jump"))
+		(not is_on_floor() and $JumpBufferLate.time_left > 0.0 and Input.is_action_just_pressed("do_jump")) or 
+		(is_minecarting and Input.is_action_just_pressed("do_jump"))
 	):
 		velocity.y = jump_velocity
 		$JumpPlayer.play()
@@ -235,6 +285,7 @@ func jump():
 		jumped = true
 		is_climbing = false
 		$ClimbWait.start()
+		jumped = true
 		
 	if Input.is_action_just_released("do_jump") and hold_jump:
 		if velocity.y < 0:
@@ -243,6 +294,8 @@ func jump():
 
 	if not Input.is_action_pressed("do_jump"):
 		hold_jump = false
+	
+	return jumped
 
 
 func animate():
@@ -291,6 +344,9 @@ func reset():
 	$JumpBufferLate.stop()
 	$ClimbWait.stop()
 	freeze = false
+	is_minecarting = false
+	is_entering_minecart = false
+	is_climbing = false
 
 
 func _on_ladder_area_entered(area):
@@ -345,3 +401,10 @@ func _on_player_sprite_frame_changed():
 				play_step_sound(2)
 
 
+func _on_animation_player_animation_finished(anim_name):
+	if anim_name == "enter_minecart":
+		is_entering_minecart = false
+		is_minecarting = true
+		freeze = false
+		velocity.x = minecart_direction * MINECART_START_SPEED
+		velocity.y = -10.0

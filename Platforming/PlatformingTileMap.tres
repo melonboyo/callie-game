@@ -11396,7 +11396,8 @@ texture = ExtResource("1_e7pc0")
 36:22/0/physics_layer_1/angular_velocity = 0.0
 
 [resource]
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 2049
+physics_layer_0/collision_mask = 2049
 physics_layer_0/physics_material = SubResource("PhysicsMaterial_0ddi4")
 physics_layer_1/collision_layer = 8
 physics_layer_1/collision_mask = 0

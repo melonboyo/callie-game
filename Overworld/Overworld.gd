@@ -8,8 +8,9 @@ var level = 1
 @onready var player = $Player
 
 
-func _on_start_level_1_body_entered(body):
+func _on_start_level_1_body_entered(body, exit):
 	level = 1
+	GameState.exit = exit
 	on_level = true
 
 
