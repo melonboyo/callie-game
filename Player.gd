@@ -83,6 +83,7 @@ var is_minecarting = false
 var is_entering_minecart = false
 var minecart_direction = 1.0
 var rigid_minecart = preload("res://Platforming/Upgrades/MinecartRigid.tscn")
+var can_use_minecart = true
 
 var pick_up: Node2D
 
@@ -134,6 +135,9 @@ func _physics_process(delta):
 		if is_minecarting:
 			return
 	
+	if is_on_floor():
+		can_use_minecart = true
+	
 	sprite.offset = sprite.offset.move_toward(Vector2.ZERO, delta * 5.0)
 	
 	if can_climb and abs(direction_y) > 0.8 and not $ClimbWait.time_left > 0.0:
@@ -152,6 +156,7 @@ func _physics_process(delta):
 		Input.is_action_just_pressed("minecart") and 
 		GameState.acquired_upgrades[GameState.Upgrade.Minecart]
 		and not is_climbing
+		and can_use_minecart
 	):
 		is_entering_minecart = true
 		$AnimationPlayer.play("enter_minecart")
@@ -230,6 +235,7 @@ func minecart_move(delta):
 	if jump():
 		$Minecart.visible = false
 		is_minecarting = false
+		can_use_minecart = false
 		return
 	velocity.x = lerpf(velocity.x, minecart_direction * MINECART_SPEED, delta * ACCELERATION)
 	if not is_on_floor():

@@ -10,10 +10,10 @@ func _ready():
 	PaletteSwitch.set_fade(-0.9)
 	player.freeze = true
 	player.position = %SpawnPoint.position
+	Music.play(Music.Track.Forest)	
 	await get_tree().create_timer(0.5).timeout
 	PaletteSwitch.fade_in()
 	player.freeze = false
-	Music.play(Music.Track.Forest)
 
 
 func _on_death_zone_body_entered(body):
@@ -33,5 +33,6 @@ func _on_exit_level(body, exit, direction):
 	GameState.exit = exit
 	player.exit_level = true
 	player.exit_level_direction = direction
+	Music.stop()
 	$ExitLevelTimer.start()
 	PaletteSwitch.fade_out()

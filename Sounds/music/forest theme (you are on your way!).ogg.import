@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/forest theme (you are on your way!).ogg-f04d5
 [params]
 
 loop=true
-loop_offset=6.34
-bpm=0.0
+loop_offset=6.44
+bpm=149.0
 beat_count=0
 bar_beats=4
