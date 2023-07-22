@@ -10,10 +10,12 @@ var upgrade_scenes := {
 }
 
 var acquired_upgrades = {
-	Upgrade.Jump1: true
+	Upgrade.Jump1: false
 }
 
 var has_key = false
+
+var exit = 0
 
 
 func get_upgrade(ug: GameState.Upgrade):

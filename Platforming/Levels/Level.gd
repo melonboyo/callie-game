@@ -23,13 +23,13 @@ func _on_death_zone_body_entered(body):
 	player.reset()
 
 
-var exit_direction = Vector2.RIGHT
+func _on_exit_level_timer_timeout():
+	get_tree().change_scene_to_packed(Levels.overworld)
 
-func _on_level_end_body_entered(body):
+
+func _on_exit_level(body, exit, direction):
+	GameState.exit = exit
 	player.exit_level = true
+	player.exit_level_direction = direction
 	$ExitLevelTimer.start()
 	PaletteSwitch.fade_out()
-
-
-func _on_exit_level_timer_timeout():
-	pass
