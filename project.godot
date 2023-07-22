@@ -22,6 +22,7 @@ PaletteSwitch="*res://Globals/PaletteSwitch.tscn"
 Fade="*res://Globals/Fade.tscn"
 GameState="*res://Globals/GameState.gd"
 Levels="*res://Globals/Levels.gd"
+Music="*res://Globals/Music.gd"
 
 [display]
 
