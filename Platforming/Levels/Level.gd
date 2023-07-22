@@ -10,7 +10,7 @@ func _ready():
 	PaletteSwitch.set_fade(-0.9)
 	player.freeze = true
 	player.position = %SpawnPoint.position
-	Music.play(Music.Track.Forest)	
+	Music.play(Music.Track.Forest)
 	await get_tree().create_timer(0.5).timeout
 	PaletteSwitch.fade_in()
 	player.freeze = false

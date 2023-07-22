@@ -234,13 +234,24 @@ func climb_move(delta):
 func minecart_move(delta):
 	if jump():
 		$Minecart.visible = false
+		$CartShape.disabled = true
+		$PlayerShape.disabled = false
+		var minecart_instance = rigid_minecart.instantiate()
+		minecart_instance.linear_velocity.x = velocity.x
+		minecart_instance.position = position
+		get_parent().add_child(minecart_instance)
 		is_minecarting = false
 		can_use_minecart = false
 		return
 	velocity.x = lerpf(velocity.x, minecart_direction * MINECART_SPEED, delta * ACCELERATION)
 	if not is_on_floor():
-		velocity.y += gravity * 1.2 * delta
+		velocity.y += gravity * delta
 		velocity.y = minf(velocity.y, MAX_FALL_SPEED)
+	
+	sprite.offset.y = move_toward(sprite.offset.y, -3.0 - (abs(clampf(velocity.y, 0.0, MAX_FALL_SPEED)) / abs(MAX_FALL_SPEED)) * 32.0, delta * 17.0)
+	if velocity.y <= 0.5:
+		sprite.offset.y = -3.0
+	
 	move_and_slide()
 
 
@@ -353,6 +364,10 @@ func reset():
 	is_minecarting = false
 	is_entering_minecart = false
 	is_climbing = false
+	$Minecart.visible = false
+	$CartShape.disabled = true
+	$PlayerShape.disabled = false
+	sprite.offset = Vector2.ZERO
 
 
 func _on_ladder_area_entered(area):
@@ -411,6 +426,8 @@ func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "enter_minecart":
 		is_entering_minecart = false
 		is_minecarting = true
+		$CartShape.disabled = false
+		$PlayerShape.disabled = true
 		freeze = false
 		velocity.x = minecart_direction * MINECART_START_SPEED
 		velocity.y = -10.0

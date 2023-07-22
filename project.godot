@@ -14,6 +14,7 @@ config/name="Callie's Quest"
 config/tags=PackedStringArray("gamejam", "gofrog", "kenney_jam", "1_bit", "platformer")
 run/main_scene="res://Overworld/Overworld.tscn"
 config/features=PackedStringArray("4.1", "GL Compatibility")
+run/max_fps=60
 config/icon="res://icon.svg"
 
 [autoload]
@@ -26,12 +27,13 @@ Music="*res://Globals/Music.gd"
 
 [display]
 
-window/size/viewport_width=320
-window/size/viewport_height=180
+window/size/viewport_width=384
+window/size/viewport_height=216
 window/size/resizable=false
-window/size/window_width_override=1280
-window/size/window_height_override=720
+window/size/window_width_override=1536
+window/size/window_height_override=864
 window/stretch/mode="viewport"
+window/vsync/vsync_mode=0
 
 [filesystem]
 
