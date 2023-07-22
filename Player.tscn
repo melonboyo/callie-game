@@ -133,7 +133,6 @@ script = ExtResource("1_8fvrf")
 jump_height = 1
 
 [node name="CartShape" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_2514i")
 disabled = true

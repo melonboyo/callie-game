@@ -1,31 +1,84 @@
-[gd_scene load_steps=5 format=3 uid="uid://bvmyeydgriqwh"]
+[gd_scene load_steps=9 format=3 uid="uid://bvmyeydgriqwh"]
 
+[ext_resource type="Script" path="res://Platforming/Upgrades/MinecartRigid.gd" id="1_7ec7j"]
 [ext_resource type="Texture2D" uid="uid://cffgae45ornex" path="res://Textures/Player/Minecart/MinecartBack.png" id="1_tgeyj"]
 [ext_resource type="Texture2D" uid="uid://b5fy36lb6bsgl" path="res://Textures/Player/Minecart/MinecartFront.png" id="2_gmpv6"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wv20x"]
 friction = 0.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_826oq"]
-size = Vector2(12, 11)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gkon0"]
+size = Vector2(16, 15)
+
+[sub_resource type="Animation" id="Animation_i0cfw"]
+resource_name = "fade_out"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Minecart:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_6mtud"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Minecart:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_05dfk"]
+_data = {
+"RESET": SubResource("Animation_6mtud"),
+"fade_out": SubResource("Animation_i0cfw")
+}
 
 [node name="MinecartRigid" type="RigidBody2D"]
+z_index = -1
 texture_filter = 1
 collision_layer = 2048
 collision_mask = 2048
+mass = 3.0
 physics_material_override = SubResource("PhysicsMaterial_wv20x")
-gravity_scale = 1.2
+gravity_scale = 0.82
+script = ExtResource("1_7ec7j")
 
-[node name="PlayerShape" type="CollisionShape2D" parent="."]
-position = Vector2(0, 2.5)
-shape = SubResource("RectangleShape2D_826oq")
+[node name="CartShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_gkon0")
 debug_color = Color(0.247059, 0.568627, 0.360784, 0.345098)
 
 [node name="Minecart" type="Node2D" parent="."]
 
 [node name="Front" type="Sprite2D" parent="Minecart"]
-z_index = 1
 texture = ExtResource("2_gmpv6")
 
 [node name="Back" type="Sprite2D" parent="Minecart"]
 texture = ExtResource("1_tgeyj")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_05dfk")
+}
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

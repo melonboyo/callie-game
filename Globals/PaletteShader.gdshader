@@ -5,7 +5,6 @@ uniform sampler2D palette : hint_default_black, filter_nearest;
 uniform sampler2D screen_texture : hint_screen_texture, filter_nearest;
 
 uniform sampler2D u_dither_tex : filter_nearest, repeat_enable;
-uniform sampler2D dither_palette : hint_default_black, filter_nearest;
 uniform int u_bit_depth;
 uniform float u_contrast;
 uniform float u_offset;
@@ -38,7 +37,7 @@ void fragment() {
 	// lower colour.
 	
 	// get the palette texture size mapped so it is 1px high (so the x value however many colour bands there are)
-	ivec2 col_size = textureSize(dither_palette, 0);
+	ivec2 col_size = textureSize(palette, 0);
 	col_size /= col_size.y;
 	
 	float col_x = float(col_size.x) - 1.0; // colour boundaries is 1 less than the number of colour bands
@@ -66,22 +65,9 @@ void fragment() {
 	float ramp_val = lum_scaled < threshold ? 0.0f : 1.0f;
 	// sample at the lower bound colour if ramp_val is 0.0, upper bound colour if 1.0
 	float col_sample = mix(lum_lower, lum_upper, ramp_val);
-	vec3 dither_color = texture(dither_palette, vec2(col_sample, 0.5)).rgb;
+	vec3 dither_color = texture(palette, vec2(col_sample, 0.5)).rgb;
 	
 	vec3 final_color = dither_color;
-	vec3 new_color = vec3(.0);
-
-	ivec2 palette_dimensions = textureSize(palette, 0);
-
-	int palette_size = palette_dimensions.x;
-
-	for (int i = 0; i < palette_size; i++) {
-		float progress = (float(i) / float(palette_size));
-		if (final_color.r >= progress) {
-			vec3 palette_color = texture(palette, vec2(progress + 0.01, 0.5)).rgb;
-			new_color = palette_color;
-		}
-	}
 	
-	COLOR.rgb = new_color;
+	COLOR.rgb = final_color;
 }

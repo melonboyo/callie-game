@@ -10,7 +10,7 @@ var streams = {
 
 var volume = 0
 var volumes = {
-	Track.Forest : -10,
+	Track.Forest : -16,
 }
 
 var selected_track = null

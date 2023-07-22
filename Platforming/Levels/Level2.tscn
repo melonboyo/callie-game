@@ -1,0 +1,119 @@
+[gd_scene load_steps=13 format=3 uid="uid://d2dlwe74ia121"]
+
+[ext_resource type="Script" path="res://Platforming/Levels/Level.gd" id="1_r1ehx"]
+[ext_resource type="Script" path="res://Camera.gd" id="2_8iexv"]
+[ext_resource type="Script" path="res://Platforming/Levels/CameraZone.gd" id="3_ou5bc"]
+[ext_resource type="Script" path="res://Platforming/Levels/Checkpoints.gd" id="8_q6k7a"]
+[ext_resource type="Script" path="res://Platforming/Levels/Checkpoint.gd" id="9_pdqdb"]
+[ext_resource type="PackedScene" uid="uid://bo1xhn2kyap4e" path="res://Player.tscn" id="10_xqb63"]
+[ext_resource type="PackedScene" uid="uid://dpq18bmg53coj" path="res://Platforming/PlatformingTileMap.tscn" id="11_d4hbx"]
+[ext_resource type="AudioStream" uid="uid://cplqheqkv3to3" path="res://Sounds/pine/death.wav" id="12_8fgy3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v4dg2"]
+size = Vector2(10000, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j1fg8"]
+size = Vector2(368, 296)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kuv7e"]
+size = Vector2(6, 122)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_di7mr"]
+size = Vector2(24, 192)
+
+[node name="Level2" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_r1ehx")
+
+[node name="Focus" type="Node2D" parent="."]
+position = Vector2(0, -48)
+script = ExtResource("2_8iexv")
+player_path = NodePath("../Player")
+
+[node name="Camera2D" type="Camera2D" parent="Focus"]
+offset = Vector2(0, -12)
+
+[node name="DeathZone" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
+position = Vector2(0, 180)
+shape = SubResource("RectangleShape2D_v4dg2")
+debug_color = Color(0.521569, 0, 0.12549, 0.419608)
+
+[node name="CameraZones" type="Node2D" parent="."]
+z_index = 1
+
+[node name="CameraZoneStart" type="Area2D" parent="CameraZones"]
+position = Vector2(-1072, 0)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("3_ou5bc")
+y_offset = -48
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CameraZones/CameraZoneStart"]
+position = Vector2(32, -8)
+shape = SubResource("RectangleShape2D_j1fg8")
+debug_color = Color(0.396078, 0.568627, 0.6, 0.0745098)
+
+[node name="Interactives" type="Node2D" parent="."]
+
+[node name="Ladder" type="Area2D" parent="Interactives"]
+position = Vector2(-88, -72)
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactives/Ladder"]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_kuv7e")
+debug_color = Color(0.760784, 0.45098, 0, 0.419608)
+
+[node name="Checkpoints" type="Node2D" parent="."]
+script = ExtResource("8_q6k7a")
+
+[node name="0" type="Node2D" parent="Checkpoints"]
+position = Vector2(-1112, -8)
+script = ExtResource("9_pdqdb")
+
+[node name="SpawnPoint" type="Node2D" parent="Checkpoints"]
+unique_name_in_owner = true
+position = Vector2(-1112, -8)
+
+[node name="PlatformingTileMap" parent="." instance=ExtResource("11_d4hbx")]
+layer_0/tile_data = PackedInt32Array(458690, 1114113, 6, 393154, 1114113, 6, 327618, 1114113, 6, 262082, 1114113, 6, 196546, 1114113, 6, 131010, 1114113, 6, 65474, 1114113, 5, 458689, 1376257, 5, 393153, 1376257, 5, 327617, 1376257, 5, 262081, 1376257, 5, 196545, 1376257, 5, 131009, 1048577, 6, 65473, 1048577, 5, 458688, 1048577, 6, 393152, 1048577, 6, 327616, 1376257, 5, 262080, 1376257, 5, 196544, 1048577, 6, 131008, 1376257, 5, 65472, 1048577, 5, 458687, 1376257, 5, 393151, 1376257, 5, 327615, 1376257, 5, 262079, 1376257, 5, 196543, 1376257, 5, 131007, 1048577, 6, 65471, 1048577, 5, 458686, 1376257, 5, 393150, 1376257, 5, 327614, 1048577, 6, 262078, 1376257, 5, 196542, 1376257, 5, 131006, 1376257, 5, 65470, 1048577, 5, 458685, 1376257, 5, 393149, 1376257, 5, 327613, 1048577, 6, 262077, 1376257, 5, 196541, 1376257, 5, 131005, 1376257, 5, 65469, 1048577, 5, 458684, 1048577, 6, 393148, 1376257, 5, 327612, 1376257, 5, 262076, 1376257, 5, 196540, 1376257, 5, 131004, 1376257, 5, 65468, 1048577, 5, 458683, 1376257, 5, 393147, 1048577, 6, 327611, 1376257, 5, 262075, 1376257, 5, 196539, 1376257, 5, 131003, 1376257, 5, 65467, 1048577, 5, 458682, 1376257, 5, 393146, 1376257, 5, 327610, 1376257, 5, 262074, 1048577, 6, 196538, 1376257, 5, 131002, 1048577, 6, 65466, 1048577, 5, 458681, 1048577, 6, 393145, 1376257, 5, 327609, 1376257, 5, 262073, 1376257, 5, 196537, 1376257, 5, 131001, 1376257, 5, 65465, 1048577, 5, 458680, 1376257, 5, 393144, 1376257, 5, 327608, 1376257, 5, 262072, 1376257, 5, 196536, 1376257, 5, 131000, 1376257, 5, 65464, 1048577, 5, 458679, 1376257, 5, 393143, 1376257, 5, 327607, 1376257, 5, 262071, 1376257, 5, 196535, 1376257, 5, 130999, 1376257, 5, 65463, 1048577, 5, 458678, 1376257, 5, 393142, 1376257, 5, 327606, 1376257, 5, 262070, 1376257, 5, 196534, 1376257, 5, 130998, 1376257, 5, 65462, 1048577, 5, 458677, 1376257, 5, 393141, 1376257, 5, 327605, 1376257, 5, 262069, 1048577, 6, 196533, 1376257, 5, 130997, 1048577, 6, 65461, 1048577, 5, 458676, 1376257, 5, 393140, 1376257, 5, 327604, 1376257, 5, 262068, 1376257, 5, 196532, 1376257, 5, 130996, 1376257, 5, 65460, 1048577, 5, 458675, 1048577, 6, 393139, 1376257, 5, 327603, 1376257, 5, 262067, 1048577, 6, 196531, 1376257, 5, 130995, 1048577, 6, 65459, 1048577, 5, 458674, 1376257, 5, 393138, 1376257, 5, 327602, 1376257, 5, 262066, 1376257, 5, 196530, 1376257, 5, 130994, 1376257, 5, 65458, 1048577, 5, 458673, 1376257, 5, 393137, 1376257, 5, 327601, 1376257, 5, 262065, 1376257, 5, 196529, 1376257, 5, 130993, 1048577, 6, 65457, 1048577, 5, 458672, 1376257, 5, 393136, 1376257, 5, 327600, 1376257, 5, 262064, 1376257, 5, 196528, 1376257, 5, 130992, 1376257, 5, 65456, 1048577, 5, 458671, 1376257, 5, 393135, 1376257, 5, 327599, 1048577, 6, 262063, 1376257, 5, 196527, 1376257, 5, 130991, 1376257, 5, 65455, 1048577, 5, 458670, 1376257, 5, 393134, 1048577, 6, 327598, 1376257, 5, 262062, 1376257, 5, 196526, 1376257, 5, 130990, 1376257, 5, 65454, 1048577, 5, 458669, 1048577, 6, 393133, 1376257, 5, 327597, 1376257, 5, 262061, 1376257, 5, 196525, 1376257, 5, 130989, 1376257, 5, 65453, 1048577, 5, 458668, 1376257, 5, 393132, 1376257, 5, 327596, 1376257, 5, 262060, 1376257, 5, 196524, 1376257, 5, 130988, 1376257, 5, 65452, 1048577, 5, 458667, 1048577, 6, 393131, 1376257, 5, 327595, 1376257, 5, 262059, 1376257, 5, 196523, 1376257, 5, 130987, 1376257, 5, 65451, 1048577, 5, 458666, 1376257, 5, 393130, 1376257, 5, 327594, 1376257, 5, 262058, 1376257, 5, 196522, 1376257, 5, 130986, 1376257, 5, 65450, 1048577, 5, 458665, 1048577, 6, 393129, 1376257, 5, 327593, 1376257, 5, 262057, 1048577, 6, 196521, 1048577, 6, 130985, 1376257, 5, 65449, 1048577, 5, 458664, 1048577, 6, 393128, 1376257, 5, 327592, 1376257, 5, 262056, 1376257, 5, 196520, 1376257, 5, 130984, 1376257, 5, 65448, 1048577, 5, 458663, 1376257, 5, 393127, 1376257, 5, 327591, 1376257, 5, 262055, 1376257, 5, 196519, 1376257, 5, 130983, 1376257, 5, 65447, 1048577, 5, 458662, 983041, 6, 393126, 983041, 6, 327590, 983041, 6, 262054, 983041, 6, 196518, 983041, 6, 130982, 983041, 6, 65446, 983041, 5, 589762, 1114113, 7, 524226, 1114113, 6, 589761, 1048577, 7, 524225, 1376257, 5, 589760, 1048577, 7, 524224, 1376257, 5, 589759, 1048577, 7, 524223, 1048577, 6, 589758, 1048577, 7, 524222, 1376257, 5, 589757, 1048577, 7, 524221, 1376257, 5, 589756, 1048577, 7, 524220, 1376257, 5, 589755, 1048577, 7, 524219, 1048577, 6, 589754, 1048577, 7, 524218, 1376257, 5, 589753, 1048577, 7, 524217, 1376257, 5, 589752, 1048577, 7, 524216, 1376257, 5, 589751, 1048577, 7, 524215, 1376257, 5, 589750, 1048577, 7, 524214, 1376257, 5, 589749, 1048577, 7, 524213, 1376257, 5, 589748, 1048577, 7, 524212, 1376257, 5, 589747, 1048577, 7, 524211, 1048577, 6, 589746, 1048577, 7, 524210, 1376257, 5, 589745, 1048577, 7, 524209, 1376257, 5, 589744, 1048577, 7, 524208, 1376257, 5, 589743, 1048577, 7, 524207, 1376257, 5, 589742, 1048577, 7, 524206, 1048577, 6, 589741, 1048577, 7, 524205, 1376257, 5, 589740, 1048577, 7, 524204, 1376257, 5, 589739, 1048577, 7, 524203, 1048577, 6, 589738, 1048577, 7, 524202, 1376257, 5, 589737, 1048577, 7, 524201, 1048577, 6, 589736, 1048577, 7, 524200, 1376257, 5, 589735, 1048577, 7, 524199, 1376257, 5, 589734, 983041, 7, 524198, 983041, 6)
+
+[node name="Player" parent="." instance=ExtResource("10_xqb63")]
+position = Vector2(-1112, -8)
+collision_layer = 7
+
+[node name="ExitLevel1" type="Area2D" parent="."]
+position = Vector2(-1368, -88)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitLevel1"]
+shape = SubResource("RectangleShape2D_di7mr")
+debug_color = Color(0, 0.745098, 0.211765, 0.419608)
+
+[node name="ExitLevelTimer" type="Timer" parent="."]
+wait_time = 1.56
+one_shot = true
+
+[node name="DeathPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_8fgy3")
+volume_db = -13.183
+bus = &"Effects"
+
+[connection signal="body_entered" from="DeathZone" to="." method="_on_death_zone_body_entered"]
+[connection signal="body_entered" from="CameraZones/CameraZoneStart" to="CameraZones/CameraZoneStart" method="_on_body_entered"]
+[connection signal="body_exited" from="CameraZones/CameraZoneStart" to="CameraZones/CameraZoneStart" method="_on_body_exited"]
+[connection signal="camera_zone_entered" from="CameraZones/CameraZoneStart" to="Focus" method="_on_camera_zone_entered"]
+[connection signal="camera_zone_exited" from="CameraZones/CameraZoneStart" to="Focus" method="_on_camera_zone_exited"]
+[connection signal="set_cam_look_offset" from="Player" to="Focus" method="_on_player_set_cam_look_offset"]
+[connection signal="body_entered" from="ExitLevel1" to="." method="_on_exit_level" binds= [1, Vector2(-1, 0)]]
+[connection signal="timeout" from="ExitLevelTimer" to="." method="_on_exit_level_timer_timeout"]
