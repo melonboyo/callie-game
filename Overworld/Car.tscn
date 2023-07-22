@@ -1,0 +1,85 @@
+[gd_scene load_steps=11 format=3 uid="uid://c8s7dj5c18w22"]
+
+[ext_resource type="Script" path="res://Overworld/Car.gd" id="1_pt6m0"]
+[ext_resource type="ArrayMesh" uid="uid://bm7m8oye3rctd" path="res://Overworld/van.obj" id="1_xplf0"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_xd8jo"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ncfeg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_avt20"]
+shading_mode = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yew1w"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dvbj8"]
+shading_mode = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gm7cr"]
+shading_mode = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vwugk"]
+shading_mode = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iplbb"]
+shading_mode = 0
+
+[node name="Car" type="RigidBody2D"]
+y_sort_enabled = true
+physics_material_override = SubResource("PhysicsMaterial_xd8jo")
+gravity_scale = 0.0
+lock_rotation = true
+script = ExtResource("1_pt6m0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.19209e-07, 2.5)
+shape = SubResource("CircleShape2D_ncfeg")
+debug_color = Color(0.976471, 0, 0.419608, 0.419608)
+
+[node name="Car2D" type="Node2D" parent="."]
+texture_filter = 1
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Car2D"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.5
+offset_top = -16.5
+offset_right = 16.5
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="SubViewport" type="SubViewport" parent="Car2D/SubViewportContainer"]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+size = Vector2i(34, 34)
+render_target_update_mode = 4
+
+[node name="Car3D" type="Node3D" parent="Car2D/SubViewportContainer/SubViewport"]
+
+[node name="Van" type="MeshInstance3D" parent="Car2D/SubViewportContainer/SubViewport/Car3D"]
+mesh = ExtResource("1_xplf0")
+surface_material_override/0 = SubResource("StandardMaterial3D_avt20")
+surface_material_override/1 = SubResource("StandardMaterial3D_yew1w")
+surface_material_override/2 = SubResource("StandardMaterial3D_dvbj8")
+surface_material_override/3 = SubResource("StandardMaterial3D_gm7cr")
+surface_material_override/4 = SubResource("StandardMaterial3D_vwugk")
+surface_material_override/5 = SubResource("StandardMaterial3D_iplbb")
+
+[node name="Pivot" type="Node3D" parent="Car2D/SubViewportContainer/SubViewport/Car3D"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0.6, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Car2D/SubViewportContainer/SubViewport/Car3D/Pivot"]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, -4)
+projection = 1
+size = 3.2

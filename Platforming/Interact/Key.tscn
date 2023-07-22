@@ -1,0 +1,79 @@
+[gd_scene load_steps=8 format=3 uid="uid://bqk4a2x1dnbt1"]
+
+[ext_resource type="Script" path="res://Platforming/Interact/Key.gd" id="1_ig52b"]
+[ext_resource type="Texture2D" uid="uid://8ikcq5k762s8" path="res://Textures/Interact/key.png" id="1_j4tk8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_odpr5"]
+radius = 7.0
+
+[sub_resource type="Animation" id="Animation_mfhtv"]
+resource_name = "spin"
+length = 8.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(-1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_rbpsj"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_w0l3b"]
+resource_name = "hover"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2, 4, 6),
+"transitions": PackedFloat32Array(-2, -2, -2, -2),
+"update": 0,
+"values": [Vector2(0, -2), Vector2(0, 2), Vector2(0, -2), Vector2(0, 2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ht3dr"]
+_data = {
+"RESET": SubResource("Animation_rbpsj"),
+"hover": SubResource("Animation_w0l3b"),
+"spin": SubResource("Animation_mfhtv")
+}
+
+[node name="Key" type="Area2D"]
+texture_filter = 1
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_ig52b")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_j4tk8")
+offset = Vector2(0, -2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_odpr5")
+debug_color = Color(0.631373, 0.411765, 0.862745, 0.419608)
+
+[node name="SpinPlayer" type="AnimationPlayer" parent="."]
+autoplay = "spin"
+speed_scale = 2.0
+libraries = {
+"": SubResource("AnimationLibrary_ht3dr")
+}
+
+[node name="OffsetPlayer" type="AnimationPlayer" parent="."]
+autoplay = "hover"
+speed_scale = 2.33
+libraries = {
+"": SubResource("AnimationLibrary_ht3dr")
+}
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

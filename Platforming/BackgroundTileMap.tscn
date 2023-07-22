@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://b8pu2w3hojhir"]
+
+[ext_resource type="Shader" path="res://Globals/PaletteShader.gdshader" id="1_ufgxk"]
+[ext_resource type="Texture2D" uid="uid://b2qtobxgj21c" path="res://Textures/Palettes/10.png" id="2_ro8hw"]
+[ext_resource type="TileSet" uid="uid://db3o7hft2nja2" path="res://Platforming/PlatformingTileMap.tres" id="3_5qo6a"]
+[ext_resource type="Texture2D" uid="uid://cw78vjkinpu" path="res://Textures/black.png" id="4_by3th"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x21j1"]
+shader = ExtResource("1_ufgxk")
+shader_parameter/palette = ExtResource("2_ro8hw")
+
+[node name="BackgroundTileMap" type="TileMap"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_x21j1")
+use_parent_material = true
+position = Vector2(1, 0)
+tile_set = ExtResource("3_5qo6a")
+format = 2
+layer_0/name = "Main"
+layer_1/name = "Background"
+layer_1/enabled = true
+layer_1/modulate = Color(1, 1, 1, 1)
+layer_1/y_sort_enabled = false
+layer_1/y_sort_origin = 0
+layer_1/z_index = -1
+layer_1/tile_data = PackedInt32Array()
+layer_2/name = "MiddleBackground"
+layer_2/enabled = true
+layer_2/modulate = Color(0.486275, 0.486275, 0.486275, 1)
+layer_2/y_sort_enabled = false
+layer_2/y_sort_origin = 0
+layer_2/z_index = -2
+layer_2/tile_data = PackedInt32Array()
+metadata/_edit_group_ = true
+
+[node name="BlackBG" type="Sprite2D" parent="."]
+visible = false
+z_index = -1
+use_parent_material = true
+position = Vector2(-1, 0)
+scale = Vector2(9.40735, 8.13519)
+texture = ExtResource("4_by3th")
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
