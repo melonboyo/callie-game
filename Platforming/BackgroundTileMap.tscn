@@ -7,6 +7,10 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x21j1"]
 shader = ExtResource("1_ufgxk")
+shader_parameter/u_bit_depth = null
+shader_parameter/u_contrast = null
+shader_parameter/u_offset = null
+shader_parameter/u_dither_size = null
 shader_parameter/palette = ExtResource("2_ro8hw")
 
 [node name="BackgroundTileMap" type="TileMap"]

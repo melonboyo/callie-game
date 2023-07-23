@@ -3,13 +3,15 @@ extends Node
 enum Track {
 	Overworld,
 	Forest,
-	Castle
+	Castle,
+	Mountain
 }
 
 var streams = {
 	Track.Forest : preload("res://Sounds/music/forest theme (you are on your way!).ogg"),
 	Track.Overworld : preload("res://Sounds/music/overworld pog.ogg"),
-	Track.Castle : preload("res://Sounds/music/castle theme (you are on a minecart!).ogg")
+	Track.Castle : preload("res://Sounds/music/castle theme (you are on a minecart!).ogg"),
+	Track.Mountain : preload("res://Sounds/music/mountain music (you are on your way to completing the gamejam!).ogg")
 }
 
 var volume = 0

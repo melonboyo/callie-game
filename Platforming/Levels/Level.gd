@@ -15,6 +15,7 @@ func _ready():
 	player.position = %SpawnPoint.position
 	await get_tree().create_timer(0.5).timeout
 	PaletteSwitch.fade_in()
+	print("hey")
 	player.freeze = false
 
 
