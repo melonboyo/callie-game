@@ -6246,11 +6246,11 @@ shape = SubResource("RectangleShape2D_bldxq")
 debug_color = Color(0.305882, 0.627451, 0, 0.419608)
 
 [node name="Exit2" type="Area2D" parent="."]
+position = Vector2(-320, 26)
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Exit2"]
-position = Vector2(-320, 24)
 shape = SubResource("RectangleShape2D_bldxq")
 debug_color = Color(0.305882, 0.627451, 0, 0.419608)
 

@@ -1,6 +1,7 @@
 extends Node
 
-var public_server_host = "callie.pckv.me"
+var public_server_host = "localhost" if OS.is_debug_build() else "callie.pckv.me"
+
 var public_server_port = 45276
 
 const TICKS_PER_SECOND = 1.0 / 60.0
