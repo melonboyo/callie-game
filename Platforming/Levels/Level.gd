@@ -13,7 +13,6 @@ func _ready():
 	player.freeze = true
 	level_specific_ready()
 	player.position = %SpawnPoint.position
-	Music.play(Music.Track.Forest)
 	await get_tree().create_timer(0.5).timeout
 	PaletteSwitch.fade_in()
 	player.freeze = false

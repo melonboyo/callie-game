@@ -7,6 +7,7 @@ func _enter_tree():
 
 
 func level_specific_ready():
+	Music.play(Music.Track.Castle)
 	if testing:
 		return
 	if GameState.exit == 3:
