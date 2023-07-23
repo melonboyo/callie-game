@@ -551,8 +551,8 @@ func look_up_or_down():
 		set_cam_look_offset.emit(0.0)
 
 
-func taunt():
-	$TauntPlayer.taunt(Network.client_info.id if Network.is_connected else 0)
+func taunt(stamp: int):
+	$TauntPlayer.taunt(stamp + (Network.client_info.id if Network.is_connected else 0))
 
 
 func _on_look_up_timer_timeout():

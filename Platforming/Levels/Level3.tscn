@@ -59,7 +59,6 @@ collision_layer = 7
 
 [node name="Checkpoints" type="Node2D" parent="."]
 script = ExtResource("6_5ca4y")
-checkpoint = 5
 
 [node name="0" type="Node2D" parent="Checkpoints"]
 position = Vector2(-1112, -8)

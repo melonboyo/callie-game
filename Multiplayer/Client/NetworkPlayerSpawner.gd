@@ -52,6 +52,6 @@ func remove_player(player_id: int):
 		player_nodes.erase(player_id)
 
 
-func taunt(player_id: int):
+func taunt(stamp: int, player_id: int):
 	var player = player_nodes[player_id]
-	player.taunt(player_id)
+	player.taunt(stamp, player_id)

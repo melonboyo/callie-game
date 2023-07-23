@@ -2,7 +2,6 @@ extends Node2D
 
 @onready var taunt_player = $TauntPlayer
 
-var total_taunts = 0
 var taunt_sounds = [
 	preload("res://Sounds/egg/close_door.ogg"), 
 	preload("res://Sounds/egg/confirm.ogg"), 
@@ -29,8 +28,7 @@ var taunt_sounds = [
 ]
 
 func taunt(seed: int):
-	var random_result = rand_from_seed(seed + total_taunts)
+	var random_result = rand_from_seed(seed)
 	var sound = taunt_sounds[random_result[0] % taunt_sounds.size()]
 	$TauntPlayer.stream = sound
 	$TauntPlayer.play()
-	total_taunts += 1
