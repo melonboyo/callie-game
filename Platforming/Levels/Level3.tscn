@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bfl886smpvipg"]
+[gd_scene load_steps=22 format=3 uid="uid://bfl886smpvipg"]
 
 [ext_resource type="Script" path="res://Platforming/Levels/Level3.gd" id="1_0h1js"]
 [ext_resource type="PackedScene" uid="uid://dpq18bmg53coj" path="res://Platforming/PlatformingTileMap.tscn" id="2_lme2m"]
@@ -32,6 +32,9 @@ size = Vector2(6216, 2672)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aihuf"]
 size = Vector2(6216.74, 724)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y7he3"]
+size = Vector2(288, 360)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kuv7e"]
 size = Vector2(6, 122)
 
@@ -56,6 +59,7 @@ collision_layer = 7
 
 [node name="Checkpoints" type="Node2D" parent="."]
 script = ExtResource("6_5ca4y")
+checkpoint = 5
 
 [node name="0" type="Node2D" parent="Checkpoints"]
 position = Vector2(-1112, -8)
@@ -245,8 +249,8 @@ y_offset = -1068
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CameraZones/CameraZone5"]
-position = Vector2(2868.36, 378)
-shape = SubResource("RectangleShape2D_aihuf")
+position = Vector2(56, -964)
+shape = SubResource("RectangleShape2D_y7he3")
 debug_color = Color(0.396078, 0.568627, 0.6, 0.0745098)
 
 [node name="Interactives" type="Node2D" parent="."]
@@ -364,5 +368,5 @@ bus = &"Effects"
 [connection signal="camera_zone_entered" from="CameraZones/CameraZone5" to="Focus" method="_on_camera_zone_entered"]
 [connection signal="camera_zone_exited" from="CameraZones/CameraZone5" to="Focus" method="_on_camera_zone_exited"]
 [connection signal="body_entered" from="ExitLevel4" to="." method="_on_exit_level" binds= [4, Vector2(-1, 0)]]
-[connection signal="body_entered" from="ExitLevel5" to="." method="_on_exit_level" binds= [0, Vector2(1, 0)]]
+[connection signal="body_entered" from="ExitLevel5" to="." method="_on_exit_level" binds= [4, Vector2(1, 0)]]
 [connection signal="timeout" from="ExitLevelTimer" to="." method="_on_exit_level_timer_timeout"]
