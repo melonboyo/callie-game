@@ -9,10 +9,11 @@ func _ready():
 
 
 func _process(delta: float):
+	var player = get_player()
 	if Input.is_action_just_pressed("toggle_online_collision"):
-		var player = get_player()
 		has_online_collision = not has_online_collision
-		player.set_collision_mask_value(9, has_online_collision)
+	
+	player.set_collision_mask_value(9, has_online_collision)
 
 	
 func _on_disconnected():

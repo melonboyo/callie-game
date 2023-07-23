@@ -135,6 +135,7 @@ _data = {
 size = Vector2(12, 11)
 
 [node name="NetworkPlayer" type="RigidBody2D"]
+y_sort_enabled = true
 texture_filter = 1
 collision_layer = 256
 gravity_scale = 0.0
