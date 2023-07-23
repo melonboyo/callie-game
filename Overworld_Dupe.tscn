@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://xnikro5wkiyl"]
+[gd_scene load_steps=21 format=3 uid="uid://bw0icx4ii2ajl"]
 
 [ext_resource type="Script" path="res://Overworld/Overworld.gd" id="1_vil6b"]
 [ext_resource type="Texture2D" uid="uid://cw78vjkinpu" path="res://Textures/black.png" id="1_xslx0"]

@@ -1,4 +1,5 @@
 extends Node2D
+class_name Overworld
 
 
 var on_level = false
@@ -18,7 +19,7 @@ func _on_start_level_body_exited(body):
 func _ready():
 	PaletteSwitch.set_fade(-0.9)
 	player.freeze = true
-#	player.position = $Spawns.get_children()[GameState.exit].position
+	player.position = $Spawns.get_children()[GameState.exit].position
 	await get_tree().create_timer(0.5).timeout
 	PaletteSwitch.fade_in()
 	Music.play(Music.Track.Overworld)
@@ -38,13 +39,19 @@ func _process(delta):
 		PaletteSwitch.fade_out()
 		await get_tree().create_timer(1.4).timeout
 		
-		get_tree().change_scene_to_packed(levels[level])
+		get_tree().change_scene_to_file(levels[level])
 
 
-var levels := {
-	1: preload("res://Platforming/Levels/Level1.tscn"),
-	2: preload("res://Platforming/Levels/Level2.tscn"),
-	3: preload("res://Platforming/Levels/Level3.tscn"),
+#var levels := {
+#	1: preload("res://Platforming/Levels/Level1.tscn"),
+#	2: preload("res://Platforming/Levels/Level2.tscn"),
+#	3: preload("res://Platforming/Levels/Level3.tscn"),
+#}
+
+var levels = {
+	1: "res://Platforming/Levels/Level1.tscn",
+	2: "res://Platforming/Levels/Level2.tscn",
+	3: "res://Platforming/Levels/Level3.tscn",
 }
 
 

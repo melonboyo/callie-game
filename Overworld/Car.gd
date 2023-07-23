@@ -39,7 +39,7 @@ func _physics_process(delta):
 		input_rotation = facing_rotation
 	
 	var handling = HANDLING * ((linear_velocity.length() / MAX_SPEED) * 0.3 + 0.7)
-	facing_rotation = lerp_angle(facing_rotation, input_rotation, delta * handling)	
+	facing_rotation = lerp_angle(facing_rotation, input_rotation, delta * handling)
 	var facing_direction = Vector2.DOWN.rotated(facing_rotation)
 	
 	if direction_input.length() > 0.001:

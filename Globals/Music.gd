@@ -11,14 +11,15 @@ var streams = {
 	Track.Forest : preload("res://Sounds/music/forest theme (you are on your way!).ogg"),
 	Track.Overworld : preload("res://Sounds/music/overworld pog.ogg"),
 	Track.Castle : preload("res://Sounds/music/castle theme (you are on a minecart!).ogg"),
-	Track.Mountain : preload("res://Sounds/music/mountain music (you are on your way to completing the gamejam!).ogg")
+	Track.Mountain : preload("res://Sounds/music/2023-07-23_deff_mountain.ogg")
 }
 
 var volume = 0
 var volumes = {
 	Track.Forest : -14.5,
 	Track.Overworld : -16.5,
-	Track.Castle : -17.5
+	Track.Castle : -17.5,
+	Track.Mountain : -17.5
 }
 
 var selected_track = null

@@ -4,7 +4,7 @@ class_name Level
 
 @onready var player: Player = $Player
 @export var testing = false
-@onready var overworld := preload("res://Overworld/Overworld.tscn")
+#@onready var overworld := preload("res://Overworld/Overworld.tscn")
 
 
 func _ready():
@@ -15,7 +15,6 @@ func _ready():
 	player.position = %SpawnPoint.position
 	await get_tree().create_timer(0.5).timeout
 	PaletteSwitch.fade_in()
-	print("hey")
 	player.freeze = false
 
 
@@ -27,14 +26,14 @@ func _on_death_zone_body_entered(body):
 	$DeathPlayer.play()
 	PaletteSwitch.fade_out_in()
 	player.reset()
-	player.freeze = true	
+	player.freeze = true
 	await get_tree().create_timer(0.71).timeout
 	player.position = %SpawnPoint.position
 	player.freeze = false
 
 
 func _on_exit_level_timer_timeout():
-	get_tree().change_scene_to_packed(overworld)
+	get_tree().change_scene_to_file("res://Overworld.tscn")
 
 
 func _on_exit_level(body, exit, direction):
