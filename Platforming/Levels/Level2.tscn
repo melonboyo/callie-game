@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://Platforming/Levels/CameraZone.gd" id="3_ou5bc"]
 [ext_resource type="Texture2D" uid="uid://dhuyt5uel8wmr" path="res://Textures/UI/SHIFTF.png" id="5_ptxkt"]
 [ext_resource type="PackedScene" uid="uid://bqk4a2x1dnbt1" path="res://Platforming/Interact/Key.tscn" id="6_2j875"]
-[ext_resource type="PackedScene" path="res://Platforming/Upgrades/Minecart.tscn" id="6_047b6"]
+[ext_resource type="PackedScene" uid="uid://bffah7d18q47y" path="res://Platforming/Upgrades/Minecart.tscn" id="6_047b6"]
 [ext_resource type="PackedScene" uid="uid://buj6attf3upj4" path="res://Platforming/Interact/KeyDoor.tscn" id="7_ume4m"]
 [ext_resource type="PackedScene" uid="uid://bkvwhmr2715yq" path="res://Platforming/Interact/CrumblyPlatform.tscn" id="8_m3gb0"]
 [ext_resource type="Script" path="res://Platforming/Levels/Checkpoints.gd" id="8_q6k7a"]
@@ -308,7 +308,7 @@ debug_color = Color(0.352941, 0.619608, 0, 0.419608)
 
 [node name="SpawnPoint" type="Node2D" parent="Checkpoints"]
 unique_name_in_owner = true
-position = Vector2(1016, -840)
+position = Vector2(-1160, 0)
 
 [node name="DeathZone" type="Area2D" parent="."]
 collision_layer = 0
