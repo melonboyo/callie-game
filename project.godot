@@ -20,7 +20,6 @@ config/icon="res://icon.svg"
 
 PaletteSwitch="*res://Globals/PaletteSwitch.tscn"
 GameState="*res://Globals/GameState.gd"
-Levels="*res://Globals/Levels.gd"
 Music="*res://Globals/Music.gd"
 
 [display]
