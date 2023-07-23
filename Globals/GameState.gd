@@ -33,7 +33,7 @@ var opened_doors = {
 
 var has_key = false
 
-var exit = 0
+var exit = 2
 var current_level = 1
 var current_checkpoint = 0
 
