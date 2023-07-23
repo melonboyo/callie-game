@@ -380,7 +380,7 @@ func minecart_move(delta):
 
 func exit_level_move(delta):
 	velocity.x = lerpf(velocity.x, exit_level_direction.x * MAX_RUN_SPEED, delta * ACCELERATION)
-	last_strong_direction_x = exit_level_direction
+	last_strong_direction_x = exit_level_direction.x
 	if not is_on_floor():
 		velocity.y += gravity * delta
 		velocity.y = minf(velocity.y, MAX_FALL_SPEED)

@@ -62,7 +62,7 @@ func _on_start_level_1_body_entered(body, exit):
 	if exit == 1:
 		camera_offset = Vector2.RIGHT * 64.0
 	else:
-		camera_offset = Vector2.RIGHT * 64.0
+		camera_offset = Vector2.LEFT * 64.0
 
 
 func _on_start_level_2_body_entered(body, exit):
