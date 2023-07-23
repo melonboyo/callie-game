@@ -165,7 +165,7 @@ func _physics_process(delta):
 		if $WallCast.is_colliding():
 			is_wall_running = true
 			wall_direction = last_strong_direction_x
-			velocity.y = -abs(velocity.x) + velocity.y - BOOTS_BOOST
+			velocity.y = -abs(velocity.x) * 0.2 + velocity.y * 0.9 - BOOTS_BOOST
 			velocity.x = wall_direction * 20.0
 			$BootsTimer.start()
 	
@@ -296,17 +296,18 @@ func boots_move(delta):
 		boots_timeout = false
 		direction_timeout = false
 		$BootsCooldownTimer.start()
-		is_wall_running = false	
+		is_wall_running = false
 		return
 	
-	if  not ($WallCast.is_colliding() and rotation != 0.0):
-		velocity.y -= 95.0
+	if not ($WallCast.is_colliding() and rotation != 0.0):
+		velocity.y += minf(velocity.y * 1.0, -54.0)
+		velocity.y = maxf(velocity.y, jump_velocity)
 		boots_timeout = false
 		if is_minecarting:
 			stop_minecarting()
 		direction_timeout = false
 		$BootsCooldownTimer.start()
-		is_wall_running = false	
+		is_wall_running = false
 		return
 	
 	if boots_timeout:
@@ -318,12 +319,13 @@ func boots_move(delta):
 		is_wall_running = false
 		return
 	
-	velocity.y = lerpf(velocity.y, -MAX_WALL_RUN_SPEED if not hold_away else -MAX_WALL_RUN_SPEED*0.5, delta * ACCELERATION)
+	velocity.y = lerpf(velocity.y, -MAX_WALL_RUN_SPEED if not hold_away else -MAX_WALL_RUN_SPEED*0.72, delta * ACCELERATION * 1.4)
 	velocity.x = wall_direction * 20.0
 	
 	sprite.animation = "run"
-	sprite.speed_scale = 0.8 * abs(velocity.y) / MAX_RUN_SPEED + 0.2
+	sprite.speed_scale = 1.8 * abs(velocity.y) / MAX_RUN_SPEED + 0.2
 	$StepPlayer.pitch_scale = abs(velocity.y) / MAX_RUN_SPEED * 0.2 + 1.0
+	$StepPlayer.volume_db = -6.0
 	
 	move_and_slide()
 
@@ -423,7 +425,8 @@ func jump() -> bool:
 		if is_climbing:
 			velocity.x = direction_x * MAX_RUN_SPEED * 0.6
 		
-		hold_jump = true
+		if not is_wall_running:
+			hold_jump = true
 		$JumpBufferEarly.stop()
 		$JumpBufferLate.stop()
 		jumped_last_frame = true
@@ -432,7 +435,7 @@ func jump() -> bool:
 		$ClimbWait.start()
 		
 	if Input.is_action_just_released("do_jump") and hold_jump:
-		if velocity.y < 0 and not is_wall_running:
+		if velocity.y < 0:
 			velocity.y += pow(abs(velocity.y) / jump_velocity, 2) * abs(jump_velocity * 0.8)
 		hold_jump = false
 
@@ -479,6 +482,8 @@ func play_step_sound(type: int):
 	var sounds = step_sounds[type]
 	var sound = sounds[randi_range(0, sounds.size()-1)]
 	$StepPlayer.stream = sound
+	if not is_wall_running:
+		$StepPlayer.volume_db = -9.5
 	$StepPlayer.play()
 
 

@@ -533,6 +533,7 @@ unique_name_in_owner = true
 
 [node name="Checkpoints" type="Node2D" parent="."]
 script = ExtResource("6_m5727")
+checkpoint = 4
 
 [node name="0" type="Node2D" parent="Checkpoints"]
 position = Vector2(-1112, -8)
@@ -614,7 +615,7 @@ debug_color = Color(0.352941, 0.619608, 0, 0.419608)
 
 [node name="SpawnPoint" type="Node2D" parent="Checkpoints"]
 unique_name_in_owner = true
-position = Vector2(-1112, -8)
+position = Vector2(208, -168)
 
 [node name="Player" parent="." instance=ExtResource("3_j4pp5")]
 position = Vector2(-1112, -8)
