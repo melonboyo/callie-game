@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b6rk7ok2afbyb"
+path="res://.godot/imported/temporary minecraft sound.ogg-a3a6fd15e386bd012458f89dfb6f9db7.oggvorbisstr"
+
+[deps]
+
+source_file="res://Sounds/sfx/temporary minecraft sound.ogg"
+dest_files=["res://.godot/imported/temporary minecraft sound.ogg-a3a6fd15e386bd012458f89dfb6f9db7.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=350.0
+beat_count=10
+bar_beats=4

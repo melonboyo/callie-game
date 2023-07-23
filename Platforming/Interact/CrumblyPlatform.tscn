@@ -1,16 +1,16 @@
 [gd_scene load_steps=9 format=3 uid="uid://bkvwhmr2715yq"]
 
 [ext_resource type="Script" path="res://Platforming/Interact/CrumblyPlatform.gd" id="1_2rr05"]
-[ext_resource type="Texture2D" uid="uid://cci83hrwu7c11" path="res://Textures/Interact/Crumble3.png" id="2_6nac7"]
+[ext_resource type="Texture2D" uid="uid://6mrk3upy455o" path="res://Textures/Interact/Crumble2.png" id="1_u8m3t"]
 [ext_resource type="AudioStream" uid="uid://bjuexv5oubfom" path="res://Sounds/pine/crumble.ogg" id="3_0ldau"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mjfhg"]
 resource_local_to_scene = true
-size = Vector2(48, 4)
+size = Vector2(32, 4)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eqc68"]
 resource_local_to_scene = true
-size = Vector2(48, 4)
+size = Vector2(32, 4)
 
 [sub_resource type="Animation" id="Animation_ukk1n"]
 length = 0.001
@@ -94,9 +94,10 @@ texture_filter = 1
 collision_layer = 2049
 collision_mask = 2049
 script = ExtResource("1_2rr05")
+length = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_6nac7")
+texture = ExtResource("1_u8m3t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -6)

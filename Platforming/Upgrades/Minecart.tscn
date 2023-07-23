@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://bffah7d18q47y"]
+
+[ext_resource type="Script" path="res://Platforming/Upgrades/Minecart.gd" id="1_0rp0m"]
+[ext_resource type="Texture2D" uid="uid://ci22hk3fchy4b" path="res://Textures/Player/Minecart/Minecart.png" id="2_1arfb"]
+[ext_resource type="AnimationLibrary" uid="uid://b1bg48mmxgsis" path="res://Platforming/Interact/HoverAnimations.tres" id="3_31xn1"]
+[ext_resource type="AudioStream" uid="uid://kf8ta061h37g" path="res://Sounds/egg/confirm.ogg" id="4_kctt3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wtj7w"]
+size = Vector2(8, 10)
+
+[node name="Minecart" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_0rp0m")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_wtj7w")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_1arfb")
+offset = Vector2(0, -2)
+
+[node name="SpinPlayer" type="AnimationPlayer" parent="."]
+autoplay = "HoverAnimations/spin"
+speed_scale = 2.0
+libraries = {
+"HoverAnimations": ExtResource("3_31xn1")
+}
+
+[node name="HoverPlayer" type="AnimationPlayer" parent="."]
+autoplay = "HoverAnimations/hover"
+speed_scale = 2.33
+libraries = {
+"HoverAnimations": ExtResource("3_31xn1")
+}
+
+[node name="PickUpPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_kctt3")
+volume_db = -10.0
+bus = &"Effects"
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

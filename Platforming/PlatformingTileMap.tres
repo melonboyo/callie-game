@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=9 format=3 uid="uid://db3o7hft2nja2"]
+[gd_resource type="TileSet" load_steps=10 format=3 uid="uid://db3o7hft2nja2"]
 
 [ext_resource type="Texture2D" uid="uid://dh3rsl2baf0jj" path="res://Textures/platforming_tile_sheet.png" id="1_e7pc0"]
 
@@ -13,6 +13,9 @@ tile_data = PackedInt32Array(65536, 1245186, 10, 131072, 1114114, 10, 196608, 11
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_jwajm"]
 tile_data = PackedInt32Array(0, 1, 9, 65536, 1, 10, 1, 131073, 9, 65537, 131073, 10)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_gwbbi"]
+tile_data = PackedInt32Array(65536, 1245186, 10, 131072, 1245186, 9, 1, 1245186, 10, 65537, 393218, 13, 131073, 393218, 12, 196609, 1245186, 9, 2, 1245186, 11, 65538, 327682, 13, 131074, 327682, 12, 196610, 1245186, 12, 65539, 1245186, 11, 131075, 1245186, 12)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0ddi4"]
 
@@ -11468,3 +11471,4 @@ pattern_0 = SubResource("TileMapPattern_iergc")
 pattern_1 = SubResource("TileMapPattern_mnnfc")
 pattern_2 = SubResource("TileMapPattern_vytsy")
 pattern_3 = SubResource("TileMapPattern_jwajm")
+pattern_4 = SubResource("TileMapPattern_gwbbi")

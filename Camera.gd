@@ -87,3 +87,7 @@ func _on_camera_zone_exited(_id):
 
 func _on_player_set_cam_look_offset(offset):
 	player_look_offset = offset
+
+
+func _on_minecart_picked_up_minecart():
+	$UI/UIAnimation.play("fade_in_out")

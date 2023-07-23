@@ -19,6 +19,6 @@ func _on_body_entered(body):
 
 
 func _ready():
-	print(GameState.opened_doors[GameState.current_level][id])
+#	print(GameState.opened_doors[GameState.current_level][id])
 	if GameState.opened_doors[GameState.current_level][id]:
 		queue_free()

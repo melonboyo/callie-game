@@ -13,8 +13,10 @@ var player: Node2D = null
 
 @export_range(1,3) var length = 3:
 	set(value):
+#		if not Engine.is_editor_hint():
+#			return
 		length = value
-		if not Engine.is_editor_hint():
+		if not get_node_or_null("Sprite2D"):
 			return
 		$Sprite2D.texture = sprites[value-1]
 		$CollisionShape2D.shape.size.x = 16 * value

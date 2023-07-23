@@ -2,6 +2,10 @@ extends Level
 class_name Level1
 
 
+func _enter_tree():
+	GameState.current_level = 1
+
+
 func level_specific_ready():
 	for c in %KeyDoors.get_children():
 		if GameState.opened_doors[1][c.id]:

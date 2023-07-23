@@ -26,10 +26,11 @@ func level_specific_ready():
 func _on_death_zone_body_entered(body):
 	$DeathPlayer.play()
 	PaletteSwitch.fade_out_in()
-	player.freeze = true
+	player.reset()
+	player.freeze = true	
 	await get_tree().create_timer(0.71).timeout
 	player.position = %SpawnPoint.position
-	player.reset()
+	player.freeze = false
 
 
 func _on_exit_level_timer_timeout():

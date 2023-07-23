@@ -11,8 +11,9 @@ var upgrade_scenes := {
 	Upgrade.Minecart: preload("res://Platforming/Upgrades/Jump1.tscn"),
 }
 
+
 var acquired_upgrades = {
-	Upgrade.Jump1: true,
+	Upgrade.Jump1: false,
 	Upgrade.Minecart: false,
 }
 

@@ -131,19 +131,20 @@ func _physics_process(delta):
 	
 	animate_pick_up(delta)
 	
+	if is_on_floor():
+		can_use_minecart = true
+	
 	if is_minecarting:
 		minecart_move(delta)
 		if is_minecarting:
 			return
 	
-	if is_on_floor():
-		can_use_minecart = true
-	
-	sprite.offset = sprite.offset.move_toward(Vector2.ZERO, delta * 5.0)
+	sprite.offset = sprite.offset.move_toward(Vector2.ZERO, delta * 50.0)
 	
 	if can_climb and abs(direction_y) > 0.8 and not $ClimbWait.time_left > 0.0:
 		$ClimbWait.stop()
 		is_climbing = true
+		can_use_minecart = true
 		first_climb_frame = true
 	
 	if is_climbing:
@@ -160,6 +161,7 @@ func _physics_process(delta):
 		and can_use_minecart
 	):
 		is_entering_minecart = true
+		can_use_minecart = false
 		$AnimationPlayer.play("enter_minecart")
 		freeze = true
 		minecart_direction = last_strong_direction_x
@@ -238,17 +240,26 @@ func minecart_move(delta):
 		$Minecart.visible = false
 		$CartShape.disabled = true
 		$PlayerShape.disabled = false
+		$MinecartPlayer.stream = load("res://Sounds/sfx/BUMP.ogg")
+		$MinecartPlayer.play()
+		$CartDrivingPlayer.stop()
 		var minecart_instance = rigid_minecart.instantiate()
 		minecart_instance.linear_velocity.x = velocity.x
 		minecart_instance.position = position
 		get_parent().add_child(minecart_instance)
 		is_minecarting = false
-		can_use_minecart = false
 		return
 	velocity.x = lerpf(velocity.x, minecart_direction * MINECART_SPEED, delta * ACCELERATION)
 	if not is_on_floor():
 		velocity.y += gravity * delta
 		velocity.y = minf(velocity.y, MAX_FALL_SPEED)
+		if $CartDrivingPlayer.playing:
+			$CartDrivingPlayer.stop()
+	else:
+		if not $CartDrivingPlayer.playing:
+			$CartDrivingPlayer.play()
+		$CartDrivingPlayer.volume_db = remap(abs(velocity.x), 0.0, MINECART_START_SPEED, -80.0, -11.0)
+		$CartDrivingPlayer.pitch_scale = remap(abs(velocity.x), 0.0, MINECART_START_SPEED, 1.2, 1.8)
 	
 	sprite.offset.y = move_toward(sprite.offset.y, -3.0 - (abs(clampf(velocity.y, 0.0, MAX_FALL_SPEED)) / abs(MAX_FALL_SPEED)) * 32.0, delta * 17.0)
 	if velocity.y <= 0.5:
@@ -287,9 +298,9 @@ func overworld_move(delta):
 
 func jump() -> bool:
 	if (
-		((is_on_floor() or is_climbing) and $JumpBufferEarly.time_left > 0.0) or
-		(not is_on_floor() and $JumpBufferLate.time_left > 0.0 and Input.is_action_just_pressed("do_jump") and not jumped) or 
-		(is_minecarting and Input.is_action_just_pressed("do_jump"))
+		((is_on_floor() or is_climbing) and $JumpBufferEarly.time_left > 0.0 and not is_minecarting) or
+		(not is_on_floor() and $JumpBufferLate.time_left > 0.0 and Input.is_action_just_pressed("do_jump") and not jumped and not is_minecarting) or 
+		(is_minecarting and $JumpBufferEarly.time_left > 0.0)
 	):
 		velocity.y = jump_velocity
 		$JumpPlayer.play()
@@ -313,7 +324,7 @@ func jump() -> bool:
 	if not Input.is_action_pressed("do_jump"):
 		hold_jump = false
 	
-	return jumped
+	return jumped_last_frame
 
 
 func animate():
@@ -361,7 +372,6 @@ func reset():
 	$JumpBufferEarly.stop()
 	$JumpBufferLate.stop()
 	$ClimbWait.stop()
-	freeze = false
 	is_minecarting = false
 	is_entering_minecart = false
 	is_climbing = false
@@ -424,8 +434,11 @@ func _on_player_sprite_frame_changed():
 
 
 func _on_animation_player_animation_finished(anim_name):
+	if Engine.is_editor_hint():
+		return
 	if anim_name == "enter_minecart":
 		is_entering_minecart = false
+		$MinecartPlayer2.play()
 		is_minecarting = true
 		$CartShape.disabled = false
 		$PlayerShape.disabled = true
