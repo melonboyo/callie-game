@@ -13,6 +13,10 @@ func _process(delta: float):
 	if Input.is_action_just_pressed("toggle_online_collision"):
 		has_online_collision = not has_online_collision
 	
+	if Input.is_action_just_pressed("taunt"):
+		player.taunt()
+		Network.for_all_players(func (receiver_id: int): rpc_id(receiver_id, "taunt"))
+	
 	player.set_collision_mask_value(9, has_online_collision)
 
 	
@@ -39,3 +43,9 @@ func get_current_level(player: Player):
 func sync_player(state):
 	var player_id = multiplayer.get_remote_sender_id()
 	network_player_spawner.sync_player(player_id, state)
+  
+
+@rpc("any_peer", "unreliable")
+func taunt():
+	var player_id = multiplayer.get_remote_sender_id()
+	network_player_spawner.taunt(player_id)

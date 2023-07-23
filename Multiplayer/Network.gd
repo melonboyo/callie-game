@@ -1,6 +1,7 @@
 extends Node
 
-var public_server_host = "localhost" if OS.is_debug_build() else "callie.pckv.me"
+#var public_server_host = "localhost" if OS.is_debug_build() else "callie.pckv.me"
+var public_server_host = "callie.pckv.me"
 
 var public_server_port = 45276
 
@@ -146,6 +147,14 @@ func unregister_player(id: int):
 	# Remove the player info
 	players.erase(id)
 	emit_signal("player_disconnected", id)
+
+
+func for_all_players(callback: Callable):
+	for network_player in players.values():
+		if network_player.id == 1 or network_player.id == multiplayer.get_unique_id():
+			continue
+		
+		callback.call(network_player.id)
 
 
 func _on_server_connected():

@@ -11,14 +11,10 @@ func _on_tick_timer_tick():
 	
 	var level = client.get_current_level(player)
 	
-	for network_player in Network.players.values():
-		send_state(network_player.id, level, player)
+	Network.for_all_players(func (receiver_id: int): send_state(receiver_id, level, player))
 
 
 func send_state(receiver_id, level, player):
-	if receiver_id == 1 or receiver_id == multiplayer.get_unique_id():
-		return
-	
 	var animation = player.get_animation()
 	client.rpc_id(receiver_id, "sync_player", {
 		level = level,

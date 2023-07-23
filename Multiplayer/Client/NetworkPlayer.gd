@@ -1,11 +1,12 @@
 extends RigidBody2D
 
-
 var rigid_minecart_scene = preload("res://Platforming/Upgrades/MinecartRigid.tscn")
+
 
 @onready var sprite = $PlayerSprite
 @onready var minecart = $Minecart
 @onready var animation_player = $AnimationPlayer
+@onready var taunt_player = $TauntPlayer
 
 var is_minecarting = false
 
@@ -38,6 +39,10 @@ func set_minecarting(new_is_minecarting: bool):
 		minecart_instance.position = position
 		minecart_instance.rotation = rotation
 		get_parent().add_child(minecart_instance)
+
+
+func taunt(player_id: int):
+	taunt_player.taunt(player_id)
 
 
 func _on_animation_player_animation_finished(anim_name):

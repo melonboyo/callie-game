@@ -50,3 +50,8 @@ func remove_player(player_id: int):
 	if player_id in player_nodes:
 		player_nodes[player_id].queue_free()
 		player_nodes.erase(player_id)
+
+
+func taunt(player_id: int):
+	var player = player_nodes[player_id]
+	player.taunt(player_id)

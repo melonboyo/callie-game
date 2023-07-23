@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://bdqag3kply5fw"]
+[gd_scene load_steps=11 format=3 uid="uid://bdqag3kply5fw"]
 
 [ext_resource type="Script" path="res://Multiplayer/Client/NetworkPlayer.gd" id="1_ioshe"]
 [ext_resource type="PackedScene" uid="uid://bu42bi3m5khvm" path="res://PlayerSprite.tscn" id="1_ptorx"]
 [ext_resource type="Texture2D" uid="uid://b5fy36lb6bsgl" path="res://Textures/Player/Minecart/MinecartFront.png" id="3_562tf"]
 [ext_resource type="Texture2D" uid="uid://cffgae45ornex" path="res://Textures/Player/Minecart/MinecartBack.png" id="4_nijx1"]
 [ext_resource type="AudioStream" uid="uid://hkypt0cfbkxx" path="res://Sounds/pine/jump2.ogg" id="5_iwcwo"]
+[ext_resource type="PackedScene" uid="uid://ch0xiyevyghu7" path="res://TauntPlayer.tscn" id="6_bqtx6"]
 
 [sub_resource type="Animation" id="Animation_aauuy"]
 length = 0.001
@@ -138,7 +139,7 @@ size = Vector2(12, 11)
 z_index = -1
 y_sort_enabled = true
 texture_filter = 1
-collision_layer = 256
+collision_layer = 258
 gravity_scale = 0.0
 freeze = true
 script = ExtResource("1_ioshe")
@@ -166,5 +167,7 @@ libraries = {
 position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_ffw63")
 debug_color = Color(0.247059, 0.568627, 0.360784, 0.345098)
+
+[node name="TauntPlayer" parent="." instance=ExtResource("6_bqtx6")]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

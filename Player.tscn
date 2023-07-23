@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bo1xhn2kyap4e"]
+[gd_scene load_steps=17 format=3 uid="uid://bo1xhn2kyap4e"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_8fvrf"]
 [ext_resource type="PackedScene" uid="uid://bu42bi3m5khvm" path="res://PlayerSprite.tscn" id="2_0nbv6"]
@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://bxr3xhjfa3xc5" path="res://Sounds/sfx/BUMP.ogg" id="7_dxse7"]
 [ext_resource type="AudioStream" uid="uid://b6rk7ok2afbyb" path="res://Sounds/sfx/temporary minecraft sound.ogg" id="7_hmk57"]
 [ext_resource type="AudioStream" uid="uid://tna7tn4j5gfs" path="res://Sounds/pine/rocket_launch.ogg" id="8_ijfhx"]
+[ext_resource type="PackedScene" uid="uid://ch0xiyevyghu7" path="res://TauntPlayer.tscn" id="11_2u380"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2514i"]
 size = Vector2(14, 11)
@@ -257,6 +258,8 @@ libraries = {
 [node name="WallCast" type="RayCast2D" parent="."]
 enabled = false
 target_position = Vector2(16, 0)
+
+[node name="TauntPlayer" parent="." instance=ExtResource("11_2u380")]
 
 [connection signal="frame_changed" from="PlayerSprite" to="." method="_on_player_sprite_frame_changed"]
 [connection signal="timeout" from="LookUpTimer" to="." method="_on_look_up_timer_timeout"]
