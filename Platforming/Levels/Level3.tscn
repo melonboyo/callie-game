@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bfl886smpvipg"]
+[gd_scene load_steps=22 format=3 uid="uid://bfl886smpvipg"]
 
 [ext_resource type="Script" path="res://Platforming/Levels/Level3.gd" id="1_0h1js"]
 [ext_resource type="PackedScene" uid="uid://dpq18bmg53coj" path="res://Platforming/PlatformingTileMap.tscn" id="2_lme2m"]
@@ -10,6 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://0q82rlo7owgb" path="res://Platforming/Upgrades/Boots.tscn" id="7_70md0"]
 [ext_resource type="Script" path="res://Platforming/Levels/Checkpoint.gd" id="7_ehjx8"]
 [ext_resource type="AudioStream" uid="uid://cplqheqkv3to3" path="res://Sounds/pine/death.wav" id="8_l6xps"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fpdyg"]
+size = Vector2(20, 146)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v4dg2"]
 size = Vector2(10000, 100)
@@ -29,11 +32,11 @@ size = Vector2(6216, 2672)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aihuf"]
 size = Vector2(6216.74, 724)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y7he3"]
+size = Vector2(288, 360)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kuv7e"]
 size = Vector2(6, 122)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fpdyg"]
-size = Vector2(20, 146)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_di7mr"]
 size = Vector2(24, 192)
@@ -53,6 +56,92 @@ layer_2/tile_data = PackedInt32Array(-720795, 983042, 14, -720793, 1114114, 14, 
 [node name="Player" parent="." instance=ExtResource("3_eeyx2")]
 position = Vector2(-1112, -8)
 collision_layer = 7
+
+[node name="Checkpoints" type="Node2D" parent="."]
+script = ExtResource("6_5ca4y")
+checkpoint = 5
+
+[node name="0" type="Node2D" parent="Checkpoints"]
+position = Vector2(-1112, -8)
+script = ExtResource("7_ehjx8")
+
+[node name="Area2D" type="Area2D" parent="Checkpoints/0"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/0/Area2D"]
+position = Vector2(0, -63)
+shape = SubResource("RectangleShape2D_fpdyg")
+debug_color = Color(0.352941, 0.619608, 0, 0.419608)
+
+[node name="1" type="Node2D" parent="Checkpoints"]
+position = Vector2(-376, -72)
+script = ExtResource("7_ehjx8")
+
+[node name="Area2D" type="Area2D" parent="Checkpoints/1"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/1/Area2D"]
+position = Vector2(0, -63)
+shape = SubResource("RectangleShape2D_fpdyg")
+debug_color = Color(0.352941, 0.619608, 0, 0.419608)
+
+[node name="2" type="Node2D" parent="Checkpoints"]
+position = Vector2(976, -24)
+script = ExtResource("7_ehjx8")
+
+[node name="Area2D" type="Area2D" parent="Checkpoints/2"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/2/Area2D"]
+position = Vector2(0, -63)
+shape = SubResource("RectangleShape2D_fpdyg")
+debug_color = Color(0.352941, 0.619608, 0, 0.419608)
+
+[node name="3" type="Node2D" parent="Checkpoints"]
+position = Vector2(1384, -472)
+script = ExtResource("7_ehjx8")
+
+[node name="Area2D" type="Area2D" parent="Checkpoints/3"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/3/Area2D"]
+position = Vector2(0, -63)
+shape = SubResource("RectangleShape2D_fpdyg")
+debug_color = Color(0.352941, 0.619608, 0, 0.419608)
+
+[node name="4" type="Node2D" parent="Checkpoints"]
+position = Vector2(1640, -72)
+script = ExtResource("7_ehjx8")
+
+[node name="Area2D" type="Area2D" parent="Checkpoints/4"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/4/Area2D"]
+position = Vector2(0, -63)
+shape = SubResource("RectangleShape2D_fpdyg")
+debug_color = Color(0.352941, 0.619608, 0, 0.419608)
+
+[node name="5" type="Node2D" parent="Checkpoints"]
+position = Vector2(1616, -808)
+script = ExtResource("7_ehjx8")
+
+[node name="Area2D" type="Area2D" parent="Checkpoints/5"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/5/Area2D"]
+position = Vector2(0, -63)
+shape = SubResource("RectangleShape2D_fpdyg")
+debug_color = Color(0.352941, 0.619608, 0, 0.419608)
+
+[node name="SpawnPoint" type="Node2D" parent="Checkpoints"]
+unique_name_in_owner = true
+position = Vector2(1616, -808)
 
 [node name="Focus" type="Node2D" parent="."]
 position = Vector2(0, -48)
@@ -160,8 +249,8 @@ y_offset = -1068
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CameraZones/CameraZone5"]
-position = Vector2(2868.36, 378)
-shape = SubResource("RectangleShape2D_aihuf")
+position = Vector2(56, -964)
+shape = SubResource("RectangleShape2D_y7he3")
 debug_color = Color(0.396078, 0.568627, 0.6, 0.0745098)
 
 [node name="Interactives" type="Node2D" parent="."]
@@ -218,91 +307,6 @@ length = 3
 [node name="Boots" parent="Interactives" instance=ExtResource("7_70md0")]
 position = Vector2(1638, -248)
 
-[node name="Checkpoints" type="Node2D" parent="."]
-script = ExtResource("6_5ca4y")
-
-[node name="0" type="Node2D" parent="Checkpoints"]
-position = Vector2(-1112, -8)
-script = ExtResource("7_ehjx8")
-
-[node name="Area2D" type="Area2D" parent="Checkpoints/0"]
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/0/Area2D"]
-position = Vector2(0, -63)
-shape = SubResource("RectangleShape2D_fpdyg")
-debug_color = Color(0.352941, 0.619608, 0, 0.419608)
-
-[node name="1" type="Node2D" parent="Checkpoints"]
-position = Vector2(-376, -72)
-script = ExtResource("7_ehjx8")
-
-[node name="Area2D" type="Area2D" parent="Checkpoints/1"]
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/1/Area2D"]
-position = Vector2(0, -63)
-shape = SubResource("RectangleShape2D_fpdyg")
-debug_color = Color(0.352941, 0.619608, 0, 0.419608)
-
-[node name="2" type="Node2D" parent="Checkpoints"]
-position = Vector2(976, -24)
-script = ExtResource("7_ehjx8")
-
-[node name="Area2D" type="Area2D" parent="Checkpoints/2"]
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/2/Area2D"]
-position = Vector2(0, -63)
-shape = SubResource("RectangleShape2D_fpdyg")
-debug_color = Color(0.352941, 0.619608, 0, 0.419608)
-
-[node name="3" type="Node2D" parent="Checkpoints"]
-position = Vector2(1384, -472)
-script = ExtResource("7_ehjx8")
-
-[node name="Area2D" type="Area2D" parent="Checkpoints/3"]
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/3/Area2D"]
-position = Vector2(0, -63)
-shape = SubResource("RectangleShape2D_fpdyg")
-debug_color = Color(0.352941, 0.619608, 0, 0.419608)
-
-[node name="4" type="Node2D" parent="Checkpoints"]
-position = Vector2(1640, -72)
-script = ExtResource("7_ehjx8")
-
-[node name="Area2D" type="Area2D" parent="Checkpoints/4"]
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/4/Area2D"]
-position = Vector2(0, -63)
-shape = SubResource("RectangleShape2D_fpdyg")
-debug_color = Color(0.352941, 0.619608, 0, 0.419608)
-
-[node name="5" type="Node2D" parent="Checkpoints"]
-position = Vector2(1616, -808)
-script = ExtResource("7_ehjx8")
-
-[node name="Area2D" type="Area2D" parent="Checkpoints/5"]
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/5/Area2D"]
-position = Vector2(0, -63)
-shape = SubResource("RectangleShape2D_fpdyg")
-debug_color = Color(0.352941, 0.619608, 0, 0.419608)
-
-[node name="SpawnPoint" type="Node2D" parent="Checkpoints"]
-unique_name_in_owner = true
-position = Vector2(1616, -808)
-
 [node name="ExitLevel4" type="Area2D" parent="."]
 position = Vector2(-1344, -88)
 collision_layer = 0
@@ -332,6 +336,12 @@ volume_db = -13.183
 bus = &"Effects"
 
 [connection signal="set_cam_look_offset" from="Player" to="Focus" method="_on_player_set_cam_look_offset"]
+[connection signal="body_entered" from="Checkpoints/0/Area2D" to="Checkpoints/0" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Checkpoints/1/Area2D" to="Checkpoints/1" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Checkpoints/2/Area2D" to="Checkpoints/2" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Checkpoints/3/Area2D" to="Checkpoints/3" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Checkpoints/4/Area2D" to="Checkpoints/4" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Checkpoints/5/Area2D" to="Checkpoints/5" method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="DeathZone" to="." method="_on_death_zone_body_entered"]
 [connection signal="body_entered" from="CameraZones/CameraZone0" to="CameraZones/CameraZone0" method="_on_body_entered"]
 [connection signal="body_exited" from="CameraZones/CameraZone0" to="CameraZones/CameraZone0" method="_on_body_exited"]
@@ -358,5 +368,5 @@ bus = &"Effects"
 [connection signal="camera_zone_entered" from="CameraZones/CameraZone5" to="Focus" method="_on_camera_zone_entered"]
 [connection signal="camera_zone_exited" from="CameraZones/CameraZone5" to="Focus" method="_on_camera_zone_exited"]
 [connection signal="body_entered" from="ExitLevel4" to="." method="_on_exit_level" binds= [4, Vector2(-1, 0)]]
-[connection signal="body_entered" from="ExitLevel5" to="." method="_on_exit_level_5_body_entered"]
+[connection signal="body_entered" from="ExitLevel5" to="." method="_on_exit_level" binds= [4, Vector2(1, 0)]]
 [connection signal="timeout" from="ExitLevelTimer" to="." method="_on_exit_level_timer_timeout"]
