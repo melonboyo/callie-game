@@ -308,7 +308,7 @@ debug_color = Color(0.352941, 0.619608, 0, 0.419608)
 
 [node name="SpawnPoint" type="Node2D" parent="Checkpoints"]
 unique_name_in_owner = true
-position = Vector2(-1160, 0)
+position = Vector2(1016, -840)
 
 [node name="DeathZone" type="Area2D" parent="."]
 collision_layer = 0
