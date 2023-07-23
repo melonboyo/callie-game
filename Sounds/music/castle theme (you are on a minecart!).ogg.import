@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://di5byjhu6pc0i"
+path="res://.godot/imported/castle theme (you are on a minecart!).ogg-1a6a57044e85598b65288c5444157584.oggvorbisstr"
+
+[deps]
+
+source_file="res://Sounds/music/castle theme (you are on a minecart!).ogg"
+dest_files=["res://.godot/imported/castle theme (you are on a minecart!).ogg-1a6a57044e85598b65288c5444157584.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=111.0
+beat_count=0
+bar_beats=4
