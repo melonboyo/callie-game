@@ -56,7 +56,7 @@ var jump_velocity = -285.0
 		jump_velocity = -sqrt(2 * gravity * jump_height_pixels) - 10.0
 
 
-var last_strong_direction_x: float = 1.0
+var last_strong_direction_x = 1.0
 var hold_jump = false
 var direction_x = 0.0
 var direction_y = 0.0
@@ -133,7 +133,7 @@ func _physics_process(delta):
 		overworld_move(delta)
 		return
 	
-	if last_strong_direction_x < 0.0:
+	if last_strong_direction_x < 0:
 		sprite.flip_h = true
 	else:
 		sprite.flip_h = false
@@ -380,7 +380,7 @@ func minecart_move(delta):
 
 func exit_level_move(delta):
 	velocity.x = lerpf(velocity.x, exit_level_direction.x * MAX_RUN_SPEED, delta * ACCELERATION)
-	last_strong_direction_x = exit_level_direction.x
+	last_strong_direction_x = exit_level_direction
 	if not is_on_floor():
 		velocity.y += gravity * delta
 		velocity.y = minf(velocity.y, MAX_FALL_SPEED)

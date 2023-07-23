@@ -30,6 +30,7 @@ window/size/resizable=false
 window/size/window_width_override=1536
 window/size/window_height_override=864
 window/stretch/mode="viewport"
+window/vsync/vsync_mode=0
 
 [filesystem]
 
