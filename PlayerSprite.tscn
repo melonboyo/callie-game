@@ -1,12 +1,12 @@
 [gd_scene load_steps=14 format=3 uid="uid://bu42bi3m5khvm"]
 
-[ext_resource type="Texture2D" uid="uid://clpfwo5vlmome" path="res://Textures/Player/FlopEar/tile_0295.png" id="1_ktl5m"]
+[ext_resource type="Texture2D" uid="uid://c6scienvyf3pw" path="res://Textures/Player/FlopEar/tile_0289.png" id="1_awrj4"]
+[ext_resource type="Texture2D" uid="uid://c2wdm3ymuoslv" path="res://Textures/Player/FlopEar/tile_0290.png" id="2_0eu2d"]
 [ext_resource type="Texture2D" uid="uid://cak7w4ofvrw7b" path="res://Textures/Player/FlopEar/tile_0291.png" id="2_2ks8o"]
-[ext_resource type="Texture2D" uid="uid://ddplmvclxg6p4" path="res://Textures/Player/FlopEar/tile_0292.png" id="3_wae36"]
 [ext_resource type="Texture2D" uid="uid://b2ny8vvsn1wbv" path="res://Textures/Player/FlopEar/tile_0282.png" id="4_vp6yk"]
 [ext_resource type="Texture2D" uid="uid://dl1syt3exh3pd" path="res://Textures/Player/FlopEar/tile_0285.png" id="5_qg3va"]
 [ext_resource type="Texture2D" uid="uid://gfnwsqtfv6i8" path="res://Textures/Player/FlopEar/tile_0280.png" id="6_eg78w"]
-[ext_resource type="Texture2D" uid="uid://bnmnwsacyknlr" path="res://Textures/Player/FlopEar/tile_0286.png" id="7_oy72q"]
+[ext_resource type="Texture2D" uid="uid://c74yk4wssfet" path="res://Textures/Player/FlopEar/jump.png" id="6_utvyo"]
 [ext_resource type="Texture2D" uid="uid://c337stha0r5o7" path="res://Textures/Player/FlopEar/tile_0288.png" id="10_gf4yg"]
 [ext_resource type="Texture2D" uid="uid://gyejc8va12ep" path="res://Textures/Player/FlopEar/tile_0294.png" id="11_fvkkf"]
 [ext_resource type="Texture2D" uid="uid://dnqp8mpn2xsti" path="res://Textures/Player/FlopEar/tile_0281.png" id="12_dsklg"]
@@ -17,24 +17,13 @@
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_ktl5m")
+"texture": ExtResource("1_awrj4")
 }, {
 "duration": 1.0,
-"texture": ExtResource("1_ktl5m")
+"texture": ExtResource("2_0eu2d")
 }],
 "loop": true,
 "name": &"climb",
-"speed": 6.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_2ks8o")
-}, {
-"duration": 1.0,
-"texture": ExtResource("3_wae36")
-}],
-"loop": true,
-"name": &"climb_old",
 "speed": 6.0
 }, {
 "frames": [{
@@ -63,7 +52,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("7_oy72q")
+"texture": ExtResource("6_utvyo")
 }],
 "loop": true,
 "name": &"jump",
@@ -79,27 +68,11 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("10_gf4yg")
-}],
-"loop": true,
-"name": &"look_down",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": ExtResource("2_2ks8o")
 }],
 "loop": true,
 "name": &"look_down_old",
 "speed": 24.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("7_oy72q")
-}],
-"loop": true,
-"name": &"look_up",
-"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -139,4 +112,4 @@ animations = [{
 texture_filter = 1
 use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_nm6yw")
-animation = &"look_down"
+animation = &"get"

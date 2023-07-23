@@ -6222,6 +6222,7 @@ camera_path = NodePath("../Player/Camera2D")
 
 [node name="Player" parent="." instance=ExtResource("6_77h7t")]
 position = Vector2(312, -304)
+collision_mask = 1033
 motion_mode = 1
 is_in_overworld = true
 
