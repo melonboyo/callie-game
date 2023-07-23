@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bu42bi3m5khvm"]
+[gd_scene load_steps=14 format=3 uid="uid://bu42bi3m5khvm"]
 
 [ext_resource type="Texture2D" uid="uid://clpfwo5vlmome" path="res://Textures/Player/FlopEar/tile_0295.png" id="1_ktl5m"]
 [ext_resource type="Texture2D" uid="uid://cak7w4ofvrw7b" path="res://Textures/Player/FlopEar/tile_0291.png" id="2_2ks8o"]
@@ -6,13 +6,12 @@
 [ext_resource type="Texture2D" uid="uid://b2ny8vvsn1wbv" path="res://Textures/Player/FlopEar/tile_0282.png" id="4_vp6yk"]
 [ext_resource type="Texture2D" uid="uid://dl1syt3exh3pd" path="res://Textures/Player/FlopEar/tile_0285.png" id="5_qg3va"]
 [ext_resource type="Texture2D" uid="uid://gfnwsqtfv6i8" path="res://Textures/Player/FlopEar/tile_0280.png" id="6_eg78w"]
-[ext_resource type="Texture2D" uid="uid://bwap20qxex6l1" path="res://Textures/Player/FlopEar/tile_0287.png" id="7_xh7ok"]
-[ext_resource type="Texture2D" uid="uid://c2wdm3ymuoslv" path="res://Textures/Player/FlopEar/tile_0290.png" id="8_kr5o6"]
-[ext_resource type="Texture2D" uid="uid://clasrq7xxkywy" path="res://Textures/Player/FlopEar/tile_0293.png" id="9_ky0if"]
+[ext_resource type="Texture2D" uid="uid://bnmnwsacyknlr" path="res://Textures/Player/FlopEar/tile_0286.png" id="7_oy72q"]
 [ext_resource type="Texture2D" uid="uid://c337stha0r5o7" path="res://Textures/Player/FlopEar/tile_0288.png" id="10_gf4yg"]
 [ext_resource type="Texture2D" uid="uid://gyejc8va12ep" path="res://Textures/Player/FlopEar/tile_0294.png" id="11_fvkkf"]
 [ext_resource type="Texture2D" uid="uid://dnqp8mpn2xsti" path="res://Textures/Player/FlopEar/tile_0281.png" id="12_dsklg"]
 [ext_resource type="Texture2D" uid="uid://cm6s3unrvto3w" path="res://Textures/Player/FlopEar/tile_0284.png" id="13_1wxsj"]
+[ext_resource type="Texture2D" uid="uid://dg3h16ok5ii0c" path="res://Textures/Player/FlopEar/tile_0283.png" id="13_p1vd6"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nm6yw"]
 animations = [{
@@ -64,7 +63,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("7_xh7ok")
+"texture": ExtResource("7_oy72q")
 }],
 "loop": true,
 "name": &"jump",
@@ -72,7 +71,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("8_kr5o6")
+"texture": ExtResource("10_gf4yg")
 }],
 "loop": true,
 "name": &"lay",
@@ -80,7 +79,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("8_kr5o6")
+"texture": ExtResource("10_gf4yg")
 }],
 "loop": true,
 "name": &"look_down",
@@ -88,7 +87,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("9_ky0if")
+"texture": ExtResource("2_2ks8o")
 }],
 "loop": true,
 "name": &"look_down_old",
@@ -96,7 +95,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("10_gf4yg")
+"texture": ExtResource("7_oy72q")
 }],
 "loop": true,
 "name": &"look_up",
@@ -112,7 +111,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_qg3va")
+"texture": ExtResource("13_1wxsj")
 }],
 "loop": true,
 "name": &"minecarting",
@@ -126,10 +125,10 @@ animations = [{
 "texture": ExtResource("4_vp6yk")
 }, {
 "duration": 1.0,
-"texture": ExtResource("13_1wxsj")
+"texture": ExtResource("13_p1vd6")
 }, {
 "duration": 2.0,
-"texture": ExtResource("5_qg3va")
+"texture": ExtResource("13_1wxsj")
 }],
 "loop": true,
 "name": &"run",
@@ -140,4 +139,4 @@ animations = [{
 texture_filter = 1
 use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_nm6yw")
-animation = &"minecarting"
+animation = &"look_down"

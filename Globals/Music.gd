@@ -12,8 +12,8 @@ var streams = {
 
 var volume = 0
 var volumes = {
-	Track.Forest : -10,
-	Track.Overworld : -10,
+	Track.Forest : -13.3,
+	Track.Overworld : -15.5,
 }
 
 var selected_track = null

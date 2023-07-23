@@ -2,17 +2,19 @@
 extends CharacterBody2D
 class_name Player
 
-const MAX_RUN_SPEED = 110.0
-const MAX_AIR_SPEED = 150.0
+const MAX_RUN_SPEED = 112.0
+const MAX_AIR_SPEED = 166.0
 const MAX_CLIMB_SPEED = 60.0
-const ACCELERATION = 4.2
-const AIR_ACCELERATION = 1.8
+const MAX_WALL_RUN_SPEED = 162.0
+const ACCELERATION = 5.15
+const AIR_ACCELERATION = 2.62
 const CLIMB_ACCELERATION = 12.0
 const MAX_FALL_SPEED = 300.0
 const LOOK_OFFSET = 32.0
 const OVERWORLD_SPEED = 87.0
 const MINECART_START_SPEED = 210.0
 const MINECART_SPEED = 170.0
+const BOOTS_BOOST = 110.0
 
 var step_sounds_grass := [
 	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_grass_000.ogg"),
@@ -86,6 +88,12 @@ var minecart_direction = 1.0
 var rigid_minecart = preload("res://Platforming/Upgrades/MinecartRigid.tscn")
 var can_use_minecart = true
 
+var is_wall_running = false
+var can_wall_run = true
+var wall_direction = 1.0
+var boots_timeout = false
+var direction_timeout = false
+
 var pick_up: Node2D
 
 @onready var sprite = %PlayerSprite
@@ -114,6 +122,9 @@ func _physics_process(delta):
 	if Engine.is_editor_hint():
 		return
 	
+	if not is_wall_running:
+		rotation = 0.0
+	
 	if freeze:
 		velocity = Vector2.ZERO
 		return
@@ -121,6 +132,11 @@ func _physics_process(delta):
 	if is_in_overworld:
 		overworld_move(delta)
 		return
+	
+	if last_strong_direction_x < 0:
+		sprite.flip_h = true
+	else:
+		sprite.flip_h = false
 	
 	if exit_level:
 		exit_level_move(delta)
@@ -133,6 +149,41 @@ func _physics_process(delta):
 	
 	if is_on_floor():
 		can_use_minecart = true
+		can_wall_run = true
+	
+	if GameState.acquired_upgrades[GameState.Upgrade.Boots]:
+		$WallCast.enabled = true
+		$WallCast.target_position = Vector2(last_strong_direction_x, 0.0).normalized() * 16.0
+	
+	if (GameState.acquired_upgrades[GameState.Upgrade.Boots] and 
+		is_on_wall() and
+		direction_x and
+		(abs(velocity.x) > 2.0 or not is_on_floor()) and
+		can_wall_run and 
+		not is_wall_running
+	):
+		if $WallCast.is_colliding():
+			is_wall_running = true
+			wall_direction = last_strong_direction_x
+			velocity.y = -abs(velocity.x) + velocity.y - BOOTS_BOOST
+			velocity.x = wall_direction * 20.0
+			$BootsTimer.start()
+	
+	if is_wall_running:
+		$WallCast.target_position = Vector2.DOWN * 16.0
+		boots_move(delta)
+		if is_wall_running:
+			return
+	
+	$StepPlayer.pitch_scale = 1.0
+	boots_timeout = false
+	direction_timeout = false
+	if not $DirectionHeldTimer.is_stopped():
+		$DirectionHeldTimer.stop()
+	if not $BootsCooldownTimer.is_stopped():
+		$BootsCooldownTimer.stop()
+	if not $BootsTimer.is_stopped():
+		$BootsTimer.stop()
 	
 	if is_minecarting:
 		minecart_move(delta)
@@ -200,11 +251,6 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y = minf(velocity.y, MAX_FALL_SPEED)
 	
-	if last_strong_direction_x < 0:
-		sprite.flip_h = true
-	else:
-		sprite.flip_h = false
-	
 	animate()
 
 	was_on_floor = is_on_floor()
@@ -233,6 +279,47 @@ func climb_move(delta):
 		$ClimbWait.start()
 	
 	first_climb_frame = false
+
+
+func boots_move(delta):
+	rotation = -0.5*PI if wall_direction > 0.0 else 0.5*PI
+	var hold_away = (wall_direction > 0.0 and direction_x < 0.0) or (wall_direction < 0.0 and direction_x > 0.0)
+	if hold_away and $DirectionHeldTimer.is_stopped():
+		$DirectionHeldTimer.start()
+		direction_timeout = false
+	
+#	print(direction_timeout)d
+	
+	if jump() or direction_timeout:
+		is_wall_running = false
+		boots_timeout = false
+		direction_timeout = false
+		$BootsCooldownTimer.start()
+		return
+	
+	if  not ($WallCast.is_colliding() and rotation != 0.0):
+		velocity.y -= 114.0
+		is_wall_running = false
+		boots_timeout = false
+		direction_timeout = false
+		$BootsCooldownTimer.start()
+		return
+	
+	if boots_timeout:
+		boots_timeout = false
+		is_wall_running = false
+		direction_timeout = false
+		can_wall_run = false
+		return
+	
+	velocity.y = lerpf(velocity.y, -MAX_WALL_RUN_SPEED if not hold_away else -MAX_WALL_RUN_SPEED*0.5, delta * ACCELERATION)
+	velocity.x = wall_direction * 20.0
+	
+	sprite.animation = "run"
+	sprite.speed_scale = 0.8 * abs(velocity.y) / MAX_RUN_SPEED + 0.2
+	$StepPlayer.pitch_scale = abs(velocity.y) / MAX_RUN_SPEED * 0.2 + 1.0
+	
+	move_and_slide()
 
 
 func minecart_move(delta):
@@ -298,11 +385,18 @@ func overworld_move(delta):
 
 func jump() -> bool:
 	if (
-		((is_on_floor() or is_climbing) and $JumpBufferEarly.time_left > 0.0 and not is_minecarting) or
-		(not is_on_floor() and $JumpBufferLate.time_left > 0.0 and Input.is_action_just_pressed("do_jump") and not jumped and not is_minecarting) or 
-		(is_minecarting and $JumpBufferEarly.time_left > 0.0)
+		((is_on_floor() or is_climbing) and $JumpBufferEarly.time_left > 0.0 and not is_minecarting and not is_wall_running) or
+		(not is_on_floor() and $JumpBufferLate.time_left > 0.0 and Input.is_action_just_pressed("do_jump") and not jumped and not is_minecarting and not is_wall_running) or 
+		(is_minecarting and $JumpBufferEarly.time_left > 0.0) or 
+		(is_wall_running and $JumpBufferEarly.time_left > 0.0)
 	):
-		velocity.y = jump_velocity
+		if is_wall_running:
+			var up_factor = -direction_y
+			if not direction_y:
+				up_factor = 0.8
+			velocity = 1.28 * jump_velocity * Vector2(wall_direction * 0.68, up_factor).normalized()
+		else:
+			velocity.y = jump_velocity
 		$JumpPlayer.play()
 		
 		if is_climbing:
@@ -317,7 +411,7 @@ func jump() -> bool:
 		$ClimbWait.start()
 		
 	if Input.is_action_just_released("do_jump") and hold_jump:
-		if velocity.y < 0:
+		if velocity.y < 0 and not is_wall_running:
 			velocity.y += pow(abs(velocity.y) / jump_velocity, 2) * abs(jump_velocity * 0.8)
 		hold_jump = false
 
@@ -369,8 +463,13 @@ func play_step_sound(type: int):
 
 func reset():
 	velocity = Vector2.ZERO
+	$StepPlayer.pitch_scale = 1.0
 	$JumpBufferEarly.stop()
 	$JumpBufferLate.stop()
+	$BootsTimer.stop()
+	$BootsCooldownTimer.stop()
+	$DirectionHeldTimer.stop()
+	direction_timeout = false
 	$ClimbWait.stop()
 	is_minecarting = false
 	is_entering_minecart = false
@@ -378,7 +477,12 @@ func reset():
 	$Minecart.visible = false
 	$CartShape.disabled = true
 	$PlayerShape.disabled = false
+	$WallCast.enabled = true
 	sprite.offset = Vector2.ZERO
+	rotation = 0.0
+	is_wall_running = false
+	can_wall_run = true
+	boots_timeout = false
 
 
 func _on_ladder_area_entered(area):
@@ -445,3 +549,18 @@ func _on_animation_player_animation_finished(anim_name):
 		freeze = false
 		velocity.x = minecart_direction * MINECART_START_SPEED
 		velocity.y = -10.0
+
+
+func _on_boots_timer_timeout():
+#	is_wall_running = false
+	boots_timeout = true
+	can_wall_run = false
+	$MinecartPlayer.play()
+
+
+func _on_boots_cooldown_timer_timeout():
+	can_wall_run = true
+
+
+func _on_direction_held_timer_timeout():
+	direction_timeout = true

@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://0q82rlo7owgb"]
+
+[ext_resource type="Script" path="res://Platforming/Upgrades/Boots.gd" id="1_xh3at"]
+[ext_resource type="Texture2D" uid="uid://dhev01jqjfmj1" path="res://Textures/Upgrades/Boots.png" id="2_1hkov"]
+[ext_resource type="AnimationLibrary" uid="uid://b1bg48mmxgsis" path="res://Platforming/Interact/HoverAnimations.tres" id="3_lxy15"]
+[ext_resource type="AudioStream" uid="uid://kf8ta061h37g" path="res://Sounds/egg/confirm.ogg" id="4_2vxj1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wtj7w"]
+size = Vector2(8, 10)
+
+[node name="Boots" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_xh3at")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_wtj7w")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_1hkov")
+offset = Vector2(0, -2)
+
+[node name="SpinPlayer" type="AnimationPlayer" parent="."]
+autoplay = "HoverAnimations/spin"
+speed_scale = 2.0
+libraries = {
+"HoverAnimations": ExtResource("3_lxy15")
+}
+
+[node name="HoverPlayer" type="AnimationPlayer" parent="."]
+autoplay = "HoverAnimations/hover"
+speed_scale = 2.33
+libraries = {
+"HoverAnimations": ExtResource("3_lxy15")
+}
+
+[node name="PickUpPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_2vxj1")
+volume_db = -10.0
+bus = &"Effects"
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
