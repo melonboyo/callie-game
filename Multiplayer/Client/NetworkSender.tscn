@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bclltifdrhwnf"]
+
+[ext_resource type="Script" path="res://Multiplayer/Client/NetworkSender.gd" id="1_p14am"]
+[ext_resource type="Script" path="res://Multiplayer/TickTimer.gd" id="2_sgq4k"]
+
+[node name="NetworkSender" type="Node2D"]
+script = ExtResource("1_p14am")
+
+[node name="TickTimer" type="Node" parent="."]
+script = ExtResource("2_sgq4k")
+
+[connection signal="tick" from="TickTimer" to="." method="_on_tick_timer_tick"]

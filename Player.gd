@@ -143,7 +143,7 @@ func _physics_process(delta):
 		animate()
 		return
 	
-	collision_mask = 9
+	set_collision_mask_value(4, true)
 	
 	animate_pick_up(delta)
 	
@@ -201,7 +201,7 @@ func _physics_process(delta):
 	if is_climbing:
 		climb_move(delta)
 		if is_climbing:
-			collision_mask = 1
+			set_collision_mask_value(4, false)
 			move_and_slide()
 			return
 	
@@ -463,6 +463,14 @@ func animate():
 		sprite.play("look_up")
 	else:
 		sprite.play("idle")
+
+
+func get_animation():
+	return {
+		animation = sprite.animation,
+		flip_h = sprite.flip_h,
+		offset_y = sprite.offset.y,
+	}
 
 
 func animate_pick_up(delta):

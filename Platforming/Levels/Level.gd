@@ -8,7 +8,6 @@ class_name Level
 
 
 func _ready():
-	PaletteSwitch.current_palette = 12
 	PaletteSwitch.set_fade(-0.9)
 	player.freeze = true
 	level_specific_ready()

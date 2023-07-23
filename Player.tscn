@@ -79,7 +79,7 @@ tracks/0/path = NodePath("PlayerSprite:offset")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.15, 0.35, 0.51),
+"times": PackedFloat32Array(0, 0.15, 0.36, 0.51),
 "transitions": PackedFloat32Array(0.5, 2, 2.54912, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(0, -17), Vector2(0, -17), Vector2(0, -3)]
@@ -122,7 +122,7 @@ tracks/3/keys = {
 }
 tracks/4/type = "audio"
 tracks/4/imported = false
-tracks/4/enabled = true
+tracks/4/enabled = false
 tracks/4/path = NodePath("MinecartPlayer")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
@@ -142,7 +142,7 @@ _data = {
 "enter_minecart": SubResource("Animation_fes0p")
 }
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 texture_filter = 1
 use_parent_material = true
 collision_layer = 3
