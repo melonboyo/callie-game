@@ -200,6 +200,10 @@ bus = &"Effects"
 volume_db = -11.0
 bus = &"Effects"
 
+[node name="MinecartPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -11.0
+bus = &"Effects"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_3i2rj")

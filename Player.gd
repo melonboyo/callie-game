@@ -65,6 +65,7 @@ var first_climb_frame = false
 var climb_x = 0.0
 
 var was_on_floor = true
+var jumped_last_frame = false
 var jumped = false
 
 var freeze = false
@@ -165,15 +166,16 @@ func _physics_process(delta):
 		return
 	
 	if not is_on_floor():
-		if was_on_floor and not jumped:
+		if was_on_floor and not jumped_last_frame:
 			$JumpBufferLate.start()
-		jumped = false
+		jumped_last_frame = false
 		velocity.y += gravity * delta
 
 	var desired_velocity
 	var acceleration
 	
 	if is_on_floor():
+		jumped = false
 		desired_velocity = direction_x * MAX_RUN_SPEED
 		acceleration = ACCELERATION
 		
@@ -215,7 +217,7 @@ func climb_move(delta):
 	velocity.x = 0.0
 	
 	if direction_y:
-		velocity.y = lerpf(velocity.y, direction_y * MAX_CLIMB_SPEED, delta * CLIMB_ACCELERATION)
+		velocity.y = lerpf(velocity.y, (direction_y * 1.2 + 0.2) * MAX_CLIMB_SPEED, delta * CLIMB_ACCELERATION)
 	else:
 		velocity.y = lerpf(velocity.y, 0.0, delta * CLIMB_ACCELERATION)
 		if abs(velocity.y) < 8.0:
@@ -284,10 +286,9 @@ func overworld_move(delta):
 
 
 func jump() -> bool:
-	var jumped = false
 	if (
 		((is_on_floor() or is_climbing) and $JumpBufferEarly.time_left > 0.0) or
-		(not is_on_floor() and $JumpBufferLate.time_left > 0.0 and Input.is_action_just_pressed("do_jump")) or 
+		(not is_on_floor() and $JumpBufferLate.time_left > 0.0 and Input.is_action_just_pressed("do_jump") and not jumped) or 
 		(is_minecarting and Input.is_action_just_pressed("do_jump"))
 	):
 		velocity.y = jump_velocity
@@ -299,10 +300,10 @@ func jump() -> bool:
 		hold_jump = true
 		$JumpBufferEarly.stop()
 		$JumpBufferLate.stop()
+		jumped_last_frame = true
 		jumped = true
 		is_climbing = false
 		$ClimbWait.start()
-		jumped = true
 		
 	if Input.is_action_just_released("do_jump") and hold_jump:
 		if velocity.y < 0:

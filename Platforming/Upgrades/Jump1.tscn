@@ -1,48 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://6ro1or50hq7c"]
+[gd_scene load_steps=6 format=3 uid="uid://6ro1or50hq7c"]
 
 [ext_resource type="Script" path="res://Platforming/Upgrades/Jump1.gd" id="1_fxy6n"]
 [ext_resource type="Texture2D" uid="uid://y0ngi7uqwopk" path="res://Textures/Upgrades/Jump1.png" id="1_mbp5m"]
+[ext_resource type="AnimationLibrary" uid="uid://b1bg48mmxgsis" path="res://Platforming/Interact/HoverAnimations.tres" id="3_1yov4"]
+[ext_resource type="AudioStream" uid="uid://kf8ta061h37g" path="res://Sounds/egg/confirm.ogg" id="3_xg8yb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wtj7w"]
 size = Vector2(8, 10)
-
-[sub_resource type="Animation" id="Animation_x7ugq"]
-length = 0.001
-
-[sub_resource type="Animation" id="Animation_c7yau"]
-resource_name = "spin"
-length = 8.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 4),
-"transitions": PackedFloat32Array(-2, -2),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(-1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:offset")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 2, 4, 6),
-"transitions": PackedFloat32Array(-2, -2, -2, -2),
-"update": 0,
-"values": [Vector2(0, -2), Vector2(0, 2), Vector2(0, -2), Vector2(0, 2)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_6ex80"]
-_data = {
-"RESET": SubResource("Animation_x7ugq"),
-"spin": SubResource("Animation_c7yau")
-}
 
 [node name="Jump1" type="Node2D"]
 texture_filter = 1
@@ -59,10 +23,23 @@ shape = SubResource("RectangleShape2D_wtj7w")
 texture = ExtResource("1_mbp5m")
 offset = Vector2(0, -2)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "spin"
+[node name="SpinPlayer" type="AnimationPlayer" parent="."]
+autoplay = "HoverAnimations/spin"
+speed_scale = 2.0
 libraries = {
-"": SubResource("AnimationLibrary_6ex80")
+"HoverAnimations": ExtResource("3_1yov4")
 }
+
+[node name="HoverPlayer" type="AnimationPlayer" parent="."]
+autoplay = "HoverAnimations/hover"
+speed_scale = 2.33
+libraries = {
+"HoverAnimations": ExtResource("3_1yov4")
+}
+
+[node name="PickUpPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_xg8yb")
+volume_db = -10.0
+bus = &"Effects"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://xnikro5wkiyl"]
+[gd_scene load_steps=19 format=3 uid="uid://xnikro5wkiyl"]
 
 [ext_resource type="Script" path="res://Overworld/Overworld.gd" id="1_vil6b"]
 [ext_resource type="Texture2D" uid="uid://cw78vjkinpu" path="res://Textures/black.png" id="1_xslx0"]
@@ -6057,6 +6057,12 @@ pattern_0 = SubResource("TileMapPattern_an67e")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bldxq"]
 size = Vector2(112, 80)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jxope"]
+size = Vector2(304, 208)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lkuv8"]
+size = Vector2(384, 64)
+
 [node name="Overworld" type="Node2D"]
 y_sort_enabled = true
 texture_filter = 1
@@ -6121,6 +6127,15 @@ position = Vector2(-320, 24)
 shape = SubResource("RectangleShape2D_bldxq")
 debug_color = Color(0.305882, 0.627451, 0, 0.419608)
 
+[node name="Exit3" type="Area2D" parent="."]
+position = Vector2(1192, 416)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Exit3"]
+shape = SubResource("RectangleShape2D_bldxq")
+debug_color = Color(0.305882, 0.627451, 0, 0.419608)
+
 [node name="Spawns" type="Node2D" parent="."]
 
 [node name="0" type="Node2D" parent="Spawns"]
@@ -6132,7 +6147,31 @@ position = Vector2(-736, -56)
 [node name="2" type="Node2D" parent="Spawns"]
 position = Vector2(-320, 24)
 
+[node name="3" type="Node2D" parent="Spawns"]
+position = Vector2(1192, 440)
+
+[node name="WorldBorders" type="StaticBody2D" parent="."]
+modulate = Color(0, 0.85098, 1, 0.701961)
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WorldBorders"]
+polygon = PackedVector2Array(-1136, 232, -1352, 240, -1520, 160, -1576, -88, -1448, -272, -1240, -376, -992, -352, -784, -304, -640, -200, -600, -112, -592, 80, -792, 200, -1120, 224, -1112, 360, -488, 320, -512, -432, -1656, -384, -1624, 368, -1112, 360, -1120, 224)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="WorldBorders"]
+polygon = PackedVector2Array(-384, -176, -208, -304, 24, -376, 192, -464, 296, -480, 464, -464, 504, -368, 536, -256, 648, -256, 624, -680, -504, -632, -464, 384, 296, 384, 288, 304, 16, 320, -176, 320, -328, 264, -368, 64, -376, -64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBorders"]
+position = Vector2(1192, 264)
+shape = SubResource("RectangleShape2D_jxope")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="WorldBorders"]
+position = Vector2(1192, 264)
+shape = SubResource("RectangleShape2D_lkuv8")
+
 [connection signal="body_entered" from="Exit1" to="." method="_on_start_level_1_body_entered" binds= [1]]
 [connection signal="body_exited" from="Exit1" to="." method="_on_start_level_1_body_exited"]
 [connection signal="body_entered" from="Exit2" to="." method="_on_start_level_1_body_entered" binds= [2]]
 [connection signal="body_exited" from="Exit2" to="." method="_on_start_level_1_body_exited"]
+[connection signal="body_entered" from="Exit3" to="." method="_on_start_level_2_body_entered" binds= [3]]
+[connection signal="body_exited" from="Exit3" to="." method="_on_start_level_1_body_exited"]

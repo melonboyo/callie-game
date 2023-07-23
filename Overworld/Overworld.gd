@@ -8,12 +8,6 @@ var level = 1
 @onready var player = $Player
 
 
-func _on_start_level_1_body_entered(body, exit):
-	level = 1
-	GameState.exit = exit
-	on_level = true
-
-
 func _on_start_level_1_body_exited(body):
 	on_level = false
 
@@ -37,4 +31,18 @@ func _process(delta):
 		entering_level = true
 		PaletteSwitch.fade_out()
 		await get_tree().create_timer(1.4).timeout
-		get_tree().change_scene_to_packed(Levels.levels[1])
+		get_tree().change_scene_to_packed(Levels.levels[level])
+
+
+func _on_start_level_1_body_entered(body, exit):
+	level = 1
+	GameState.current_level = 1
+	GameState.exit = exit
+	on_level = true
+
+
+func _on_start_level_2_body_entered(body, exit):
+	level = 2
+	GameState.current_level = 2
+	GameState.exit = exit
+	on_level = true

@@ -3,17 +3,24 @@ class_name Level
 
 
 @onready var player: Player = $Player
+@export var testing = false
+@onready var overworld := load("res://Overworld/Overworld.tscn")
 
 
 func _ready():
 	PaletteSwitch.current_palette = 12
 	PaletteSwitch.set_fade(-0.9)
 	player.freeze = true
+	level_specific_ready()
 	player.position = %SpawnPoint.position
 	Music.play(Music.Track.Forest)
 	await get_tree().create_timer(0.5).timeout
 	PaletteSwitch.fade_in()
 	player.freeze = false
+
+
+func level_specific_ready():
+	pass
 
 
 func _on_death_zone_body_entered(body):
@@ -26,7 +33,7 @@ func _on_death_zone_body_entered(body):
 
 
 func _on_exit_level_timer_timeout():
-	get_tree().change_scene_to_packed(Levels.overworld)
+	get_tree().change_scene_to_packed(overworld)
 
 
 func _on_exit_level(body, exit, direction):
@@ -36,3 +43,7 @@ func _on_exit_level(body, exit, direction):
 	Music.stop()
 	$ExitLevelTimer.start()
 	PaletteSwitch.fade_out()
+
+
+func _on_open_door():
+	$OpenDoorPlayer.play()

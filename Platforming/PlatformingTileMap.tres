@@ -1,6 +1,18 @@
-[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://db3o7hft2nja2"]
+[gd_resource type="TileSet" load_steps=9 format=3 uid="uid://db3o7hft2nja2"]
 
 [ext_resource type="Texture2D" uid="uid://dh3rsl2baf0jj" path="res://Textures/platforming_tile_sheet.png" id="1_e7pc0"]
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_iergc"]
+tile_data = PackedInt32Array(0, 983041, 10, 65536, 983041, 10, 131072, 983041, 10, 2, 1114113, 10, 65538, 1114113, 10, 131074, 1114113, 10)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_mnnfc"]
+tile_data = PackedInt32Array(65536, 1245186, 10, 131072, 1114114, 10, 196608, 1114114, 10, 262144, 1245186, 9, 1, 1245186, 10, 65537, 393218, 13, 262145, 393218, 12, 327681, 1245186, 9, 2, 1048578, 11, 327682, 1048578, 9, 3, 1048578, 11, 327683, 1048578, 9, 4, 1245186, 11, 65540, 327682, 13, 262148, 327682, 12, 327684, 1245186, 12, 65541, 1245186, 11, 131077, 983042, 10, 196613, 983042, 10, 262149, 1245186, 12)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_vytsy"]
+tile_data = PackedInt32Array(65536, 1245186, 10, 131072, 1114114, 10, 196608, 1114114, 10, 262144, 1245186, 9, 1, 1245186, 10, 65537, 393218, 13, 262145, 393218, 12, 327681, 1245186, 9, 2, 1048578, 11, 327682, 1048578, 9, 3, 1245186, 11, 65539, 983042, 10, 131075, 983042, 10, 196611, 983042, 10, 262147, 983042, 10, 327683, 1245186, 12, 4, 1245186, 10, 65540, 1114114, 10, 131076, 1114114, 10, 196612, 1114114, 10, 262148, 1114114, 10, 327684, 1245186, 9, 5, 1048578, 11, 327685, 1048578, 9, 6, 1245186, 11, 65542, 327682, 13, 262150, 327682, 12, 327686, 1245186, 12, 65543, 1245186, 11, 131079, 983042, 10, 196615, 983042, 10, 262151, 1245186, 12)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_jwajm"]
+tile_data = PackedInt32Array(0, 1, 9, 65536, 1, 10, 1, 131073, 9, 65537, 131073, 10)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0ddi4"]
 
@@ -3121,7 +3133,7 @@ texture = ExtResource("1_e7pc0")
 16:10/0 = 0
 16:10/0/terrain_set = 0
 16:10/0/terrain = 1
-16:10/0/probability = 0.2
+16:10/0/probability = 0.0
 16:10/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 16:10/0/physics_layer_0/angular_velocity = 0.0
 16:10/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -4213,7 +4225,7 @@ texture = ExtResource("1_e7pc0")
 16:14/0 = 0
 16:14/0/terrain_set = 0
 16:14/0/terrain = 3
-16:14/0/probability = 0.2
+16:14/0/probability = 0.0
 16:14/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 16:14/0/physics_layer_0/angular_velocity = 0.0
 16:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -6408,7 +6420,6 @@ texture = ExtResource("1_e7pc0")
 21:9/0 = 0
 21:9/0/terrain_set = 0
 21:9/0/terrain = 1
-21:9/0/probability = 0.8
 21:9/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 21:9/0/physics_layer_0/angular_velocity = 0.0
 21:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -6524,7 +6535,6 @@ texture = ExtResource("1_e7pc0")
 21:13/0 = 0
 21:13/0/terrain_set = 0
 21:13/0/terrain = 3
-21:13/0/probability = 0.8
 21:13/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 21:13/0/physics_layer_0/angular_velocity = 0.0
 21:13/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -11454,3 +11464,7 @@ custom_data_layer_0/name = ""
 custom_data_layer_0/type = 0
 sources/1 = SubResource("TileSetAtlasSource_kchof")
 sources/2 = SubResource("TileSetAtlasSource_ori3t")
+pattern_0 = SubResource("TileMapPattern_iergc")
+pattern_1 = SubResource("TileMapPattern_mnnfc")
+pattern_2 = SubResource("TileMapPattern_vytsy")
+pattern_3 = SubResource("TileMapPattern_jwajm")

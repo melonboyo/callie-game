@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://bv5hsltudnhie"]
+[gd_scene load_steps=6 format=3 uid="uid://bv5hsltudnhie"]
 
 [ext_resource type="Script" path="res://Globals/PaletteSwitch.gd" id="1_3r7hx"]
 [ext_resource type="Shader" path="res://Globals/PaletteShader.gdshader" id="1_bhd5b"]
-[ext_resource type="Texture2D" uid="uid://dvh37riy0w35y" path="res://Textures/Palettes/dither.png" id="2_bdrja"]
 [ext_resource type="Texture2D" uid="uid://bq8eiq2wb4j5w" path="res://Textures/Palettes/12.png" id="2_n26uh"]
 [ext_resource type="Texture2D" uid="uid://dlg5pvh16kxt4" path="res://Textures/Palettes/bayer2tile16.png" id="3_vuvxt"]
 
@@ -14,7 +13,6 @@ shader_parameter/u_offset = 0.0
 shader_parameter/u_dither_size = 1
 shader_parameter/palette = ExtResource("2_n26uh")
 shader_parameter/u_dither_tex = ExtResource("3_vuvxt")
-shader_parameter/dither_palette = ExtResource("2_bdrja")
 
 [node name="PaletteSwitch" type="Control"]
 z_index = 90

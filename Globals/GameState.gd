@@ -12,13 +12,26 @@ var upgrade_scenes := {
 }
 
 var acquired_upgrades = {
-	Upgrade.Jump1: false,
-	Upgrade.Minecart: true,
+	Upgrade.Jump1: true,
+	Upgrade.Minecart: false,
+}
+
+var opened_doors = {
+	1: [
+		false,
+	],
+	2: [
+		false,
+		false,
+		false,
+	]
 }
 
 var has_key = false
 
 var exit = 0
+var current_level = 1
+var current_checkpoint = 0
 
 
 func get_upgrade(ug: GameState.Upgrade):

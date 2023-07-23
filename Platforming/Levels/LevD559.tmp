@@ -518,18 +518,13 @@ position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_pk1ho")
 debug_color = Color(0.760784, 0.45098, 0, 0.419608)
 
-[node name="Keys" type="Node2D" parent="Interactives"]
-
-[node name="Key" parent="Interactives/Keys" instance=ExtResource("4_6g5di")]
+[node name="Key" parent="Interactives" instance=ExtResource("4_6g5di")]
 position = Vector2(152, -432)
 
 [node name="Jump1" parent="Interactives" instance=ExtResource("8_kfkjr")]
 position = Vector2(-1512, -392)
 
-[node name="KeyDoors" type="Node2D" parent="Interactives"]
-unique_name_in_owner = true
-
-[node name="KeyDoor" parent="Interactives/KeyDoors" instance=ExtResource("6_0d5tp")]
+[node name="KeyDoor" parent="Interactives" instance=ExtResource("6_0d5tp")]
 
 [node name="Checkpoints" type="Node2D" parent="."]
 script = ExtResource("6_m5727")
@@ -733,8 +728,8 @@ bus = &"Effects"
 [connection signal="body_exited" from="CameraZones/CameraZone16" to="CameraZones/CameraZone16" method="_on_body_exited"]
 [connection signal="camera_zone_entered" from="CameraZones/CameraZone16" to="Focus" method="_on_camera_zone_entered"]
 [connection signal="camera_zone_exited" from="CameraZones/CameraZone16" to="Focus" method="_on_camera_zone_exited"]
-[connection signal="key_picked_up" from="Interactives/Keys/Key" to="Player" method="_on_key_key_picked_up"]
-[connection signal="open_door" from="Interactives/KeyDoors/KeyDoor" to="." method="_on_open_door"]
+[connection signal="key_picked_up" from="Interactives/Key" to="Player" method="_on_key_key_picked_up"]
+[connection signal="open_door" from="Interactives/KeyDoor" to="." method="_on_open_door"]
 [connection signal="body_entered" from="Checkpoints/0/Area2D" to="Checkpoints/0" method="_on_body_entered_checkpoint"]
 [connection signal="body_entered" from="Checkpoints/1/Area2D" to="Checkpoints/1" method="_on_body_entered_checkpoint"]
 [connection signal="body_entered" from="Checkpoints/2/Area2D" to="Checkpoints/2" method="_on_body_entered_checkpoint"]
