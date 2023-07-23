@@ -33,6 +33,9 @@ var fade_out_immediate = false
 
 
 func _ready():
+	if DisplayServer.get_name() == "headless":
+		queue_free()
+		return
 	if Engine.is_editor_hint():
 		return
 	material.set_shader_parameter("palette", palettes[current_palette])
