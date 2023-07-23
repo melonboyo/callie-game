@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://d25sgbwsojswi"]
+
+[ext_resource type="Script" path="res://Multiplayer/Client/NetworkPlayerSpawner.gd" id="1_276a6"]
+
+[node name="NetworkPlayerSpawner" type="Node2D"]
+script = ExtResource("1_276a6")
+
+[node name="Players" type="Node2D" parent="."]
