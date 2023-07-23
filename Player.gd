@@ -14,7 +14,7 @@ const LOOK_OFFSET = 32.0
 const OVERWORLD_SPEED = 87.0
 const MINECART_START_SPEED = 210.0
 const MINECART_SPEED = 170.0
-const BOOTS_BOOST = 110.0
+const BOOTS_BOOST = 30.0
 
 var step_sounds_grass := [
 	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_grass_000.ogg"),
@@ -291,25 +291,31 @@ func boots_move(delta):
 #	print(direction_timeout)d
 	
 	if jump() or direction_timeout:
-		is_wall_running = false
+		if is_minecarting:
+			stop_minecarting()
 		boots_timeout = false
 		direction_timeout = false
 		$BootsCooldownTimer.start()
+		is_wall_running = false	
 		return
 	
 	if  not ($WallCast.is_colliding() and rotation != 0.0):
-		velocity.y -= 114.0
-		is_wall_running = false
+		velocity.y -= 95.0
 		boots_timeout = false
+		if is_minecarting:
+			stop_minecarting()
 		direction_timeout = false
 		$BootsCooldownTimer.start()
+		is_wall_running = false	
 		return
 	
 	if boots_timeout:
 		boots_timeout = false
-		is_wall_running = false
 		direction_timeout = false
 		can_wall_run = false
+		if is_minecarting:
+			stop_minecarting()
+		is_wall_running = false
 		return
 	
 	velocity.y = lerpf(velocity.y, -MAX_WALL_RUN_SPEED if not hold_away else -MAX_WALL_RUN_SPEED*0.5, delta * ACCELERATION)
@@ -322,19 +328,27 @@ func boots_move(delta):
 	move_and_slide()
 
 
+func stop_minecarting():
+	$Minecart.visible = false
+	$CartShape.disabled = true
+	$PlayerShape.disabled = false
+	$MinecartPlayer.play()
+	$CartDrivingPlayer.stop()
+	var minecart_instance = rigid_minecart.instantiate()
+	if is_wall_running:
+		minecart_instance.linear_velocity.y = velocity.y
+	else:
+		minecart_instance.linear_velocity.x = velocity.x
+	minecart_instance.position = position
+	minecart_instance.rotation = rotation
+	get_parent().add_child(minecart_instance)
+	is_minecarting = false
+
+
 func minecart_move(delta):
 	if jump():
-		$Minecart.visible = false
-		$CartShape.disabled = true
-		$PlayerShape.disabled = false
+		stop_minecarting()
 		$MinecartPlayer.stream = load("res://Sounds/sfx/BUMP.ogg")
-		$MinecartPlayer.play()
-		$CartDrivingPlayer.stop()
-		var minecart_instance = rigid_minecart.instantiate()
-		minecart_instance.linear_velocity.x = velocity.x
-		minecart_instance.position = position
-		get_parent().add_child(minecart_instance)
-		is_minecarting = false
 		return
 	velocity.x = lerpf(velocity.x, minecart_direction * MINECART_SPEED, delta * ACCELERATION)
 	if not is_on_floor():
@@ -348,7 +362,14 @@ func minecart_move(delta):
 		$CartDrivingPlayer.volume_db = remap(abs(velocity.x), 0.0, MINECART_START_SPEED, -80.0, -11.0)
 		$CartDrivingPlayer.pitch_scale = remap(abs(velocity.x), 0.0, MINECART_START_SPEED, 1.2, 1.8)
 	
-	sprite.offset.y = move_toward(sprite.offset.y, -3.0 - (abs(clampf(velocity.y, 0.0, MAX_FALL_SPEED)) / abs(MAX_FALL_SPEED)) * 32.0, delta * 17.0)
+	var down_velocity = velocity.y
+	if is_wall_running:
+		if wall_direction > 0:
+			down_velocity = velocity.x
+		else:
+			down_velocity = -velocity.x
+	
+	sprite.offset.y = move_toward(sprite.offset.y, -3.0 - (abs(clampf(down_velocity, 0.0, MAX_FALL_SPEED)) / abs(MAX_FALL_SPEED)) * 32.0, delta * 17.0)
 	if velocity.y <= 0.5:
 		sprite.offset.y = -3.0
 	
@@ -471,7 +492,8 @@ func reset():
 	$DirectionHeldTimer.stop()
 	direction_timeout = false
 	$ClimbWait.stop()
-	is_minecarting = false
+	if is_minecarting:
+		stop_minecarting()
 	is_entering_minecart = false
 	is_climbing = false
 	$Minecart.visible = false
