@@ -37,6 +37,7 @@ func _process(delta):
 		entering_level = true
 		PaletteSwitch.fade_out()
 		await get_tree().create_timer(1.4).timeout
+		
 		get_tree().change_scene_to_packed(Levels.levels[level])
 
 

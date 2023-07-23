@@ -8,6 +8,9 @@ func _enter_tree():
 
 func level_specific_ready():
 	Music.play(Music.Track.Castle)
+	for c in %KeyDoors.get_children():
+		if GameState.opened_doors[1][c.id]:
+			c.queue_free()
 	if testing:
 		return
 	if GameState.exit == 3:

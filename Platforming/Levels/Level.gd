@@ -4,7 +4,7 @@ class_name Level
 
 @onready var player: Player = $Player
 @export var testing = false
-@onready var overworld := load("res://Overworld/Overworld.tscn")
+@onready var overworld := preload("res://Overworld/Overworld.tscn")
 
 
 func _ready():

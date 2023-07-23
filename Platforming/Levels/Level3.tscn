@@ -236,7 +236,7 @@ debug_color = Color(0.352941, 0.619608, 0, 0.419608)
 
 [node name="SpawnPoint" type="Node2D" parent="Checkpoints"]
 unique_name_in_owner = true
-position = Vector2(-376, -72)
+position = Vector2(-1112, -8)
 
 [node name="ExitLevel4" type="Area2D" parent="."]
 position = Vector2(-1344, -88)
