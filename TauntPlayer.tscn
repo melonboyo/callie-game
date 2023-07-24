@@ -7,3 +7,5 @@ script = ExtResource("1_qsu5r")
 
 [node name="TauntPlayer" type="AudioStreamPlayer2D" parent="."]
 max_distance = 300.0
+panning_strength = 2.0
+bus = &"Taunt"
