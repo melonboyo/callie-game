@@ -59,7 +59,6 @@ collision_layer = 7
 
 [node name="Checkpoints" type="Node2D" parent="."]
 script = ExtResource("6_5ca4y")
-checkpoint = 5
 
 [node name="0" type="Node2D" parent="Checkpoints"]
 position = Vector2(-1112, -8)
@@ -141,7 +140,7 @@ debug_color = Color(0.352941, 0.619608, 0, 0.419608)
 
 [node name="SpawnPoint" type="Node2D" parent="Checkpoints"]
 unique_name_in_owner = true
-position = Vector2(1616, -808)
+position = Vector2(-1112, -8)
 
 [node name="Focus" type="Node2D" parent="."]
 position = Vector2(0, -48)
@@ -337,11 +336,16 @@ bus = &"Effects"
 
 [connection signal="set_cam_look_offset" from="Player" to="Focus" method="_on_player_set_cam_look_offset"]
 [connection signal="body_entered" from="Checkpoints/0/Area2D" to="Checkpoints/0" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Checkpoints/0/Area2D" to="Checkpoints/0" method="_on_body_entered_checkpoint"]
 [connection signal="body_entered" from="Checkpoints/1/Area2D" to="Checkpoints/1" method="_on_area_2d_body_entered"]
-[connection signal="body_entered" from="Checkpoints/2/Area2D" to="Checkpoints/2" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Checkpoints/1/Area2D" to="Checkpoints/1" method="_on_body_entered_checkpoint"]
+[connection signal="body_entered" from="Checkpoints/2/Area2D" to="Checkpoints/2" method="_on_body_entered_checkpoint"]
 [connection signal="body_entered" from="Checkpoints/3/Area2D" to="Checkpoints/3" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Checkpoints/3/Area2D" to="Checkpoints/3" method="_on_body_entered_checkpoint"]
 [connection signal="body_entered" from="Checkpoints/4/Area2D" to="Checkpoints/4" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Checkpoints/4/Area2D" to="Checkpoints/4" method="_on_body_entered_checkpoint"]
 [connection signal="body_entered" from="Checkpoints/5/Area2D" to="Checkpoints/5" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Checkpoints/5/Area2D" to="Checkpoints/5" method="_on_body_entered_checkpoint"]
 [connection signal="body_entered" from="DeathZone" to="." method="_on_death_zone_body_entered"]
 [connection signal="body_entered" from="CameraZones/CameraZone0" to="CameraZones/CameraZone0" method="_on_body_entered"]
 [connection signal="body_exited" from="CameraZones/CameraZone0" to="CameraZones/CameraZone0" method="_on_body_exited"]

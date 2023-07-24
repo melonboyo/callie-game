@@ -150,6 +150,7 @@ collision_layer = 3
 collision_mask = 9
 velocity = Vector2(210, -10)
 floor_max_angle = 0.872665
+platform_wall_layers = 4294967295
 script = ExtResource("1_8fvrf")
 jump_height = 1
 
