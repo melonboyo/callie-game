@@ -1,15 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://bo1xhn2kyap4e"]
+[gd_scene load_steps=11 format=3 uid="uid://bo1xhn2kyap4e"]
 
 [ext_resource type="Script" path="res://Player/Player.gd" id="1_c8vp1"]
-[ext_resource type="Texture2D" uid="uid://b5fy36lb6bsgl" path="res://Textures/Player/Minecart/MinecartFront.png" id="2_8ytpm"]
-[ext_resource type="Texture2D" uid="uid://cffgae45ornex" path="res://Textures/Player/Minecart/MinecartBack.png" id="3_duxf3"]
+[ext_resource type="PackedScene" uid="uid://y4bpuo43hccc" path="res://Player/PlayerInMinecartSprite.tscn" id="2_cn2cf"]
+[ext_resource type="PackedScene" uid="uid://bmc1y5wail57b" path="res://Player/PlayerAudioPlayer.tscn" id="4_os2fd"]
 [ext_resource type="PackedScene" uid="uid://bu42bi3m5khvm" path="res://Player/PlayerSprite.tscn" id="4_v0ywq"]
-[ext_resource type="AudioStream" uid="uid://dgtii8fgp3k1" path="res://Sounds/egg/jump.ogg" id="5_31arw"]
-[ext_resource type="AudioStream" uid="uid://b2bo1cywfep7t" path="res://Sounds/kenney_impact-sounds/Audio/footstep_grass_000.ogg" id="6_gaksd"]
-[ext_resource type="AudioStream" uid="uid://bxr3xhjfa3xc5" path="res://Sounds/sfx/BUMP.ogg" id="7_4bue8"]
-[ext_resource type="AudioStream" uid="uid://tna7tn4j5gfs" path="res://Sounds/pine/rocket_launch.ogg" id="8_os1xt"]
-[ext_resource type="AudioStream" uid="uid://b6rk7ok2afbyb" path="res://Sounds/sfx/temporary minecraft sound.ogg" id="9_tpwh4"]
-[ext_resource type="AudioStream" uid="uid://hkypt0cfbkxx" path="res://Sounds/pine/jump2.ogg" id="10_ogvyt"]
+[ext_resource type="Animation" uid="uid://b54fx3sf8g71j" path="res://Player/enter_minecart.res" id="9_hwl32"]
 [ext_resource type="PackedScene" uid="uid://ch0xiyevyghu7" path="res://Player/TauntPlayer.tscn" id="11_dqjnj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2514i"]
@@ -69,78 +64,10 @@ tracks/3/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_fes0p"]
-resource_name = "enter_minecart"
-length = 0.57
-step = 0.03
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerSprite:offset")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.15, 0.36, 0.51),
-"transitions": PackedFloat32Array(0.5, 2, 2.54912, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, -17), Vector2(0, -17), Vector2(0, -3)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("PlayerSprite:animation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.21, 0.51),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [&"jump", &"fall", &"minecarting"]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Minecart:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.18),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Minecart:modulate")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.42),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(1, 1, 1, 1)]
-}
-tracks/4/type = "audio"
-tracks/4/imported = false
-tracks/4/enabled = false
-tracks/4/path = NodePath("MinecartPlayer")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"clips": [{
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource("10_ogvyt")
-}],
-"times": PackedFloat32Array(0.03)
-}
-tracks/4/use_blend = true
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3i2rj"]
 _data = {
 "RESET": SubResource("Animation_aauuy"),
-"enter_minecart": SubResource("Animation_fes0p")
+"enter_minecart": ExtResource("9_hwl32")
 }
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
@@ -158,15 +85,8 @@ position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_2514i")
 debug_color = Color(0.792157, 0.392157, 0.470588, 0.337255)
 
-[node name="Minecart" type="Node2D" parent="."]
+[node name="Minecart" parent="." instance=ExtResource("2_cn2cf")]
 visible = false
-
-[node name="Front" type="Sprite2D" parent="Minecart"]
-z_index = 1
-texture = ExtResource("2_8ytpm")
-
-[node name="Back" type="Sprite2D" parent="Minecart"]
-texture = ExtResource("3_duxf3")
 
 [node name="PlayerSprite" parent="." instance=ExtResource("4_v0ywq")]
 unique_name_in_owner = true
@@ -218,37 +138,7 @@ collision_mask = 4
 position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_7myib")
 
-[node name="JumpPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_31arw")
-volume_db = -8.0
-max_polyphony = 2
-bus = &"Effects"
-
-[node name="StepPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_gaksd")
-volume_db = -9.5
-bus = &"Effects"
-
-[node name="ClimbPlayer" type="AudioStreamPlayer" parent="."]
-volume_db = -11.0
-bus = &"Effects"
-
-[node name="MinecartPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_4bue8")
-volume_db = -11.0
-max_polyphony = 2
-bus = &"Effects"
-
-[node name="MinecartPlayer2" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("8_os1xt")
-volume_db = -14.0
-bus = &"Effects"
-
-[node name="CartDrivingPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("9_tpwh4")
-volume_db = -80.0
-pitch_scale = 0.9
-bus = &"Effects"
+[node name="AudioPlayer" parent="." instance=ExtResource("4_os2fd")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

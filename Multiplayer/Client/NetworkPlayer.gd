@@ -7,7 +7,8 @@ var rigid_minecart_scene = preload("res://Platforming/Upgrades/MinecartRigid.tsc
 @onready var sprite = $PlayerSprite
 @onready var minecart = $Minecart
 @onready var animation_player = $AnimationPlayer
-@onready var taunt_player = $TauntPlayer
+@onready var taunt_player := $TauntPlayer as TauntPlayer
+@onready var audio_player := $AudioPlayer as PlayerAudioPlayer
 
 var is_minecarting = false
 
@@ -47,7 +48,7 @@ func set_minecarting(new_is_minecarting: bool):
 
 
 func taunt(stamp: int, player_id: int):
-	taunt_player.taunt(stamp + player_id)
+	taunt_player.taunt(stamp, player_id)
 
 
 func _on_animation_player_animation_finished(anim_name):

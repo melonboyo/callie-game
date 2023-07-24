@@ -1,4 +1,5 @@
 extends Node
+class_name NetworkSender
 
 @onready var client: Client = get_parent()
 
@@ -9,7 +10,7 @@ func _on_tick_timer_tick():
 		print("Player is null.. why...")
 		return
 	
-	var level = client.get_current_level(player)
+	var level = client.current_level
 	
 	Network.for_all_players(func (receiver_id: int): send_state(receiver_id, level, player))
 

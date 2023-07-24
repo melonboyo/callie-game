@@ -16,36 +16,6 @@ const MINECART_START_SPEED = 210.0
 const MINECART_SPEED = 170.0
 const BOOTS_BOOST = 30.0
 
-var step_sounds_grass := [
-	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_grass_000.ogg"),
-#	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_grass_001.ogg"),
-#	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_grass_002.ogg"),
-	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_grass_003.ogg"),
-	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_grass_004.ogg"),
-]
-
-var step_sounds_concrete := [
-	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_concrete_000.ogg"),
-	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_concrete_001.ogg"),
-	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_concrete_002.ogg"),
-	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_concrete_003.ogg"),
-	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_concrete_004.ogg"),
-]
-
-var step_sounds_wood := [
-	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_wood_000.ogg"),
-	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_wood_001.ogg"),
-	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_wood_002.ogg"),
-	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_wood_003.ogg"),
-	preload("res://Sounds/kenney_impact-sounds/Audio/footstep_wood_004.ogg"),
-]
-
-var step_sounds := [
-	step_sounds_grass,
-	step_sounds_concrete,
-	step_sounds_wood
-]
-
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var jump_velocity = -285.0
@@ -97,6 +67,9 @@ var direction_timeout = false
 var pick_up: Node2D
 
 @onready var sprite = %PlayerSprite
+
+@onready var audio_player := $AudioPlayer as PlayerAudioPlayer
+var step_sound := Constants.Sound.STEP_WOOD
 
 
 func _ready():
@@ -175,7 +148,7 @@ func _physics_process(delta):
 		if is_wall_running:
 			return
 	
-	$StepPlayer.pitch_scale = 1.0
+	audio_player.set_pitch_scale(step_sound, 1.0)
 	boots_timeout = false
 	direction_timeout = false
 	if not $DirectionHeldTimer.is_stopped():
@@ -233,7 +206,7 @@ func _physics_process(delta):
 		acceleration = ACCELERATION
 		
 		if not was_on_floor:
-			play_step_sound(0)
+			play_step_sound(Constants.Sound.STEP_GRASS)
 	else:
 		desired_velocity = direction_x * MAX_AIR_SPEED
 		acceleration = clampf((1.0 - (velocity.x / MAX_AIR_SPEED) * 0.8), 0.2, 1.0) *  AIR_ACCELERATION
@@ -324,8 +297,8 @@ func boots_move(delta):
 	
 	sprite.animation = "run"
 	sprite.speed_scale = 1.8 * abs(velocity.y) / MAX_RUN_SPEED + 0.2
-	$StepPlayer.pitch_scale = abs(velocity.y) / MAX_RUN_SPEED * 0.2 + 1.0
-	$StepPlayer.volume_db = -6.0
+	audio_player.set_pitch_scale(step_sound, abs(velocity.y) / MAX_RUN_SPEED * 0.2 + 1.0)
+	audio_player.set_volume_db(step_sound, -6.0) 
 	
 	move_and_slide()
 
@@ -334,8 +307,8 @@ func stop_minecarting():
 	$Minecart.visible = false
 	$CartShape.disabled = true
 	$PlayerShape.disabled = false
-	$MinecartPlayer.play()
-	$CartDrivingPlayer.stop()
+	audio_player.play(Constants.Sound.MINECART_EXIT)
+	audio_player.stop(Constants.Sound.MINECART_DRIVING)	
 	var minecart_instance = rigid_minecart.instantiate()
 	if is_wall_running:
 		minecart_instance.linear_velocity.y = velocity.y
@@ -350,19 +323,19 @@ func stop_minecarting():
 func minecart_move(delta):
 	if jump():
 		stop_minecarting()
-		$MinecartPlayer.stream = load("res://Sounds/sfx/BUMP.ogg")
 		return
+	var driving_sound := Constants.Sound.MINECART_DRIVING
 	velocity.x = lerpf(velocity.x, minecart_direction * MINECART_SPEED, delta * ACCELERATION)
 	if not is_on_floor():
 		velocity.y += gravity * delta
 		velocity.y = minf(velocity.y, MAX_FALL_SPEED)
-		if $CartDrivingPlayer.playing:
-			$CartDrivingPlayer.stop()
+		if audio_player.is_playing(driving_sound):
+			audio_player.stop(driving_sound)
 	else:
-		if not $CartDrivingPlayer.playing:
-			$CartDrivingPlayer.play()
-		$CartDrivingPlayer.volume_db = remap(abs(velocity.x), 0.0, MINECART_START_SPEED, -80.0, -11.0)
-		$CartDrivingPlayer.pitch_scale = remap(abs(velocity.x), 0.0, MINECART_START_SPEED, 1.2, 1.8)
+		if not audio_player.is_playing(driving_sound):
+			audio_player.play(driving_sound)
+		audio_player.set_volume_db(driving_sound, remap(abs(velocity.x), 0.0, MINECART_START_SPEED, -80.0, -11.0))
+		audio_player.set_pitch_scale(driving_sound, remap(abs(velocity.x), 0.0, MINECART_START_SPEED, 1.2, 1.8))
 	
 	var down_velocity = velocity.y
 	if is_wall_running:
@@ -420,7 +393,7 @@ func jump() -> bool:
 			velocity = 1.28 * jump_velocity * Vector2(wall_direction * 0.68, up_factor).normalized()
 		else:
 			velocity.y = jump_velocity
-		$JumpPlayer.play()
+		audio_player.play(Constants.Sound.JUMP)
 		
 		if is_climbing:
 			velocity.x = direction_x * MAX_RUN_SPEED * 0.6
@@ -486,18 +459,16 @@ func animate_pick_up(delta):
 		pick_up = null
 
 
-func play_step_sound(type: int):
-	var sounds = step_sounds[type]
-	var sound = sounds[randi_range(0, sounds.size()-1)]
-	$StepPlayer.stream = sound
+func play_step_sound(sound: Constants.Sound):
+	step_sound = sound
 	if not is_wall_running:
-		$StepPlayer.volume_db = -9.5
-	$StepPlayer.play()
+		audio_player.set_volume_db(step_sound, -9.5)
+	audio_player.play(step_sound)
 
 
 func reset():
 	velocity = Vector2.ZERO
-	$StepPlayer.pitch_scale = 1.0
+	audio_player.set_pitch_scale(step_sound, 1.0)
 	$JumpBufferEarly.stop()
 	$JumpBufferLate.stop()
 	$BootsTimer.stop()
@@ -552,7 +523,7 @@ func look_up_or_down():
 
 
 func taunt(stamp: int):
-	$TauntPlayer.taunt(stamp + (Network.client_info.id if Network.is_connected else 0))
+	$TauntPlayer.taunt(stamp, (Network.client_info.id if Network.is_connected else 0))
 
 
 func _on_look_up_timer_timeout():
@@ -571,9 +542,9 @@ func _on_player_sprite_frame_changed():
 	if sprite.is_playing():
 		if sprite.frame == 0:
 			if sprite.animation == "run":
-				play_step_sound(0)
+				play_step_sound(Constants.Sound.STEP_GRASS)
 			elif sprite.animation == "climb":
-				play_step_sound(2)
+				play_step_sound(Constants.Sound.STEP_WOOD)
 
 
 func _on_animation_player_animation_finished(anim_name):
@@ -581,7 +552,7 @@ func _on_animation_player_animation_finished(anim_name):
 		return
 	if anim_name == "enter_minecart":
 		is_entering_minecart = false
-		$MinecartPlayer2.play()
+		audio_player.play(Constants.Sound.MINECART_GO)
 		is_minecarting = true
 		$CartShape.disabled = false
 		$PlayerShape.disabled = true
@@ -594,7 +565,7 @@ func _on_boots_timer_timeout():
 #	is_wall_running = false
 	boots_timeout = true
 	can_wall_run = false
-	$MinecartPlayer.play()
+	audio_player.play(Constants.Sound.MINECART_EXIT)
 
 
 func _on_boots_cooldown_timer_timeout():

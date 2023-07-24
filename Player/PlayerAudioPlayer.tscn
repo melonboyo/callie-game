@@ -1,0 +1,73 @@
+[gd_scene load_steps=9 format=3 uid="uid://bmc1y5wail57b"]
+
+[ext_resource type="Script" path="res://Player/PlayerAudioPlayer.gd" id="1_qogt2"]
+[ext_resource type="AudioStream" uid="uid://dgtii8fgp3k1" path="res://Sounds/egg/jump.ogg" id="2_ud4cu"]
+[ext_resource type="AudioStream" uid="uid://b2bo1cywfep7t" path="res://Sounds/kenney_impact-sounds/Audio/footstep_grass_000.ogg" id="3_5gl6p"]
+[ext_resource type="Script" path="res://Player/StepPlayer.gd" id="4_1icon"]
+[ext_resource type="AudioStream" uid="uid://bxr3xhjfa3xc5" path="res://Sounds/sfx/BUMP.ogg" id="4_1pnpv"]
+[ext_resource type="AudioStream" uid="uid://tna7tn4j5gfs" path="res://Sounds/pine/rocket_launch.ogg" id="5_gbguc"]
+[ext_resource type="AudioStream" uid="uid://hkypt0cfbkxx" path="res://Sounds/pine/jump2.ogg" id="6_i3unf"]
+[ext_resource type="AudioStream" uid="uid://b6rk7ok2afbyb" path="res://Sounds/sfx/temporary minecraft sound.ogg" id="6_w7rib"]
+
+[node name="AudioPlayer" type="Node2D"]
+script = ExtResource("1_qogt2")
+
+[node name="JumpPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_ud4cu")
+volume_db = -8.0
+max_distance = 300.0
+max_polyphony = 2
+panning_strength = 1.84
+bus = &"Effects"
+
+[node name="StepGrassPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_5gl6p")
+volume_db = -9.5
+max_distance = 300.0
+bus = &"Effects"
+script = ExtResource("4_1icon")
+
+[node name="StepConcretePlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_5gl6p")
+volume_db = -9.5
+max_distance = 300.0
+bus = &"Effects"
+script = ExtResource("4_1icon")
+
+[node name="StepWoodPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_5gl6p")
+volume_db = -9.5
+max_distance = 300.0
+bus = &"Effects"
+script = ExtResource("4_1icon")
+
+[node name="ClimbPlayer" type="AudioStreamPlayer2D" parent="."]
+volume_db = -11.0
+max_distance = 300.0
+bus = &"Effects"
+
+[node name="MinecartGoPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_gbguc")
+volume_db = -14.0
+max_distance = 300.0
+bus = &"Effects"
+
+[node name="MinecartJumpPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_i3unf")
+volume_db = -14.0
+max_distance = 300.0
+bus = &"Effects"
+
+[node name="MinecartExitPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_1pnpv")
+volume_db = -11.0
+max_distance = 300.0
+max_polyphony = 2
+bus = &"Effects"
+
+[node name="MinecartDrivingPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_w7rib")
+volume_db = -80.0
+pitch_scale = 0.9
+max_distance = 300.0
+bus = &"Effects"

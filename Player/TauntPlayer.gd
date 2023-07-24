@@ -1,6 +1,7 @@
 extends Node2D
+class_name TauntPlayer
 
-@onready var taunt_player = $TauntPlayer
+@onready var taunt_player := $TauntPlayer as AudioStreamPlayer2D
 
 var taunt_sounds = [
 	preload("res://Sounds/taunts/taunt1.ogg"),
@@ -44,8 +45,13 @@ var taunt_sounds = [
 ]
 
 
-func taunt(seed: int):
-	var random_result = rand_from_seed(seed)
-	var sound = taunt_sounds[random_result[0] % taunt_sounds.size()]
+func taunt(stamp: int, player_id: int):
+	var taunt_result = rand_from_seed(player_id + stamp)
+	var sound = taunt_sounds[taunt_result[0] % taunt_sounds.size()]
 	$TauntPlayer.stream = sound
+	
+	var pitch_result = rand_from_seed(player_id)
+	var pitch_variance = float(pitch_result[0] % 100)
+	$TauntPlayer.pitch_scale = remap(pitch_variance, 0, 100, 0.7, 1.3)
+	
 	$TauntPlayer.play()
