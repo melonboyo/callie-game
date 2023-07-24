@@ -1,4 +1,5 @@
 extends Node2D
+class_name Client
 
 @onready var network_sender = $NetworkSender
 @onready var network_player_spawner = $NetworkPlayerSpawner
@@ -20,7 +21,7 @@ func _process(delta: float):
 	
 	player.set_collision_mask_value(9, has_online_collision)
 
-	
+
 func _on_disconnected():
 	queue_free()
 

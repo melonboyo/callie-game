@@ -1,4 +1,5 @@
 extends RigidBody2D
+class_name NetworkPlayer
 
 var rigid_minecart_scene = preload("res://Platforming/Upgrades/MinecartRigid.tscn")
 
@@ -9,6 +10,10 @@ var rigid_minecart_scene = preload("res://Platforming/Upgrades/MinecartRigid.tsc
 @onready var taunt_player = $TauntPlayer
 
 var is_minecarting = false
+
+
+func set_collision(collision: bool):
+	set_collision_layer_value(9, collision)
 
 
 func set_animation(animation_state):

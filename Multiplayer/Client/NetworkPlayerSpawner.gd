@@ -2,9 +2,9 @@ extends Node2D
 
 var player_scene = preload("res://Multiplayer/Client/NetworkPlayer.tscn")
 
-@onready var client = get_parent()
+@onready var client: Client = get_parent()
 @onready var players = $Players
-var player_nodes = {}
+var player_nodes := {}
 
 
 func _ready():
@@ -27,9 +27,11 @@ func update_player(player_id: int, state):
 	if not player_id in player_nodes:
 		add_player(player_id)
 	
-	var player = player_nodes[player_id] as RigidBody2D
+	var player = player_nodes[player_id] as NetworkPlayer
 	player.position = state.position
-	
+
+	if "has_collision" in state:
+		player.set_collision(state.has_collision)
 	if "rotation" in state:
 		player.rotation = state.rotation
 	if "velocity" in state:

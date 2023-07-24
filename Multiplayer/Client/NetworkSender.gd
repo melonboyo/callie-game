@@ -1,6 +1,6 @@
 extends Node
 
-@onready var client = get_parent()
+@onready var client: Client = get_parent()
 
 # Responsible for sending client data to the server
 func _on_tick_timer_tick():
@@ -18,6 +18,7 @@ func send_state(receiver_id, level, player):
 	var animation = player.get_animation()
 	client.rpc_id(receiver_id, "sync_player", {
 		level = level,
+		has_collision = client.has_online_collision,
 		position = player.position,
 		rotation = player.rotation,
 		velocity = player.velocity,
