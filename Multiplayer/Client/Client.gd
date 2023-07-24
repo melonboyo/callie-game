@@ -3,7 +3,7 @@ class_name Client
 
 @onready var network_sender := $NetworkSender as NetworkSender
 @onready var network_player_spawner := $NetworkPlayerSpawner as NetworkPlayerSpawner
-var has_online_collision := false
+var has_online_collision := true
 var current_level := ""
 
 func _ready():
