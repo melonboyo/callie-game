@@ -1,16 +1,16 @@
 [gd_scene load_steps=17 format=3 uid="uid://bo1xhn2kyap4e"]
 
-[ext_resource type="Script" path="res://Player.gd" id="1_8fvrf"]
-[ext_resource type="PackedScene" uid="uid://bu42bi3m5khvm" path="res://PlayerSprite.tscn" id="2_0nbv6"]
-[ext_resource type="AudioStream" uid="uid://dgtii8fgp3k1" path="res://Sounds/egg/jump.ogg" id="3_ixp0a"]
-[ext_resource type="AudioStream" uid="uid://b2bo1cywfep7t" path="res://Sounds/kenney_impact-sounds/Audio/footstep_grass_000.ogg" id="3_jrbrd"]
-[ext_resource type="Texture2D" uid="uid://b5fy36lb6bsgl" path="res://Textures/Player/Minecart/MinecartFront.png" id="5_muekf"]
-[ext_resource type="Texture2D" uid="uid://cffgae45ornex" path="res://Textures/Player/Minecart/MinecartBack.png" id="6_gbrsd"]
-[ext_resource type="AudioStream" uid="uid://hkypt0cfbkxx" path="res://Sounds/pine/jump2.ogg" id="7_cwc6c"]
-[ext_resource type="AudioStream" uid="uid://bxr3xhjfa3xc5" path="res://Sounds/sfx/BUMP.ogg" id="7_dxse7"]
-[ext_resource type="AudioStream" uid="uid://b6rk7ok2afbyb" path="res://Sounds/sfx/temporary minecraft sound.ogg" id="7_hmk57"]
-[ext_resource type="AudioStream" uid="uid://tna7tn4j5gfs" path="res://Sounds/pine/rocket_launch.ogg" id="8_ijfhx"]
-[ext_resource type="PackedScene" uid="uid://ch0xiyevyghu7" path="res://TauntPlayer.tscn" id="11_2u380"]
+[ext_resource type="Script" path="res://Player/Player.gd" id="1_c8vp1"]
+[ext_resource type="Texture2D" uid="uid://b5fy36lb6bsgl" path="res://Textures/Player/Minecart/MinecartFront.png" id="2_8ytpm"]
+[ext_resource type="Texture2D" uid="uid://cffgae45ornex" path="res://Textures/Player/Minecart/MinecartBack.png" id="3_duxf3"]
+[ext_resource type="PackedScene" uid="uid://bu42bi3m5khvm" path="res://Player/PlayerSprite.tscn" id="4_v0ywq"]
+[ext_resource type="AudioStream" uid="uid://dgtii8fgp3k1" path="res://Sounds/egg/jump.ogg" id="5_31arw"]
+[ext_resource type="AudioStream" uid="uid://b2bo1cywfep7t" path="res://Sounds/kenney_impact-sounds/Audio/footstep_grass_000.ogg" id="6_gaksd"]
+[ext_resource type="AudioStream" uid="uid://bxr3xhjfa3xc5" path="res://Sounds/sfx/BUMP.ogg" id="7_4bue8"]
+[ext_resource type="AudioStream" uid="uid://tna7tn4j5gfs" path="res://Sounds/pine/rocket_launch.ogg" id="8_os1xt"]
+[ext_resource type="AudioStream" uid="uid://b6rk7ok2afbyb" path="res://Sounds/sfx/temporary minecraft sound.ogg" id="9_tpwh4"]
+[ext_resource type="AudioStream" uid="uid://hkypt0cfbkxx" path="res://Sounds/pine/jump2.ogg" id="10_ogvyt"]
+[ext_resource type="PackedScene" uid="uid://ch0xiyevyghu7" path="res://Player/TauntPlayer.tscn" id="11_dqjnj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2514i"]
 size = Vector2(14, 11)
@@ -131,7 +131,7 @@ tracks/4/keys = {
 "clips": [{
 "end_offset": 0.0,
 "start_offset": 0.0,
-"stream": ExtResource("7_cwc6c")
+"stream": ExtResource("10_ogvyt")
 }],
 "times": PackedFloat32Array(0.03)
 }
@@ -150,7 +150,7 @@ collision_layer = 3
 collision_mask = 9
 velocity = Vector2(210, -10)
 floor_max_angle = 0.872665
-script = ExtResource("1_8fvrf")
+script = ExtResource("1_c8vp1")
 jump_height = 1
 
 [node name="CartShape" type="CollisionShape2D" parent="."]
@@ -163,12 +163,12 @@ visible = false
 
 [node name="Front" type="Sprite2D" parent="Minecart"]
 z_index = 1
-texture = ExtResource("5_muekf")
+texture = ExtResource("2_8ytpm")
 
 [node name="Back" type="Sprite2D" parent="Minecart"]
-texture = ExtResource("6_gbrsd")
+texture = ExtResource("3_duxf3")
 
-[node name="PlayerSprite" parent="." instance=ExtResource("2_0nbv6")]
+[node name="PlayerSprite" parent="." instance=ExtResource("4_v0ywq")]
 unique_name_in_owner = true
 animation = &"idle"
 
@@ -219,13 +219,13 @@ position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_7myib")
 
 [node name="JumpPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_ixp0a")
+stream = ExtResource("5_31arw")
 volume_db = -8.0
 max_polyphony = 2
 bus = &"Effects"
 
 [node name="StepPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_jrbrd")
+stream = ExtResource("6_gaksd")
 volume_db = -9.5
 bus = &"Effects"
 
@@ -234,18 +234,18 @@ volume_db = -11.0
 bus = &"Effects"
 
 [node name="MinecartPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_dxse7")
+stream = ExtResource("7_4bue8")
 volume_db = -11.0
 max_polyphony = 2
 bus = &"Effects"
 
 [node name="MinecartPlayer2" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("8_ijfhx")
+stream = ExtResource("8_os1xt")
 volume_db = -14.0
 bus = &"Effects"
 
 [node name="CartDrivingPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_hmk57")
+stream = ExtResource("9_tpwh4")
 volume_db = -80.0
 pitch_scale = 0.9
 bus = &"Effects"
@@ -259,7 +259,7 @@ libraries = {
 enabled = false
 target_position = Vector2(16, 0)
 
-[node name="TauntPlayer" parent="." instance=ExtResource("11_2u380")]
+[node name="TauntPlayer" parent="." instance=ExtResource("11_dqjnj")]
 
 [connection signal="frame_changed" from="PlayerSprite" to="." method="_on_player_sprite_frame_changed"]
 [connection signal="timeout" from="LookUpTimer" to="." method="_on_look_up_timer_timeout"]
