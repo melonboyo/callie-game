@@ -13,11 +13,10 @@ var upgrade_scenes := {
 	Upgrade.Boots: preload("res://Platforming/Upgrades/Boots.tscn"),
 }
 
-
 var acquired_upgrades = {
 	Upgrade.Jump1: false,
 	Upgrade.Minecart: false,
-	Upgrade.Boots: false
+	Upgrade.Boots: false,
 }
 
 var opened_doors = {

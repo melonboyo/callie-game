@@ -1,9 +1,11 @@
 [gd_scene load_steps=2 format=3 uid="uid://ch0xiyevyghu7"]
 
-[ext_resource type="Script" path="res://TauntPlayer.gd" id="1_qsu5r"]
+[ext_resource type="Script" path="res://Player/TauntPlayer.gd" id="1_qsu5r"]
 
 [node name="TauntPlayer" type="Node2D"]
 script = ExtResource("1_qsu5r")
 
 [node name="TauntPlayer" type="AudioStreamPlayer2D" parent="."]
 max_distance = 300.0
+panning_strength = 2.0
+bus = &"Taunt"

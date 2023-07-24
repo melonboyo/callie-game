@@ -1,10 +1,11 @@
 extends Node2D
+class_name NetworkPlayerSpawner
 
 var player_scene = preload("res://Multiplayer/Client/NetworkPlayer.tscn")
 
-@onready var client = get_parent()
+@onready var client: Client = get_parent()
 @onready var players = $Players
-var player_nodes = {}
+var player_nodes := {}
 
 
 func _ready():
@@ -15,9 +16,7 @@ func sync_player(player_id: int, state):
 	if not "position" in state and not "level" in state:
 		return
 	
-	var player = client.get_player()
-	var level = client.get_current_level(player)
-	if state.level == level:
+	if client.current_level == state.level:
 		update_player(player_id, state)
 	else:
 		remove_player(player_id)
@@ -27,9 +26,11 @@ func update_player(player_id: int, state):
 	if not player_id in player_nodes:
 		add_player(player_id)
 	
-	var player = player_nodes[player_id] as RigidBody2D
+	var player = player_nodes[player_id] as NetworkPlayer
 	player.position = state.position
-	
+
+	if "has_collision" in state:
+		player.set_collision(state.has_collision)
 	if "rotation" in state:
 		player.rotation = state.rotation
 	if "velocity" in state:
@@ -47,11 +48,38 @@ func add_player(player_id: int):
 
 
 func remove_player(player_id: int):
-	if player_id in player_nodes:
-		player_nodes[player_id].queue_free()
-		player_nodes.erase(player_id)
+	if not player_id in player_nodes:
+		return
+	
+	player_nodes[player_id].queue_free()
+	player_nodes.erase(player_id)
 
 
-func taunt(player_id: int):
-	var player = player_nodes[player_id]
-	player.taunt(player_id)
+func taunt(stamp: int, player_id: int):
+	if not player_id in player_nodes:
+		return
+	
+	var player := player_nodes[player_id] as NetworkPlayer
+	player.taunt(stamp, player_id)
+
+
+func play_audio(player_id: int, sound: Constants.Sound, volume_db: float, pitch_scale: float):
+	if not player_id in player_nodes:
+		return
+	
+	var player := player_nodes[player_id] as NetworkPlayer
+	var audio_player := player.get_node("AudioPlayer") as PlayerAudioPlayer
+	
+	audio_player.set_volume_db(sound, volume_db)
+	audio_player.set_pitch_scale(sound, pitch_scale)
+	audio_player.play(sound)
+
+
+func stop_audio(player_id: int, sound: Constants.Sound):
+	if not player_id in player_nodes:
+		return
+	
+	var player := player_nodes[player_id] as NetworkPlayer
+	var audio_player := player.get_node("AudioPlayer") as PlayerAudioPlayer
+	
+	audio_player.stop(sound)

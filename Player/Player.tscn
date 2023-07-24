@@ -1,0 +1,162 @@
+[gd_scene load_steps=11 format=3 uid="uid://bo1xhn2kyap4e"]
+
+[ext_resource type="Script" path="res://Player/Player.gd" id="1_c8vp1"]
+[ext_resource type="PackedScene" uid="uid://y4bpuo43hccc" path="res://Player/PlayerInMinecartSprite.tscn" id="2_cn2cf"]
+[ext_resource type="PackedScene" uid="uid://bmc1y5wail57b" path="res://Player/PlayerAudioPlayer.tscn" id="4_os2fd"]
+[ext_resource type="PackedScene" uid="uid://bu42bi3m5khvm" path="res://Player/PlayerSprite.tscn" id="4_v0ywq"]
+[ext_resource type="Animation" uid="uid://b54fx3sf8g71j" path="res://Player/enter_minecart.res" id="9_hwl32"]
+[ext_resource type="PackedScene" uid="uid://ch0xiyevyghu7" path="res://Player/TauntPlayer.tscn" id="11_dqjnj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2514i"]
+size = Vector2(14, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7myib"]
+size = Vector2(12, 11)
+
+[sub_resource type="Animation" id="Animation_aauuy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PlayerSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Minecart:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Minecart:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3i2rj"]
+_data = {
+"RESET": SubResource("Animation_aauuy"),
+"enter_minecart": ExtResource("9_hwl32")
+}
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+texture_filter = 1
+use_parent_material = true
+collision_layer = 3
+collision_mask = 9
+velocity = Vector2(210, -10)
+floor_max_angle = 0.872665
+script = ExtResource("1_c8vp1")
+jump_height = 1
+
+[node name="CartShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_2514i")
+debug_color = Color(0.792157, 0.392157, 0.470588, 0.337255)
+
+[node name="Minecart" parent="." instance=ExtResource("2_cn2cf")]
+visible = false
+
+[node name="PlayerSprite" parent="." instance=ExtResource("4_v0ywq")]
+unique_name_in_owner = true
+animation = &"idle"
+
+[node name="PlayerShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_7myib")
+disabled = true
+debug_color = Color(0.247059, 0.568627, 0.360784, 0.345098)
+
+[node name="JumpBufferEarly" type="Timer" parent="."]
+wait_time = 0.085
+one_shot = true
+
+[node name="JumpBufferLate" type="Timer" parent="."]
+wait_time = 0.115
+one_shot = true
+
+[node name="ClimbWait" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="LookUpTimer" type="Timer" parent="."]
+wait_time = 0.6
+one_shot = true
+
+[node name="LookDownTimer" type="Timer" parent="."]
+wait_time = 0.6
+one_shot = true
+
+[node name="BootsTimer" type="Timer" parent="."]
+wait_time = 0.45
+one_shot = true
+
+[node name="BootsCooldownTimer" type="Timer" parent="."]
+wait_time = 0.9
+one_shot = true
+
+[node name="DirectionHeldTimer" type="Timer" parent="."]
+wait_time = 0.08
+one_shot = true
+
+[node name="LadderArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LadderArea"]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_7myib")
+
+[node name="AudioPlayer" parent="." instance=ExtResource("4_os2fd")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_3i2rj")
+}
+
+[node name="WallCast" type="RayCast2D" parent="."]
+enabled = false
+target_position = Vector2(16, 0)
+
+[node name="TauntPlayer" parent="." instance=ExtResource("11_dqjnj")]
+
+[connection signal="frame_changed" from="PlayerSprite" to="." method="_on_player_sprite_frame_changed"]
+[connection signal="timeout" from="LookUpTimer" to="." method="_on_look_up_timer_timeout"]
+[connection signal="timeout" from="LookDownTimer" to="." method="_on_look_down_timer_timeout"]
+[connection signal="timeout" from="BootsTimer" to="." method="_on_boots_timer_timeout"]
+[connection signal="timeout" from="BootsCooldownTimer" to="." method="_on_boots_cooldown_timer_timeout"]
+[connection signal="timeout" from="DirectionHeldTimer" to="." method="_on_direction_held_timer_timeout"]
+[connection signal="area_entered" from="LadderArea" to="." method="_on_ladder_area_entered"]
+[connection signal="area_exited" from="LadderArea" to="." method="_on_ladder_area_exited"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

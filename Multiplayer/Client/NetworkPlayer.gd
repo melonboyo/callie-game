@@ -1,4 +1,5 @@
 extends RigidBody2D
+class_name NetworkPlayer
 
 var rigid_minecart_scene = preload("res://Platforming/Upgrades/MinecartRigid.tscn")
 
@@ -6,9 +7,14 @@ var rigid_minecart_scene = preload("res://Platforming/Upgrades/MinecartRigid.tsc
 @onready var sprite = $PlayerSprite
 @onready var minecart = $Minecart
 @onready var animation_player = $AnimationPlayer
-@onready var taunt_player = $TauntPlayer
+@onready var taunt_player := $TauntPlayer as TauntPlayer
+@onready var audio_player := $AudioPlayer as PlayerAudioPlayer
 
 var is_minecarting = false
+
+
+func set_collision(collision: bool):
+	set_collision_layer_value(9, collision)
 
 
 func set_animation(animation_state):
@@ -41,8 +47,8 @@ func set_minecarting(new_is_minecarting: bool):
 		get_parent().add_child(minecart_instance)
 
 
-func taunt(player_id: int):
-	taunt_player.taunt(player_id)
+func taunt(stamp: int, player_id: int):
+	taunt_player.taunt(stamp, player_id)
 
 
 func _on_animation_player_animation_finished(anim_name):
