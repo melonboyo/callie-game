@@ -971,6 +971,7 @@ stream = ExtResource("12_2am4x")
 volume_db = -10.0
 bus = &"Effects"
 
+[connection signal="set_cam_look_offset" from="Player" to="Focus" method="_on_player_set_cam_look_offset"]
 [connection signal="body_entered" from="Checkpoints/0/Area2D" to="Checkpoints/0" method="_on_body_entered_checkpoint"]
 [connection signal="body_entered" from="Checkpoints/1/Area2D" to="Checkpoints/1" method="_on_body_entered_checkpoint"]
 [connection signal="body_entered" from="Checkpoints/2/Area2D" to="Checkpoints/2" method="_on_body_entered_checkpoint"]
