@@ -22,11 +22,9 @@ func sync_player(player_id: int, state):
 
 
 func update_player(player_id: int, state):
-	if not player_id in player_nodes:
-		add_player(player_id)
-	
-	if not is_instance_valid(player_nodes[player_id]):
-		return
+	if not player_exists(player_id):
+		if not add_player(player_id):
+			return
 	
 	var player := player_nodes[player_id] as NetworkPlayer
 	if not player.is_node_ready():
@@ -51,17 +49,25 @@ func update_player(player_id: int, state):
 
 
 func add_player(player_id: int):
+	var client_player = client.get_player()
+	if client_player == null:
+		return false
+	
 	var new_player = player_scene.instantiate()
 	new_player.name = StringName("NetworkPlayer_" + str(player_id))
 	player_nodes[player_id] = new_player
 	
 	# Add it next to the client player
-	var client_player = client.get_player()
 	client_player.add_sibling(new_player)
+	return true
+
+
+func player_exists(player_id: int):
+	return player_id in player_nodes and is_instance_valid(player_nodes[player_id])
 
 
 func remove_player(player_id: int):
-	if not player_id in player_nodes:
+	if not player_exists(player_id):
 		return
 	
 	player_nodes[player_id].queue_free()
@@ -74,7 +80,7 @@ func clear_players():
 
 
 func taunt(stamp: int, player_id: int):
-	if not player_id in player_nodes:
+	if not player_exists(player_id):
 		return
 	
 	var player := player_nodes[player_id] as NetworkPlayer
@@ -82,7 +88,7 @@ func taunt(stamp: int, player_id: int):
 
 
 func play_audio(player_id: int, sound: Constants.Sound, volume_db: float, pitch_scale: float):
-	if not player_id in player_nodes:
+	if not player_exists(player_id):
 		return
 	
 	var player := player_nodes[player_id] as NetworkPlayer
@@ -94,7 +100,7 @@ func play_audio(player_id: int, sound: Constants.Sound, volume_db: float, pitch_
 
 
 func stop_audio(player_id: int, sound: Constants.Sound):
-	if not player_id in player_nodes:
+	if not player_exists(player_id):
 		return
 	
 	var player := player_nodes[player_id] as NetworkPlayer
