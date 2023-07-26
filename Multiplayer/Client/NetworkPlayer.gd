@@ -26,7 +26,7 @@ func _process(delta):
 		key.modulate = Constants.SECONDARY_COLOR
 		get_parent().add_child(key)
 		pick_up = key
-	if not has_key and pick_up is Key:
+	if pick_up != null and not has_key and pick_up is Key:
 		remove_pick_up()
 	
 	animate_pick_up(delta)
