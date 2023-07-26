@@ -143,6 +143,8 @@ animations = [{
 [node name="PlayerSprite" type="AnimatedSprite2D"]
 texture_filter = 1
 use_parent_material = true
+position = Vector2(0, 6)
 sprite_frames = SubResource("SpriteFrames_nm6yw")
 animation = &"look_up"
 autoplay = "idle"
+offset = Vector2(0, -6)
