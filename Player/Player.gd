@@ -76,6 +76,7 @@ func _ready():
 	if Engine.is_editor_hint():
 		return
 	jump_height = jump_height
+	change_character(GameState.character)
 
 
 func _process(delta):
