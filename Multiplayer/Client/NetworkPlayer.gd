@@ -20,13 +20,13 @@ var pick_up: Node2D = null
 
 
 func _process(delta):
-	if has_key and not pick_up is Key:
+	if has_key and pick_up == null:
 		var key = key_scene.instantiate()
 		key.is_picked_up = true
 		key.modulate = Constants.SECONDARY_COLOR
 		get_parent().add_child(key)
 		pick_up = key
-	if not has_key and pick_up is Key:
+	if pick_up != null and not has_key and pick_up is Key:
 		remove_pick_up()
 	
 	animate_pick_up(delta)
