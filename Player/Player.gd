@@ -40,8 +40,6 @@ var was_on_floor = true
 var jumped_last_frame = false
 var jumped = false
 
-var current_character := 0
-
 var freeze = false
 @export var is_in_overworld = false:
 	set(value):
@@ -85,8 +83,8 @@ func _process(delta):
 		return
 		
 	if Input.is_action_just_pressed("change_character"):
-		current_character = posmod(current_character + 1, Constants.character_scenes.size()) 
-		change_character(current_character)
+		GameState.character = posmod(GameState.character + 1, Constants.character_scenes.size()) 
+		change_character(GameState.character)
 	
 	direction_x = Input.get_axis("move_left", "move_right")
 	direction_y = Input.get_axis("move_up", "move_down")

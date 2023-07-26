@@ -30,6 +30,9 @@ var exit = 0
 var current_level = 1
 var current_checkpoint = 0
 
+# Player sprite
+var character := 0
+
 
 func give_upgrade(upgrade: GameState.Upgrade):
 	acquired_upgrades[upgrade] = true
