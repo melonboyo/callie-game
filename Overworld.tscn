@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://qldjb8d38wk0" path="res://Textures/map_tile_sheet_large.png" id="2_ac0l3"]
 [ext_resource type="Texture2D" uid="uid://dh3rsl2baf0jj" path="res://Textures/platforming_tile_sheet.png" id="3_qei7y"]
 [ext_resource type="Texture2D" uid="uid://cm7voveqa6e0r" path="res://Textures/map_tile_sheet_small.png" id="4_1ichp"]
-[ext_resource type="PackedScene" uid="uid://bo1xhn2kyap4e" path="res://Player.tscn" id="6_77h7t"]
+[ext_resource type="PackedScene" uid="uid://bo1xhn2kyap4e" path="res://Player/Player.tscn" id="6_77h7t"]
 [ext_resource type="Texture2D" uid="uid://dw5k7bv61prsg" path="res://Textures/UI/E.png" id="8_danlk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxope"]
