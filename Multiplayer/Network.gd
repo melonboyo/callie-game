@@ -5,7 +5,7 @@ var public_server_host = "callie.pckv.me"
 
 var public_server_port = 45276
 
-const TICKS_PER_SECOND = 1.0 / 120.0
+const TICKS_PER_SECOND = 1.0 / 60.0
 
 signal connected
 signal disconnected
@@ -168,9 +168,13 @@ func _on_server_connected():
 	is_connecting = false
 
 
-func reconnect_to_server(in_seconds: int):
-	print("Reconnecting in ", in_seconds, " seconds")
-	await get_tree().create_timer(in_seconds).timeout
+func reconnect_to_server(in_seconds: int = 0):
+	if in_seconds > 0:
+		print("Reconnecting in ", in_seconds, " seconds...")
+		await get_tree().create_timer(in_seconds).timeout
+	else:
+		print("Reconnecting...")
+	
 	create_remote_connection()
 
 
@@ -181,7 +185,7 @@ func _on_server_disconnected():
 	
 	disconnected.emit()
 	
-	reconnect_to_server(1)
+	reconnect_to_server()
 
 
 func _on_connection_failed():
@@ -189,4 +193,4 @@ func _on_connection_failed():
 	print("Failed to connect.")
 	failed_to_connect.emit()
 	
-	reconnect_to_server(1)
+	reconnect_to_server()
