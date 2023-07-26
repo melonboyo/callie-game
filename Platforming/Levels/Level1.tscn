@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Platforming/Levels/Level1.gd" id="1_m85i5"]
 [ext_resource type="PackedScene" uid="uid://dpq18bmg53coj" path="res://Platforming/PlatformingTileMap.tscn" id="1_y02kl"]
 [ext_resource type="Script" path="res://Camera.gd" id="2_pb4tt"]
-[ext_resource type="PackedScene" uid="uid://bo1xhn2kyap4e" path="res://Player.tscn" id="3_j4pp5"]
+[ext_resource type="PackedScene" uid="uid://bo1xhn2kyap4e" path="res://Player/Player.tscn" id="3_j4pp5"]
 [ext_resource type="PackedScene" uid="uid://bqk4a2x1dnbt1" path="res://Platforming/Interact/Key.tscn" id="4_6g5di"]
 [ext_resource type="Script" path="res://Platforming/Levels/Checkpoint.gd" id="4_rg3du"]
 [ext_resource type="Script" path="res://Platforming/Levels/CameraZone.gd" id="5_tyo7u"]
