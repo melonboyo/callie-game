@@ -9,6 +9,7 @@ const TICKS_PER_SECOND = 1.0 / 120.0
 
 signal connected
 signal disconnected
+signal failed_to_connect
 signal is_connecting_changed(is_connecting: bool)
 signal player_connected(id: int)
 signal player_changed(id: int)
@@ -49,8 +50,8 @@ var client_info := {
 func create_server(port: int) -> ENetMultiplayerPeer:
 	is_connecting = true
 	var peer = ENetMultiplayerPeer.new()
-	multiplayer.peer_connected.connect(self._on_player_connected)
-	multiplayer.peer_disconnected.connect(self._on_player_disconnected)
+	multiplayer.peer_connected.connect(_on_player_connected)
+	multiplayer.peer_disconnected.connect(_on_player_disconnected)
 	peer.create_server(port)
 	print('server listening on 0.0.0.0:%s' % port)
 	is_server = true
@@ -72,10 +73,10 @@ func create_remote_connection():
 	is_connecting = true
 	var peer = ENetMultiplayerPeer.new()
 	print('connecting to server %s:%s' % [public_server_host, public_server_port])
+	multiplayer.connected_to_server.connect(_on_server_connected)
+	multiplayer.connection_failed.connect(_on_connection_failed)
+	multiplayer.server_disconnected.connect(_on_server_disconnected)
 	peer.create_client(public_server_host, public_server_port)
-	multiplayer.connected_to_server.connect(self._on_server_connected)
-	multiplayer.connection_failed.connect(self._on_connection_failed)
-	multiplayer.server_disconnected.connect(self._on_server_disconnected)
 	multiplayer.set_multiplayer_peer(peer)
 	
 	var client_scene = load("res://Multiplayer/Client/Client.tscn") as PackedScene
@@ -83,8 +84,9 @@ func create_remote_connection():
 	add_child(client)
 
 
-func shutdown_server():
-	get_tree().quit()
+func disconnect_from_server():
+	for peer in multiplayer.get_peers():
+		multiplayer.multiplayer_peer.disconnect_peer(peer)
 
 
 func _on_player_connected(id: int) -> void:
@@ -128,7 +130,7 @@ func player_init(players):
 	self.players = players
 	
 	# Load into the game lobby
-	emit_signal("connected")
+	connected.emit()
 
 
 @rpc("call_local")
@@ -141,16 +143,16 @@ func register_player(info):
 	
 	# Fire event based on whether the player was modified or just connected
 	if is_registered:
-		emit_signal("player_changed", info.id)
+		player_changed.emit(info.id)
 	else:
-		emit_signal("player_connected", info.id)
+		player_connected.emit(info.id)
 
 
 @rpc("call_local")
 func unregister_player(id: int):
 	# Remove the player info
 	players.erase(id)
-	emit_signal("player_disconnected", id)
+	player_disconnected.emit(id)
 
 
 func for_all_players(callback: Callable):
@@ -166,13 +168,25 @@ func _on_server_connected():
 	is_connecting = false
 
 
+func reconnect_to_server(in_seconds: int):
+	print("Reconnecting in ", in_seconds, " seconds")
+	await get_tree().create_timer(in_seconds).timeout
+	create_remote_connection()
+
+
 func _on_server_disconnected():
 	multiplayer.server_disconnected.disconnect(self._on_server_disconnected)
 	
 	is_connected = false
 	
-	emit_signal("disconnected")
+	disconnected.emit()
+	
+	reconnect_to_server(1)
 
 
 func _on_connection_failed():
-	print("Failed to connect")
+	is_connecting = false
+	print("Failed to connect.")
+	failed_to_connect.emit()
+	
+	reconnect_to_server(1)

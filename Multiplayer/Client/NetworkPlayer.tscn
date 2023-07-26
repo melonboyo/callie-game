@@ -57,7 +57,6 @@ modulate = Color(0, 0, 0, 1)
 
 [node name="PlayerSprite" parent="." instance=ExtResource("1_ptorx")]
 animation = &"idle"
-offset = Vector2(0, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

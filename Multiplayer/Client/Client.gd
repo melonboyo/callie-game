@@ -11,7 +11,8 @@ func _ready():
 	Network.is_connecting_changed.connect(_on_is_connecting_changed)
 	_on_is_connecting_changed(Network.is_connecting)
 	
-	Network.disconnected.connect(_on_disconnected)
+	Network.disconnected.connect(queue_free)
+	Network.failed_to_connect.connect(queue_free)
 
 
 func connect_player(player: Player):
@@ -47,16 +48,13 @@ func _process(delta: float):
 		var stamp = Time.get_ticks_msec()
 		player.taunt(stamp)
 		for_all_players_in_level(func (receiver_id: int): rpc_id(receiver_id, "taunt", stamp))
+		Network.disconnect_from_server()
 	
 	player.set_collision_mask_value(9, has_online_collision)
 
 
 func _on_is_connecting_changed(is_connecting: bool):
 	loading_icon.visible = is_connecting
-
-
-func _on_disconnected():
-	queue_free()
 
 
 func _on_playing_audio(sound: Constants.Sound, volume_db: float, pitch_scale: float):
