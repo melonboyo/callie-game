@@ -6,7 +6,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k8jed"]
 shader = ExtResource("1_bhd5b")
 shader_parameter/u_bit_depth = 8
-shader_parameter/u_contrast = 1.5
+shader_parameter/u_contrast = 1.0
 shader_parameter/u_offset = 0.0
 shader_parameter/u_dither_size = 1
 
