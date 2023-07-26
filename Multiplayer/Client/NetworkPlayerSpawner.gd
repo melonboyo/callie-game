@@ -11,6 +11,11 @@ func _ready():
 	Network.player_disconnected.connect(remove_player)
 
 
+func _exit_tree():
+	for player_id in player_nodes.keys():
+		remove_player(player_id)
+
+
 func sync_player(player_id: int, state):
 	if not "position" in state and not "level" in state:
 		return

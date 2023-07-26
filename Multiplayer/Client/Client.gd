@@ -48,7 +48,6 @@ func _process(delta: float):
 		var stamp = Time.get_ticks_msec()
 		player.taunt(stamp)
 		for_all_players_in_level(func (receiver_id: int): rpc_id(receiver_id, "taunt", stamp))
-		Network.disconnect_from_server()
 	
 	player.set_collision_mask_value(9, has_online_collision)
 
