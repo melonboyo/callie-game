@@ -11,4 +11,9 @@ script = ExtResource("1_dmclj")
 
 [node name="NetworkPlayerSpawner" parent="." instance=ExtResource("3_5juvy")]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="Ui" type="CanvasLayer" parent="."]
+
+[node name="LoadingIcon" type="Label" parent="Ui"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "LOADING"

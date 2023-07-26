@@ -77,6 +77,10 @@ func create_remote_connection():
 	multiplayer.connection_failed.connect(self._on_connection_failed)
 	multiplayer.server_disconnected.connect(self._on_server_disconnected)
 	multiplayer.set_multiplayer_peer(peer)
+	
+	var client_scene = load("res://Multiplayer/Client/Client.tscn") as PackedScene
+	client = client_scene.instantiate()
+	add_child(client)
 
 
 func shutdown_server():
@@ -158,10 +162,6 @@ func for_all_players(callback: Callable):
 
 
 func _on_server_connected():
-	var client_scene = load("res://Multiplayer/Client/Client.tscn") as PackedScene
-	client = client_scene.instantiate()
-	add_child(client)
-
 	is_connected = true
 	is_connecting = false
 

@@ -3,10 +3,14 @@ class_name Client
 
 @onready var network_sender := $NetworkSender as NetworkSender
 @onready var network_player_spawner := $NetworkPlayerSpawner as NetworkPlayerSpawner
+@onready var loading_icon := $Ui/LoadingIcon
 var has_online_collision := true
 var current_level := ""
 
 func _ready():
+	Network.is_connecting_changed.connect(_on_is_connecting_changed)
+	_on_is_connecting_changed(Network.is_connecting)
+	
 	Network.disconnected.connect(_on_disconnected)
 
 
@@ -44,6 +48,10 @@ func _process(delta: float):
 		for_all_players_in_level(func (receiver_id: int): rpc_id(receiver_id, "taunt", stamp))
 	
 	player.set_collision_mask_value(9, has_online_collision)
+
+
+func _on_is_connecting_changed(is_connecting: bool):
+	loading_icon.visible = is_connecting
 
 
 func _on_disconnected():

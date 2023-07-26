@@ -124,11 +124,11 @@ func _physics_process(delta):
 		can_use_minecart = true
 		can_wall_run = true
 	
-	if GameState.acquired_upgrades[GameState.Upgrade.Boots]:
+	if GameState.has_upgrade(GameState.Upgrade.Boots):
 		$WallCast.enabled = true
 		$WallCast.target_position = Vector2(last_strong_direction_x, 0.0).normalized() * 16.0
 	
-	if (GameState.acquired_upgrades[GameState.Upgrade.Boots] and 
+	if (GameState.has_upgrade(GameState.Upgrade.Boots) and 
 		is_on_wall() and
 		direction_x and
 		(abs(velocity.x) > 2.0 or not is_on_floor()) and
@@ -180,7 +180,7 @@ func _physics_process(delta):
 	
 	if (
 		Input.is_action_just_pressed("minecart") and 
-		GameState.acquired_upgrades[GameState.Upgrade.Minecart]
+		GameState.has_upgrade(GameState.Upgrade.Minecart)
 		and not is_climbing
 		and can_use_minecart
 	):

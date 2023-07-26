@@ -11,7 +11,7 @@ func _on_area_2d_body_entered(body):
 	if GameState.has_key:
 		GameState.has_key = false
 		open_door.emit()
-		GameState.opened_doors[GameState.current_level][id] = true
+		GameState.open_door(GameState.current_level, id)
 		queue_free()
 
 

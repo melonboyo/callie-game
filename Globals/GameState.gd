@@ -7,12 +7,6 @@ enum Upgrade {
 	Boots,
 }
 
-var upgrade_scenes := {
-	Upgrade.Jump1: preload("res://Platforming/Upgrades/Jump1.tscn"),
-	Upgrade.Minecart: preload("res://Platforming/Upgrades/Jump1.tscn"),
-	Upgrade.Boots: preload("res://Platforming/Upgrades/Boots.tscn"),
-}
-
 var acquired_upgrades = {
 	Upgrade.Jump1: false,
 	Upgrade.Minecart: false,
@@ -37,9 +31,37 @@ var current_level = 1
 var current_checkpoint = 0
 
 
-func get_upgrade(ug: GameState.Upgrade):
-	acquired_upgrades[ug] = true
+func give_upgrade(upgrade: GameState.Upgrade):
+	acquired_upgrades[upgrade] = true
 
 
-func has_upgrade(ug: GameState.Upgrade) -> bool:
-	return acquired_upgrades[ug]
+func has_upgrade(upgrade: GameState.Upgrade) -> bool:
+	return acquired_upgrades[upgrade]
+
+
+signal opened_door(level: int, door_number: int)
+func open_door(level: int, door_number: int, emit: bool = false):
+	opened_doors[level][door_number] = true
+	if emit: opened_door.emit(level, door_number)
+
+
+var saved_properties = [
+	"acquired_upgrades",
+	"opened_doors",
+	"exit",
+]
+
+
+func export():
+	var state := {}
+	
+	for property in saved_properties:
+		state[property] = get(property)
+	
+	return state
+
+
+func import(state: Dictionary):
+	for property in saved_properties:
+		if state.has(property):
+			set(property, state[property])
