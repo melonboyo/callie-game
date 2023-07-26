@@ -2,15 +2,52 @@ extends RigidBody2D
 class_name NetworkPlayer
 
 var rigid_minecart_scene = preload("res://Platforming/Upgrades/MinecartRigid.tscn")
+var key_scene = preload("res://Platforming/Interact/Key.tscn")
 
 
-@onready var sprite = $PlayerSprite
-@onready var minecart = $Minecart
-@onready var animation_player = $AnimationPlayer
+@onready var sprite := $PlayerSprite
+@onready var minecart := $Minecart
+@onready var animation_player := $AnimationPlayer
 @onready var taunt_player := $TauntPlayer as TauntPlayer
 @onready var audio_player := $AudioPlayer as PlayerAudioPlayer
 
 var is_minecarting = false
+var has_key = false
+
+var pick_up: Node2D = null
+
+
+func _process(delta):
+	if has_key and not pick_up is Key:
+		var key = key_scene.instantiate()
+		key.is_picked_up = true
+		key.modulate = Constants.SECONDARY_COLOR
+		get_parent().add_child(key)
+		pick_up = key
+	if not has_key and pick_up is Key:
+		remove_pick_up()
+	
+	animate_pick_up(delta)
+
+
+func _exit_tree():
+	if pick_up != null:
+		remove_pick_up()
+
+
+func animate_pick_up(delta):
+	if pick_up == null:
+		return
+	var direction_to_player = pick_up.position.direction_to(position)
+	var desired_position = position - direction_to_player * 12.0
+	var distance_to = pick_up.position.distance_to(desired_position)
+	var follow_speed = clampf(distance_to / 28.0, 0.0, 1.0) * 3.8
+	pick_up.position = pick_up.position.lerp(desired_position, delta * follow_speed)
+
+
+func remove_pick_up():
+	pick_up.queue_free()
+	pick_up = null
 
 
 func set_collision(collision: bool):

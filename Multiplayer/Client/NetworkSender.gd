@@ -25,4 +25,5 @@ func send_state(receiver_id, level, player):
 		velocity = player.velocity,
 		animation = player.get_animation(),
 		is_minecarting = player.is_minecarting or player.is_entering_minecart,
+		has_key = GameState.has_key,
 	})

@@ -39,6 +39,8 @@ func update_player(player_id: int, state):
 		player.set_animation(state.animation)
 	if "is_minecarting" in state:
 		player.set_minecarting(state.is_minecarting)
+	if "has_key" in state:
+		player.has_key = state.has_key
 
 
 func add_player(player_id: int):

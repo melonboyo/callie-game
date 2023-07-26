@@ -90,7 +90,7 @@ visible = false
 
 [node name="PlayerSprite" parent="." instance=ExtResource("4_v0ywq")]
 unique_name_in_owner = true
-animation = &"idle"
+animation = &"climb"
 
 [node name="PlayerShape" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2.5)

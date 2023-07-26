@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://2ayb7nkh51or"]
+[gd_scene load_steps=5 format=3 uid="uid://2ayb7nkh51or"]
 
 [ext_resource type="Script" path="res://Multiplayer/Client/Client.gd" id="1_dmclj"]
 [ext_resource type="PackedScene" uid="uid://bclltifdrhwnf" path="res://Multiplayer/Client/NetworkSender.tscn" id="1_sy13i"]
 [ext_resource type="PackedScene" uid="uid://d25sgbwsojswi" path="res://Multiplayer/Client/NetworkPlayerSpawner.tscn" id="3_5juvy"]
+[ext_resource type="PackedScene" uid="uid://s7y0dmd8clno" path="res://UI/LoadingIcon.tscn" id="4_uiwhn"]
 
 [node name="Client" type="Node2D"]
 script = ExtResource("1_dmclj")
@@ -13,7 +14,5 @@ script = ExtResource("1_dmclj")
 
 [node name="Ui" type="CanvasLayer" parent="."]
 
-[node name="LoadingIcon" type="Label" parent="Ui"]
-offset_right = 40.0
-offset_bottom = 23.0
-text = "LOADING"
+[node name="LoadingIcon" parent="Ui" instance=ExtResource("4_uiwhn")]
+position = Vector2(13, 13)

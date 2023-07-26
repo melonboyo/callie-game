@@ -1,5 +1,9 @@
 class_name Constants
 
+const PRIMARY_COLOR := Color.WHITE
+const SECONDARY_COLOR := Color("8a8a8a")
+const BACKGROUND_COLOR := Color.BLACK
+
 enum Sound {
 	JUMP = 0,
 	STEP_GRASS = 1,
