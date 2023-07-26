@@ -44,6 +44,7 @@ _data = {
 size = Vector2(12, 11)
 
 [node name="NetworkPlayer" type="RigidBody2D"]
+y_sort_enabled = true
 texture_filter = 1
 collision_layer = 258
 gravity_scale = 0.0
@@ -55,7 +56,6 @@ visible = false
 modulate = Color(0, 0, 0, 1)
 
 [node name="PlayerSprite" parent="." instance=ExtResource("1_ptorx")]
-y_sort_enabled = true
 animation = &"idle"
 offset = Vector2(0, 0)
 

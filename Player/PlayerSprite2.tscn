@@ -113,10 +113,9 @@ animations = [{
 }]
 
 [node name="PlayerSprite" type="AnimatedSprite2D"]
+y_sort_enabled = true
 texture_filter = 1
 use_parent_material = true
-position = Vector2(0, 6)
 sprite_frames = SubResource("SpriteFrames_pfykg")
 animation = &"fall"
 autoplay = "idle"
-offset = Vector2(0, -6)
