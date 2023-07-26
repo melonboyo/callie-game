@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://bdqag3kply5fw"]
 
 [ext_resource type="Script" path="res://Multiplayer/Client/NetworkPlayer.gd" id="1_ioshe"]
-[ext_resource type="PackedScene" uid="uid://bu42bi3m5khvm" path="res://Player/PlayerSprite.tscn" id="1_ptorx"]
+[ext_resource type="PackedScene" uid="uid://bu42bi3m5khvm" path="res://Player/PlayerSprite1.tscn" id="1_ptorx"]
 [ext_resource type="PackedScene" uid="uid://y4bpuo43hccc" path="res://Player/PlayerInMinecartSprite.tscn" id="3_5luwx"]
 [ext_resource type="Animation" uid="uid://b54fx3sf8g71j" path="res://Player/enter_minecart.res" id="4_y1826"]
 [ext_resource type="PackedScene" uid="uid://ch0xiyevyghu7" path="res://Player/TauntPlayer.tscn" id="6_bqtx6"]

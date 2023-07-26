@@ -15,3 +15,8 @@ enum Sound {
 	MINECART_EXIT = 7,
 	MINECART_DRIVING = 8,
 }
+
+const character_scenes := [
+	"res://Player/PlayerSprite1.tscn",
+	"res://Player/PlayerSprite2.tscn",
+]
