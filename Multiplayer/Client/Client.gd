@@ -37,6 +37,7 @@ func _process(delta: float):
 	var new_level = player.get_parent().name
 	if new_level != current_level:
 		current_level = new_level
+		network_player_spawner.clear_players()
 		connect_player(player)
 	
 	if Input.is_action_just_pressed("toggle_online_collision"):

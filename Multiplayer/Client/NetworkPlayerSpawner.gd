@@ -4,7 +4,6 @@ class_name NetworkPlayerSpawner
 var player_scene = preload("res://Multiplayer/Client/NetworkPlayer.tscn")
 
 @onready var client: Client = get_parent()
-@onready var players = $Players
 var player_nodes := {}
 
 
@@ -26,7 +25,10 @@ func update_player(player_id: int, state):
 	if not player_id in player_nodes:
 		add_player(player_id)
 	
-	var player = player_nodes[player_id] as NetworkPlayer
+	if not is_instance_valid(player_nodes[player_id]):
+		return
+	
+	var player := player_nodes[player_id] as NetworkPlayer
 	if not player.is_node_ready():
 		return
 	
@@ -50,8 +52,12 @@ func update_player(player_id: int, state):
 
 func add_player(player_id: int):
 	var new_player = player_scene.instantiate()
+	new_player.name = StringName("NetworkPlayer_" + str(player_id))
 	player_nodes[player_id] = new_player
-	players.add_child(new_player)
+	
+	# Add it next to the client player
+	var client_player = client.get_player()
+	client_player.add_sibling(new_player)
 
 
 func remove_player(player_id: int):
@@ -60,6 +66,11 @@ func remove_player(player_id: int):
 	
 	player_nodes[player_id].queue_free()
 	player_nodes.erase(player_id)
+
+
+func clear_players():
+	for player_id in player_nodes.keys():
+		player_nodes.erase(player_id)
 
 
 func taunt(stamp: int, player_id: int):
