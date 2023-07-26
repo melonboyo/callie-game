@@ -1,8 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://leusdbqplgk2"]
+[gd_scene load_steps=14 format=3 uid="uid://leusdbqplgk2"]
 
 [ext_resource type="Script" path="res://Platforming/Levels/Level.gd" id="1_usqmq"]
 [ext_resource type="PackedScene" uid="uid://dpq18bmg53coj" path="res://Platforming/PlatformingTileMap.tscn" id="2_wfsfy"]
-[ext_resource type="PackedScene" uid="uid://bo1xhn2kyap4e" path="res://Player.tscn" id="3_rej3j"]
+[ext_resource type="PackedScene" uid="uid://bo1xhn2kyap4e" path="res://Player/Player.tscn" id="3_rej3j"]
 [ext_resource type="Script" path="res://Camera.gd" id="4_bgdcr"]
 [ext_resource type="Script" path="res://Platforming/Levels/CameraZone.gd" id="5_6q2j4"]
 [ext_resource type="Script" path="res://Platforming/Levels/Checkpoints.gd" id="6_0vb4h"]
@@ -17,6 +17,9 @@ size = Vector2(368, 296)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kuv7e"]
 size = Vector2(6, 122)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yieut"]
+size = Vector2(20, 146)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_di7mr"]
 size = Vector2(24, 192)
@@ -98,8 +101,17 @@ debug_color = Color(0.760784, 0.45098, 0, 0.419608)
 script = ExtResource("6_0vb4h")
 
 [node name="0" type="Node2D" parent="Checkpoints"]
-position = Vector2(-1112, -8)
+position = Vector2(-1160, 0)
 script = ExtResource("7_pbuey")
+
+[node name="Area2D" type="Area2D" parent="Checkpoints/0"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/0/Area2D"]
+position = Vector2(0, -63)
+shape = SubResource("RectangleShape2D_yieut")
+debug_color = Color(0.352941, 0.619608, 0, 0.419608)
 
 [node name="SpawnPoint" type="Node2D" parent="Checkpoints"]
 unique_name_in_owner = true
@@ -133,5 +145,6 @@ bus = &"Effects"
 [connection signal="body_exited" from="CameraZones/CameraZone1" to="CameraZones/CameraZone1" method="_on_body_exited"]
 [connection signal="camera_zone_entered" from="CameraZones/CameraZone1" to="Focus" method="_on_camera_zone_entered"]
 [connection signal="camera_zone_exited" from="CameraZones/CameraZone1" to="Focus" method="_on_camera_zone_exited"]
+[connection signal="body_entered" from="Checkpoints/0/Area2D" to="Checkpoints/0" method="_on_body_entered_checkpoint"]
 [connection signal="body_entered" from="ExitLevel1" to="." method="_on_exit_level" binds= [1, Vector2(-1, 0)]]
 [connection signal="timeout" from="ExitLevelTimer" to="." method="_on_exit_level_timer_timeout"]

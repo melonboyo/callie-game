@@ -1,4 +1,4 @@
-extends Control
+extends CanvasLayer
 
 
 var palettes := {
@@ -17,6 +17,7 @@ var palettes := {
 }
 
 @onready var tween: Tween = create_tween()
+@onready var rect: ColorRect = $ColorRect
 
 var actual_palette = 0:
 	set(value):
@@ -27,7 +28,7 @@ var actual_palette = 0:
 		current_palette = Math.modi(value - 1, palettes.size())
 		current_palette += 1
 		actual_palette = value - 1
-		material.set_shader_parameter("palette", palettes[current_palette])
+		rect.material.set_shader_parameter("palette", palettes[current_palette])
 
 var fade_out_immediate = false
 
@@ -38,7 +39,7 @@ func _ready():
 		return
 	if Engine.is_editor_hint():
 		return
-	material.set_shader_parameter("palette", palettes[current_palette])
+	rect.material.set_shader_parameter("palette", palettes[current_palette])
 
 
 func _process(_delta):
@@ -47,10 +48,10 @@ func _process(_delta):
 	
 	if Input.is_action_just_pressed("ui_page_down"):
 		current_palette += 1
-		material.set_shader_parameter("palette", palettes[current_palette])
+		rect.material.set_shader_parameter("palette", palettes[current_palette])
 	elif Input.is_action_just_pressed("ui_page_up"):
 		current_palette -= 1
-		material.set_shader_parameter("palette", palettes[current_palette])
+		rect.material.set_shader_parameter("palette", palettes[current_palette])
 
 
 func fade_out():
@@ -80,4 +81,4 @@ func fade_out_in():
 
 
 func set_fade(value: float):
-	material.set_shader_parameter("u_offset", value)
+	rect.material.set_shader_parameter("u_offset", value)

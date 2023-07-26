@@ -343,10 +343,16 @@ func minecart_move(delta):
 			down_velocity = velocity.x
 		else:
 			down_velocity = -velocity.x
+		
+	down_velocity = maxf(down_velocity, 0.0)
+#	var fall_acceleration = down_velocity / MAX_FALL_SPEED * 50.0 if down_velocity > 0.0 else 120.0
+	var fall_acceleration = MAX_FALL_SPEED / maxf(down_velocity, 15.0) * 7.0
 	
-	sprite.offset.y = move_toward(sprite.offset.y, -3.0 - (abs(clampf(down_velocity, 0.0, MAX_FALL_SPEED)) / abs(MAX_FALL_SPEED)) * 32.0, delta * 17.0)
-	if velocity.y <= 0.5:
-		sprite.offset.y = -3.0
+	sprite.offset.y = move_toward(
+		sprite.offset.y, \
+		-3.0 - (abs(clampf(down_velocity, 0.0, MAX_FALL_SPEED)) / abs(MAX_FALL_SPEED)) * 13.0, \
+		delta * fall_acceleration
+	)
 	
 	move_and_slide()
 
@@ -540,7 +546,7 @@ func _on_key_key_picked_up(key):
 
 func _on_player_sprite_frame_changed():
 	if sprite.is_playing():
-		if sprite.frame == 0:
+		if sprite.frame == 0 or sprite.frame == 3:
 			if sprite.animation == "run":
 				play_step_sound(Constants.Sound.STEP_GRASS)
 			elif sprite.animation == "climb":

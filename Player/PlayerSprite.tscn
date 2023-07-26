@@ -1,114 +1,128 @@
-[gd_scene load_steps=13 format=3 uid="uid://bu42bi3m5khvm"]
+[gd_scene load_steps=17 format=3 uid="uid://bu42bi3m5khvm"]
 
-[ext_resource type="Texture2D" uid="uid://c6scienvyf3pw" path="res://Textures/Player/FlopEar/tile_0289.png" id="1_awrj4"]
-[ext_resource type="Texture2D" uid="uid://c2wdm3ymuoslv" path="res://Textures/Player/FlopEar/tile_0290.png" id="2_0eu2d"]
-[ext_resource type="Texture2D" uid="uid://cak7w4ofvrw7b" path="res://Textures/Player/FlopEar/tile_0291.png" id="2_2ks8o"]
-[ext_resource type="Texture2D" uid="uid://b2ny8vvsn1wbv" path="res://Textures/Player/FlopEar/tile_0282.png" id="4_vp6yk"]
-[ext_resource type="Texture2D" uid="uid://dl1syt3exh3pd" path="res://Textures/Player/FlopEar/tile_0285.png" id="5_qg3va"]
-[ext_resource type="Texture2D" uid="uid://gfnwsqtfv6i8" path="res://Textures/Player/FlopEar/tile_0280.png" id="6_eg78w"]
-[ext_resource type="Texture2D" uid="uid://c337stha0r5o7" path="res://Textures/Player/FlopEar/tile_0288.png" id="10_gf4yg"]
-[ext_resource type="Texture2D" uid="uid://gyejc8va12ep" path="res://Textures/Player/FlopEar/tile_0294.png" id="11_fvkkf"]
-[ext_resource type="Texture2D" uid="uid://dnqp8mpn2xsti" path="res://Textures/Player/FlopEar/tile_0281.png" id="12_dsklg"]
-[ext_resource type="Texture2D" uid="uid://cm6s3unrvto3w" path="res://Textures/Player/FlopEar/tile_0284.png" id="13_1wxsj"]
-[ext_resource type="Texture2D" uid="uid://dg3h16ok5ii0c" path="res://Textures/Player/FlopEar/tile_0283.png" id="13_p1vd6"]
+[ext_resource type="Texture2D" uid="uid://jovmgckymve3" path="res://Textures/Player/PlayerSprites/1/13.png" id="1_mvxuu"]
+[ext_resource type="Texture2D" uid="uid://dixk0dp2ub6eu" path="res://Textures/Player/PlayerSprites/1/14.png" id="2_20jyu"]
+[ext_resource type="Texture2D" uid="uid://ceh3uyl0ank7c" path="res://Textures/Player/PlayerSprites/1/9.png" id="3_1rcxw"]
+[ext_resource type="Texture2D" uid="uid://drg1nf2ei1alo" path="res://Textures/Player/PlayerSprites/1/10.png" id="4_fg4i1"]
+[ext_resource type="Texture2D" uid="uid://f2v14vnkamnh" path="res://Textures/Player/PlayerSprites/1/11.png" id="5_en84f"]
+[ext_resource type="Texture2D" uid="uid://c30op4dbq0kth" path="res://Textures/Player/PlayerSprites/1/1.png" id="6_sl7vn"]
+[ext_resource type="Texture2D" uid="uid://dc0udhgi4tkpw" path="res://Textures/Player/PlayerSprites/1/8.png" id="7_3b56g"]
+[ext_resource type="Texture2D" uid="uid://881vey7v14hm" path="res://Textures/Player/PlayerSprites/1/15.png" id="8_f5bru"]
+[ext_resource type="Texture2D" uid="uid://bbbiqh400ojxn" path="res://Textures/Player/PlayerSprites/1/16.png" id="9_ajxvt"]
+[ext_resource type="Texture2D" uid="uid://ci2j8dwgw8bpb" path="res://Textures/Player/PlayerSprites/1/2.png" id="10_ekry2"]
+[ext_resource type="Texture2D" uid="uid://baycbwbdpsqs3" path="res://Textures/Player/PlayerSprites/1/3.png" id="11_emmel"]
+[ext_resource type="Texture2D" uid="uid://de0uy42oiko4q" path="res://Textures/Player/PlayerSprites/1/4.png" id="12_0w0m7"]
+[ext_resource type="Texture2D" uid="uid://dmi8bcf22dujs" path="res://Textures/Player/PlayerSprites/1/5.png" id="13_t8sed"]
+[ext_resource type="Texture2D" uid="uid://casj8xsf210cc" path="res://Textures/Player/PlayerSprites/1/6.png" id="14_0xada"]
+[ext_resource type="Texture2D" uid="uid://bjn1cm0fbf43q" path="res://Textures/Player/PlayerSprites/1/7.png" id="15_xv8f4"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nm6yw"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_awrj4")
+"texture": ExtResource("1_mvxuu")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_0eu2d")
+"texture": ExtResource("2_20jyu")
 }],
 "loop": true,
 "name": &"climb",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_1rcxw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_fg4i1")
+}],
+"loop": false,
+"name": &"fall",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_en84f")
+}],
+"loop": true,
+"name": &"get",
 "speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_vp6yk")
-}],
-"loop": true,
-"name": &"fall",
-"speed": 24.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("5_qg3va")
-}],
-"loop": true,
-"name": &"get",
-"speed": 24.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("6_eg78w")
+"texture": ExtResource("6_sl7vn")
 }],
 "loop": true,
 "name": &"idle",
-"speed": 24.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_qg3va")
+"texture": ExtResource("7_3b56g")
 }],
 "loop": true,
 "name": &"jump",
-"speed": 24.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("10_gf4yg")
+"texture": ExtResource("6_sl7vn")
 }],
 "loop": true,
 "name": &"lay",
-"speed": 24.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_2ks8o")
+"texture": ExtResource("8_f5bru")
 }],
 "loop": true,
 "name": &"look_down",
-"speed": 24.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("11_fvkkf")
+"texture": ExtResource("9_ajxvt")
 }],
 "loop": true,
 "name": &"look_up",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("13_1wxsj")
+"texture": ExtResource("11_emmel")
 }],
 "loop": true,
 "name": &"minecarting",
-"speed": 24.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("12_dsklg")
-}, {
-"duration": 2.0,
-"texture": ExtResource("4_vp6yk")
+"texture": ExtResource("10_ekry2")
 }, {
 "duration": 1.0,
-"texture": ExtResource("13_p1vd6")
+"texture": ExtResource("11_emmel")
 }, {
-"duration": 2.0,
-"texture": ExtResource("13_1wxsj")
+"duration": 1.0,
+"texture": ExtResource("12_0w0m7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_t8sed")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_0xada")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_xv8f4")
 }],
 "loop": true,
 "name": &"run",
-"speed": 24.0
+"speed": 15.0
 }]
 
 [node name="PlayerSprite" type="AnimatedSprite2D"]
 texture_filter = 1
 use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_nm6yw")
-animation = &"look_up"
+animation = &"jump"
+autoplay = "idle"
