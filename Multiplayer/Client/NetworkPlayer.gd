@@ -11,6 +11,8 @@ var key_scene = preload("res://Platforming/Interact/Key.tscn")
 @onready var taunt_player := $TauntPlayer as TauntPlayer
 @onready var audio_player := $AudioPlayer as PlayerAudioPlayer
 
+var current_character := 0
+
 var is_minecarting = false
 var has_key = false
 
@@ -52,6 +54,21 @@ func remove_pick_up():
 
 func set_collision(collision: bool):
 	set_collision_layer_value(9, collision)
+
+
+func change_character(character: int):
+	if character == current_character:
+		return
+	
+	current_character = character
+	
+	var character_scene = load(Constants.character_scenes[character])
+	var new_sprite = character_scene.instantiate()
+	var old_sprite = sprite
+	
+	sprite.replace_by(new_sprite)
+	old_sprite.queue_free()
+	sprite = new_sprite
 
 
 func set_animation(animation_state):

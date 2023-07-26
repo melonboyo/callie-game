@@ -27,6 +27,9 @@ func update_player(player_id: int, state):
 		add_player(player_id)
 	
 	var player = player_nodes[player_id] as NetworkPlayer
+	if not player.is_node_ready():
+		return
+	
 	player.position = state.position
 
 	if "has_collision" in state:
@@ -37,6 +40,8 @@ func update_player(player_id: int, state):
 		player.linear_velocity = state.velocity
 	if "animation" in state:
 		player.set_animation(state.animation)
+	if "character" in state:
+		player.change_character(state.character)
 	if "is_minecarting" in state:
 		player.set_minecarting(state.is_minecarting)
 	if "has_key" in state:

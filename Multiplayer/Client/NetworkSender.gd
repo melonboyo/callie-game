@@ -15,7 +15,7 @@ func _on_tick_timer_tick():
 	Network.for_all_players(func (receiver_id: int): send_state(receiver_id, level, player))
 
 
-func send_state(receiver_id, level, player):
+func send_state(receiver_id: int, level: String, player: Player):
 	var animation = player.get_animation()
 	client.rpc_id(receiver_id, "sync_player", {
 		level = level,
@@ -24,6 +24,7 @@ func send_state(receiver_id, level, player):
 		rotation = player.rotation,
 		velocity = player.velocity,
 		animation = player.get_animation(),
+		character = player.current_character,
 		is_minecarting = player.is_minecarting or player.is_entering_minecart,
 		has_key = GameState.has_key,
 	})

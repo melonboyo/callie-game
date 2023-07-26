@@ -40,7 +40,7 @@ var was_on_floor = true
 var jumped_last_frame = false
 var jumped = false
 
-var current_character = 0
+var current_character := 0
 
 var freeze = false
 @export var is_in_overworld = false:
@@ -86,8 +86,7 @@ func _process(delta):
 		
 	if Input.is_action_just_pressed("change_character"):
 		current_character = posmod(current_character + 1, Constants.character_scenes.size()) 
-		var character_scene = load(Constants.character_scenes[current_character])
-		change_character(character_scene)
+		change_character(current_character)
 	
 	direction_x = Input.get_axis("move_left", "move_right")
 	direction_y = Input.get_axis("move_up", "move_down")
@@ -590,11 +589,13 @@ func _on_direction_held_timer_timeout():
 	direction_timeout = true
 
 
-func change_character(character_scene):
+func change_character(character: int):
+	var character_scene = load(Constants.character_scenes[character])
 	var new_sprite = character_scene.instantiate()
-	$PlayerSprite.queue_free()
-	$PlayerSprite.name = StringName("PlayerSpriteOLD")
-	new_sprite.name = StringName("PlayerSprite")
-	new_sprite.frame_changed.connect(_on_player_sprite_frame_changed)
-	add_child(new_sprite)
+	var old_sprite = sprite
+	
+	sprite.replace_by(new_sprite)
+	old_sprite.queue_free()
 	sprite = new_sprite
+	
+	new_sprite.frame_changed.connect(_on_player_sprite_frame_changed)	
