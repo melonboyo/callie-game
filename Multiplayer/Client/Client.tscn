@@ -10,3 +10,5 @@ script = ExtResource("1_dmclj")
 [node name="NetworkSender" parent="." instance=ExtResource("1_sy13i")]
 
 [node name="NetworkPlayerSpawner" parent="." instance=ExtResource("3_5juvy")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]

@@ -10,8 +10,7 @@ func _ready():
 	Network.disconnected.connect(_on_disconnected)
 
 
-func connect_player():
-	var player = get_player()
+func connect_player(player: Player):
 	var audio_player = get_audio_player(player)
 	audio_player.playing.connect(_on_playing_audio)
 	audio_player.stopping.connect(_on_stopping_audio)
@@ -27,12 +26,14 @@ func for_all_players_in_level(callback: Callable):
 
 func _process(delta: float):
 	var player = get_player()
+	if player == null:
+		return
 	
 	# Connect to any signals in the player when the level changes
 	var new_level = player.get_parent().name
 	if new_level != current_level:
 		current_level = new_level
-		connect_player()
+		connect_player(player)
 	
 	if Input.is_action_just_pressed("toggle_online_collision"):
 		has_online_collision = not has_online_collision
@@ -59,7 +60,10 @@ func _on_stopping_audio(sound: Constants.Sound):
 
 func get_player() -> Player:
 	var nodes = get_tree().get_nodes_in_group("player")
-	assert(nodes.size() == 1, "There is more than one player! oh no!")
+	if nodes.size() == 0:
+		return null
+	
+	assert(nodes.size() <= 1, "There is more than one player! oh no!")
 	
 	var player = nodes[0] as Player
 	if not player is Player:
