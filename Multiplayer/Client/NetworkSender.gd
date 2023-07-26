@@ -5,6 +5,9 @@ class_name NetworkSender
 
 # Responsible for sending client data to the server
 func _on_tick_timer_tick():
+	if not Network.is_connected:
+		return
+	
 	var player = client.get_player()
 	if player == null:
 		print("Player is null.. why...")
