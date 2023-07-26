@@ -1,4 +1,69 @@
-[gd_scene format=3 uid="uid://s7y0dmd8clno"]
+[gd_scene load_steps=22 format=3 uid="uid://s7y0dmd8clno"]
+
+[ext_resource type="Texture2D" uid="uid://byissyf4hmrn2" path="res://Textures/UI/Loading/loading-icon1.png" id="1_0qus7"]
+[ext_resource type="Texture2D" uid="uid://bvuumb1qfvnie" path="res://Textures/UI/Loading/loading-icon2.png" id="2_5lo11"]
+[ext_resource type="Texture2D" uid="uid://blummvv5ei2wp" path="res://Textures/UI/Loading/loading-icon11.png" id="3_bxhdu"]
+[ext_resource type="Texture2D" uid="uid://cfklasvfx2yqs" path="res://Textures/UI/Loading/loading-icon12.png" id="4_x22xq"]
+[ext_resource type="Texture2D" uid="uid://depjqo3oiiqk7" path="res://Textures/UI/Loading/loading-icon13.png" id="5_66p86"]
+[ext_resource type="Texture2D" uid="uid://b0n2bpmyc1p2o" path="res://Textures/UI/Loading/loading-icon14.png" id="6_6nukk"]
+[ext_resource type="Texture2D" uid="uid://cmk5eq1err7kj" path="res://Textures/UI/Loading/loading-icon15.png" id="7_l6q85"]
+[ext_resource type="Texture2D" uid="uid://cndpvgwkmuja5" path="res://Textures/UI/Loading/loading-icon16.png" id="8_cb6y2"]
+[ext_resource type="Texture2D" uid="uid://cx8djxq4pcwhq" path="res://Textures/UI/Loading/loading-icon17.png" id="9_k5ld7"]
+[ext_resource type="Texture2D" uid="uid://bu83aivnof7s1" path="res://Textures/UI/Loading/loading-icon18.png" id="10_yb2tx"]
+[ext_resource type="Texture2D" uid="uid://bgbygwqleqms1" path="res://Textures/UI/Loading/loading-icon19.png" id="11_kdiu7"]
+[ext_resource type="Texture2D" uid="uid://bocwmsqd80068" path="res://Textures/UI/Loading/loading-icon20.png" id="12_wnewo"]
+[ext_resource type="Texture2D" uid="uid://bopk42m2iaqur" path="res://Textures/UI/Loading/loading-icon3.png" id="13_wxbda"]
+[ext_resource type="Texture2D" uid="uid://cualocv71m7se" path="res://Textures/UI/Loading/loading-icon4.png" id="14_f6wbd"]
+[ext_resource type="Texture2D" uid="uid://cjulbc5hq8y8d" path="res://Textures/UI/Loading/loading-icon5.png" id="15_58yco"]
+[ext_resource type="Texture2D" uid="uid://ouebsdo0jkyo" path="res://Textures/UI/Loading/loading-icon6.png" id="16_g63x1"]
+[ext_resource type="Texture2D" uid="uid://m3hd1fpq7d0e" path="res://Textures/UI/Loading/loading-icon7.png" id="17_r8clh"]
+[ext_resource type="Texture2D" uid="uid://cijpfsie4fgx6" path="res://Textures/UI/Loading/loading-icon8.png" id="18_hgrq5"]
+[ext_resource type="Texture2D" uid="uid://c72lusbh684om" path="res://Textures/UI/Loading/loading-icon9.png" id="19_dx7nt"]
+[ext_resource type="Texture2D" uid="uid://vy6smc5achoj" path="res://Textures/UI/Loading/loading-icon10.png" id="20_87yht"]
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_445x0"]
+frames = 20
+speed_scale = 15.0
+frame_0/texture = ExtResource("1_0qus7")
+frame_1/texture = ExtResource("2_5lo11")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("13_wxbda")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("14_f6wbd")
+frame_3/duration = 1.0
+frame_4/texture = ExtResource("15_58yco")
+frame_4/duration = 1.0
+frame_5/texture = ExtResource("16_g63x1")
+frame_5/duration = 1.0
+frame_6/texture = ExtResource("17_r8clh")
+frame_6/duration = 1.0
+frame_7/texture = ExtResource("18_hgrq5")
+frame_7/duration = 1.0
+frame_8/texture = ExtResource("19_dx7nt")
+frame_8/duration = 1.0
+frame_9/texture = ExtResource("20_87yht")
+frame_9/duration = 1.0
+frame_10/texture = ExtResource("3_bxhdu")
+frame_10/duration = 1.0
+frame_11/texture = ExtResource("4_x22xq")
+frame_11/duration = 1.0
+frame_12/texture = ExtResource("5_66p86")
+frame_12/duration = 1.0
+frame_13/texture = ExtResource("6_6nukk")
+frame_13/duration = 1.0
+frame_14/texture = ExtResource("7_l6q85")
+frame_14/duration = 1.0
+frame_15/texture = ExtResource("8_cb6y2")
+frame_15/duration = 1.0
+frame_16/texture = ExtResource("9_k5ld7")
+frame_16/duration = 1.0
+frame_17/texture = ExtResource("10_yb2tx")
+frame_17/duration = 1.0
+frame_18/texture = ExtResource("11_kdiu7")
+frame_18/duration = 1.0
+frame_19/texture = ExtResource("12_wnewo")
+frame_19/duration = 1.0
 
 [node name="LoadingIcon" type="TextureRect"]
 texture_filter = 1
+texture = SubResource("AnimatedTexture_445x0")

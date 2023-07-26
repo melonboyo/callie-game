@@ -3,7 +3,7 @@ class_name Client
 
 @onready var network_sender := $NetworkSender as NetworkSender
 @onready var network_player_spawner := $NetworkPlayerSpawner as NetworkPlayerSpawner
-@onready var loading_icon := $Ui/LoadingIcon
+@onready var loading_icon := $Ui/Control/MarginContainer/LoadingIcon
 var has_online_collision := true
 var current_level := ""
 
