@@ -8,9 +8,13 @@ enum Upgrade {
 }
 
 var acquired_upgrades = {
-	Upgrade.Jump1: false,
-	Upgrade.Minecart: false,
-	Upgrade.Boots: false,
+	# Upgrade.Jump1: false,
+	# Upgrade.Minecart: false,
+	# Upgrade.Boots: false,
+	
+	Upgrade.Jump1: true,
+	Upgrade.Minecart: true,
+	Upgrade.Boots: true,
 }
 
 var opened_doors = {

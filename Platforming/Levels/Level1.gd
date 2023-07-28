@@ -1,5 +1,5 @@
 extends Level
-class_name Level1
+class_name Level4
 
 
 func _enter_tree():

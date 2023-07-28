@@ -51,7 +51,7 @@ var levels = {
 	1: "res://Platforming/Levels/Level1.tscn",
 	2: "res://Platforming/Levels/Level2.tscn",
 	3: "res://Platforming/Levels/Level3.tscn",
-	4: "hi",
+	4: "res://Platforming/Levels/Level4.tscn",
 }
 
 
@@ -83,7 +83,7 @@ func _on_start_level_3_body_entered(body, exit):
 
 
 # todo: poke somebody else to remove code duplication
-func _on_start_level_pond_body_entered(body, exit):
+func _on_start_level_4_body_entered(body, exit):
 	level = 4
 	GameState.current_level = 4
 	GameState.exit = exit

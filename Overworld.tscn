@@ -6278,7 +6278,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitPond"]
-position = Vector2(-161.058, 19.5652)
+position = Vector2(-211.904, 39.8832)
 scale = Vector2(1.18556, 1.26759)
 shape = SubResource("CircleShape2D_axe8m")
 debug_color = Color(0.305882, 0.627451, 0, 0.419608)
@@ -6308,5 +6308,5 @@ position = Vector2(328, -384)
 [connection signal="body_exited" from="Exit3" to="." method="_on_start_level_body_exited"]
 [connection signal="body_entered" from="Exit4" to="." method="_on_start_level_3_body_entered" binds= [4]]
 [connection signal="body_exited" from="Exit4" to="." method="_on_start_level_body_exited"]
-[connection signal="body_entered" from="ExitPond" to="." method="_on_start_level_pond_body_entered" binds= [5]]
+[connection signal="body_entered" from="ExitPond" to="." method="_on_start_level_4_body_entered" binds= [5]]
 [connection signal="body_exited" from="ExitPond" to="." method="_on_start_level_body_exited"]
