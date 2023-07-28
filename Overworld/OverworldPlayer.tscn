@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://c37fey7yw2hg7"]
 
 [ext_resource type="Script" path="res://Overworld/OverworldPlayer.gd" id="1_di424"]
-[ext_resource type="PackedScene" uid="uid://bu42bi3m5khvm" path="res://Player/PlayerSprite1.tscn" id="2_onphw"]
+[ext_resource type="PackedScene" uid="uid://bernrphbuumbp" path="res://Player/PlayerSprite1.tscn" id="2_onphw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7myib"]
 size = Vector2(12, 11)
@@ -17,4 +17,3 @@ shape = SubResource("RectangleShape2D_7myib")
 
 [node name="PlayerSprite" parent="." instance=ExtResource("2_onphw")]
 animation = &"idle"
-autoplay = "idle"
