@@ -5,5 +5,7 @@ func _ready():
 		Network.create_dedicated_server()
 		get_tree().change_scene_to_file("res://Multiplayer/Server/Server.tscn")
 	else:
-		Network.create_remote_connection()
+		if not OS.has_feature("offline"):
+			Network.create_remote_connection()
 		get_tree().change_scene_to_file("res://Overworld.tscn")
+		2 

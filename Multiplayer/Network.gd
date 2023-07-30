@@ -71,7 +71,12 @@ func create_dedicated_server():
 
 func create_remote_connection():
 	is_connecting = true
-	var peer = ENetMultiplayerPeer.new()
+	var peer: MultiplayerPeer
+	if OS.has_feature("web"):
+		peer = WebRTCMultiplayerPeer.new()
+	else:
+		peer = ENetMultiplayerPeer.new()
+	
 	print('connecting to server %s:%s' % [public_server_host, public_server_port])
 	multiplayer.connected_to_server.connect(_on_server_connected)
 	multiplayer.connection_failed.connect(_on_connection_failed)
