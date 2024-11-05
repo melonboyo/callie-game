@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ServerAddress" load_steps=2 format=3 uid="uid://puc2ayypcxdv"]
+
+[ext_resource type="Script" path="res://Multiplayer/ServerAddress.gd" id="1_hu2p1"]
+
+[resource]
+script = ExtResource("1_hu2p1")
+host = "localhost"
+port = 45276

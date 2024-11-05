@@ -1,10 +1,5 @@
 extends Node
 
-#var public_server_host = "localhost" if OS.is_debug_build() else "callie.pckv.me"
-var public_server_host = "callie.pckv.me"
-
-var public_server_port = 45276
-
 const TICKS_PER_SECOND = 1.0 / 60.0
 
 signal connected
@@ -19,6 +14,8 @@ var client
 
 var is_server := false
 var server_peer: MultiplayerPeer = null
+
+var address: ServerAddress = null
 
 var is_connected := false:
 	set(value):
@@ -47,19 +44,23 @@ var client_info := {
 		client_info = value
 
 
-func create_server(port: int) -> ENetMultiplayerPeer:
+func set_address(server_address: ServerAddress):
+	address = server_address
+
+
+func create_server() -> ENetMultiplayerPeer:
 	is_connecting = true
 	var peer = ENetMultiplayerPeer.new()
 	multiplayer.peer_connected.connect(_on_player_connected)
 	multiplayer.peer_disconnected.connect(_on_player_disconnected)
-	peer.create_server(port)
-	print('server listening on 0.0.0.0:%s' % port)
+	peer.create_server(address.port)
+	print('server listening on 0.0.0.0:%s' % address.port)
 	is_server = true
 	return peer
 
 
 func create_dedicated_server():
-	var peer = create_server(public_server_port)
+	var peer = create_server()
 	multiplayer.set_multiplayer_peer(peer)
 	server_peer = peer
 
@@ -77,11 +78,11 @@ func create_remote_connection():
 	else:
 		peer = ENetMultiplayerPeer.new()
 	
-	print('connecting to server %s:%s' % [public_server_host, public_server_port])
+	print('connecting to server %s:%s' % [address.host, address.port])
 	multiplayer.connected_to_server.connect(_on_server_connected)
 	multiplayer.connection_failed.connect(_on_connection_failed)
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
-	peer.create_client(public_server_host, public_server_port)
+	peer.create_client(address.host, address.port)
 	multiplayer.set_multiplayer_peer(peer)
 	
 	var client_scene = load("res://Multiplayer/Client/Client.tscn") as PackedScene
